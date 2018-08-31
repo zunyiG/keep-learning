@@ -50,3 +50,18 @@ addTen(2)
   // => ["tori amos"]
   
 ```
+
+#### 在高阶函数中使用 （高阶函数：参数或返回值为函数的函数）
+
+  用map把参数为单个的元素包裹一下，就能转变成参数为数组的函数
+  ```
+  const getChildren = function (x) {
+    return x.childNodes
+  }
+
+  const allTheChildren = map(getChildren)
+  ```
+
+###### 练习
+
+  => [curry.js](curry.js)
