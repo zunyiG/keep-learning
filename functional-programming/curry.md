@@ -64,4 +64,4 @@ addTen(2)
 
 ###### 练习
 
-  => [curry.js](curry.js)
+  => [curry.js](js/curry.js)
