@@ -1,4 +1,15 @@
-## 可缓存性
+## 纯函数
+
+#### 纯函数的好处
+
+- 可缓存性（Cacheable）
+- 可移植性／自文档化（Portable / Self-Documenting）
+- 可测试性（Testable）
+- 合理性（Reasonable）
+- 并行代码
+
+
+#### 可缓存性
 ```
 var squNum = memoize(function (x) {return x*x})
 
@@ -26,6 +37,8 @@ const memoize = function (f) {
   }
 }
 ```
+
+
 #### 通过延迟执行将不纯的函数转为纯函数
 
 ```
