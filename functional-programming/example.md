@@ -31,9 +31,8 @@ const authenticate = function (form) {
 const authenticate = compose(login, toUser)
 
 ```
+---
 
 #### 一个函数式的flickr
 
 > [codepen](https://codepen.io/zunyi/pen/NLYELB)
-
-
