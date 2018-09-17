@@ -57,6 +57,9 @@ var map = curry(function(f, xs){
   // 检查不同的 a 是否相等，并在有不相等的情况下打印出其中的差异
   // assertEqual :: (Equ a, Show a) => a -> a -> Assertion
 
+  // _ 表示被忽略的值
+  //  zoltar :: User -> _
+
 ```
 
 
