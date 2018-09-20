@@ -119,9 +119,7 @@ getTwenty({ balance: 10.00})
 
 ```
 
-###### 释放容器中的值
-
-maybe函数
+###### 释放容器中的值 maybe函数
 
 ```
 // maybe :: b -> (a -> b) -> Maybe a -> b
@@ -167,4 +165,291 @@ console.log(Either.of(5, null).map(addOne))
 
 ```
 
+```
+class Ether {
+  static of (x) {
+    return new Right(x)
+  }
 
+  constructor (x) {
+    this.$value = x
+  }
+}
+
+class Left extends Ether {
+  map (f) {
+    return this
+  }
+
+  inspect () {
+    return `Left(${inspect(this.$value)})`
+  }
+}
+
+class Right extends Ether {
+  map (f) {
+    return Ether.of(f(this.$value))
+  }
+
+  inspect () {
+    return `Right(${inspect(this.$value)})`
+  }
+}
+
+const left = x => new Left(x)\
+
+Either.of('rain').map(str => `b${str}`)
+// => Right('brain')
+
+left('rain').map(str => `b${str}`)
+// => Left('rain')
+
+Either.of({host: 'localhost', port: 80}).map(_.prop('host'))
+// => Right('localhost')
+
+left('adesc').map(_.prop('host'))
+// => Left('adesc')
+
+```
+
+```
+const moment = require('moment');
+
+// getAge :: Date -> User -> Either(String, Number)
+const getAge = curry((now, user) => {
+  const birthDate = moment(user.birthDate, 'YYYY-MM-DD');
+
+  return birthDate.isValid()
+    ? Either.of(now.diff(birthDate, 'years'))
+    : left('Birth date could not be parsed');
+});
+
+// fortune :: Number -> String
+const fortune = compose(concat('If you survive, you will be '), toString, add(1));
+
+// zoltar :: User -> Either(String, _)
+const zoltar = compose(map(console.log), map(fortune), getAge(moment()));
+
+zoltar({ birthDate: '2005-12-12' });
+// => 'If you survive, you will be 10'
+// => Right(undefined)
+
+zoltar({ birthDate: 'balloons!' });
+// => Left('Birth date could not be parsed')
+
+```
+
+###### lift
+一个函数被调用的时候，如果被map包裹，那么它就会从普通函数变成 `functor `函数，这个过程叫 `lift`
+普通函数更适合操作普通的数据类型而不是容器类型，在必要的时候再通过 `lift` 变为合适的容器去操作容器类型。
+
+###### either 函数
+
+```
+// either :: (a -> c) -> (b -> c) -> Either a b -> c
+const either = curry((f, g, e) => {
+  let result
+
+  switch (e.constructor) {
+    case left: 
+      result = f(e.$value)
+    case right:
+      result = g(e.$value)
+  }
+
+  return result
+})
+
+// id :: x -> x
+// zoltar :: User -> _
+const zoltar = compose(console.log, either(id, fortune), getAge(moment()))
+
+zoltar({birthDate: '2005-12-12'})
+// => 'If you survive, you will be 10'
+// => undefined
+
+zoltar({birthDate: 'abc'})
+// => 'Birth date could not be parsed'
+// => undefined
+
+```
+
+#### IO 函子
+
+```
+class IO {
+  static of (x) {
+    return new IO(_ => x)
+  }
+
+  constructor (fn) {
+    this.$value = f
+  }
+
+  map (fn) {
+    return new IO(compose(fn, this.$value))
+  }
+
+  inspect () {
+    return `IO(${inspect(this.$vaue)})`
+  }
+}
+
+```
+`IO` 的 `$value` 是一个函数,不过可以不用把它看做一个函数。
+`IO` 的作用只是把非纯执行动作包裹起来延迟执行
+
+###### 示例
+
+```
+// io_window :: IO window
+const io_window = new IO(_ => window)
+
+console.dir(io_window.map(win => win.innerWidth))
+
+console.dir(io_window
+  .map(_.prop('location'))
+  .map(_.prop('heref'))
+  .map(_.split('/')))
+
+// $ :: String -> IO [DOM]
+$ = selector => new IO(_ =>　document.querySelectorAll(selector))
+console.dir($('#doc').map(_.head).map(div => div.innerHTML))
+
+// url :: IO String
+const url = new IO(_ => window.location.href)
+
+// toPairs :: Sting => [[String]]
+const toPairs = compose(_.split('='), _.split('&'))
+
+// params :: String -> [[String]]
+const params = compose(toPairs, _.last, _.split('?'))
+
+// findParam :: String -> IO Maybe [String]
+const findParam = key => map(compose(Maybe.of, filter(compose(eq(key), _.head)), params), url)
+
+////// 非纯调用代码: main.js ///////
+findParam('searchTerm').$value()
+// => Maybe(['searchTerm', 'wafflehouse'])
+
+```
+
+#### 异步任务
+
+```
+var fs = require('fs');
+
+//  readFile :: String -> Task(Error, JSON)
+var readFile = function(filename) {
+  return new Task(function(reject, result) {
+    fs.readFile(filename, 'utf-8', function(err, data) {
+      err ? reject(err) : result(data);
+    });
+  });
+};
+
+readFile("metamorphosis").map(split('\n')).map(head);
+
+```
+与 `IO` 类似，必须调用 fork 方法才能运行 Task
+与 IO 不同的是 fork 会 fork 一个子进程去运行参数代码，主线程不会阻塞，所以它是异步的。
+
+
+```
+// Postgres.connect :: url -> IO DbConnection
+// runQuery :: DbConnection -> ResultSet
+// readFile :: String -> Task Error String
+
+// pure application ---
+
+// dbUrl :: config -> Either Error Url
+const dbUrl = ({ userName, pass, host, db}) => {
+  if (userName && pass && host && db) {
+    return Either.of(`db:pg://${uname}:${pass}@${host}5432/${db}`)
+  }
+
+  return left(Error('Inviod config'))
+}
+
+// connectDb :: config -> Either Error (IO DbConnection)
+const connectDb = compose(map(Postgres.connect), dbUrl)
+
+// getConfig :: FileName -> Task Error (Either Error (IO DbConnection))
+const getConfig = compose(map(compose(connectDb, JSON.parse)), readFile)
+
+
+// Impure calling code ---
+
+getConfig('config.json').fork(
+  logErr('coldn\'t read file'),
+  either(console.log, map(runQuery))
+)
+
+```
+
+#### 关于functor的理论
+
+functor 满足的定律
+
+```
+// indentity
+map(id) === id
+
+// composition
+compose(map(f), map(g)) === map(compose(f, g))
+
+```
+
+验证
+
+```
+const idLaw1 = map(id)
+const idLaw2 = id
+
+idLaw1(functor.of(2))
+// => functor(2)
+
+idLaw2(functor.of(2))
+// => functor(2)
+
+```
+###### functor 嵌套
+
+```
+const nested = Task.of([Ethier.of('pillows'), left('no sleep for you')])
+map(map(map(toUpperCase)), nested)
+// Task([Ethier.of('PILLOWS'), left('no sleep for you')])
+
+```
+
+对于 map(map(map(f))) 这样的结构, 我们可以将 functor 嵌套
+
+```
+class Compose {
+  constructor(fgx) {
+    this.getCompose = fgx
+  }
+
+  static of(fgx) {
+    return new Compose(fgx)
+  }
+
+  map (fn) {
+    return new Compose(map(map(fn)))
+  }
+}
+
+const tmd = Task.of(Maybe.of(', rock on, Chicago'))
+const ctmd = Compose.of(tmd)
+
+map(concat('Rock over London'), ctmd)
+// Compose(Task(Just('Rock over London, rock on, Chicago')))
+
+ctmd.getCompose
+// => Task(Just('Rock over London, rock on, Chicago'))
+
+```
+
+#### 练习
+
+=> [functor.js](./js/functor.js)

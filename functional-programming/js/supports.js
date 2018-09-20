@@ -25,8 +25,8 @@ const replace = curry(function replace(reg, rep, str) {
   return str.replace(reg, rep)
 })
 
-const map = curry(function map(fn, arr) {
-  return arr.map(fn)
+const map = curry(function map(fn, any_functor_arr) {
+  return any_functor_arr.map(fn)
 })
 
 const filter = curry(function filter(fn, arr) {
@@ -85,6 +85,10 @@ const toLowerCase = curry(function (s) {
   return s.toLowerCase()
 })
 
+const toUpperCase = curry(function (s) {
+  return s.toUpperCase()
+})
+
 const sortBy = curry(function (fn, xs) {
   return xs.sort(function (a, b) {
     if (fn(a) === fn(b)) {
@@ -103,6 +107,110 @@ const concat = curry(function (a, b) {
   return a + b
 })
 
+const id = x => x
+
+class Identity {
+  static of (x) {
+    return new Identity(x)
+  }
+
+  constructor (x) {
+    this.$value = x
+  }
+
+  map (f) {
+    return Identity.of(f(this.$value))
+  }
+}
+
+class Maybe {
+  static of (x) {
+    return new Maybe(x)
+  }
+
+  get isNothing () {
+    return this.$value === undefined || this.$value === null
+  }
+
+  constructor (x) {
+    this.$value = x
+  }
+
+  map (f) {
+    return this.isNothing ? this : Maybe.of(f(this.$value))
+  }
+}
+
+class Task {
+  constructor (fork) {
+    this.fork = fork
+  }
+
+  static of (x) {
+    return new Task((_, resolve)=> resolve(x))
+  }
+
+  map (fn) {
+    return new Task((reject, resolve) => this.fork(reject, compose(resolve, fn)))
+  }
+}
+
+class Either {
+  constructor (x) {
+    this.$value = x
+  }
+
+  static of (x) {
+    return new Right(x)
+  }
+}
+
+class Left extends Either {
+  get isLeft () {
+    return true
+  }
+
+  map () {
+    return this
+  }
+
+  static of (x) {
+    return new Left(x)
+  }
+}
+
+class Right extends Either {
+  get isLeft () {
+    return false
+  }
+
+  map (fn) {
+    return Either.of(fn(this.$value))
+  }
+}
+
+class IO {
+  constructor (io) {
+    this.unsafePerformIO = io
+  }
+
+  static of (fn) {
+    return new IO(_ => fn)
+  }
+
+  map (fn) {
+    return new IO(compose(fn, this.unsafePerformIO))
+  }
+
+  join () {
+    return this.unsafePerformIO()
+  }
+}
+
+const either = curry(function (f, g, e) {
+  return e.isLeft ? f(e.$value) : g(e.$value)
+})
+
 if (typeof module === 'object') {
   module.exports = {
     curry,
@@ -119,8 +227,18 @@ if (typeof module === 'object') {
     add,
     trace,
     toLowerCase,
+    toUpperCase,
     sortBy,
     flip,
-    concat
+    concat,
+    Identity,
+    id,
+    Maybe,
+    Task,
+    Left,
+    Right,
+    Either,
+    either,
+    IO
   }
 }
