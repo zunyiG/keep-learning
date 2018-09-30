@@ -25,10 +25,6 @@ const replace = curry(function replace(reg, rep, str) {
   return str.replace(reg, rep)
 })
 
-const map = curry(function map(fn, any_functor_arr) {
-  return any_functor_arr.map(fn)
-})
-
 const filter = curry(function filter(fn, arr) {
   return arr.filter(fn)
 })
@@ -51,7 +47,6 @@ const compose = function (...fns) {
 
     for (let i = n -1; i >= 0; i -= 1) {
       const fn = fns[i]
-
       $compose.callees.push(fn.name)
       $args = [fn.call(null, ...$args)]
     }
@@ -107,6 +102,18 @@ const concat = curry(function (a, b) {
   return a + b
 })
 
+const map = curry(function map(fn, any_functor_arr) {
+  return any_functor_arr.map(fn)
+})
+
+const chain = curry(function chain(fn, m) {
+  return m.map(fn).join()
+})
+
+const join = function join (m) {
+  return m.join()
+}
+
 const id = x => x
 
 class Identity {
@@ -136,6 +143,14 @@ class Maybe {
     this.$value = x
   }
 
+  join () {
+    return this.isNothing ? this : this.$value;
+  }
+
+  chain (fn) {
+    return this.map(fn).join()
+  }
+
   map (f) {
     return this.isNothing ? this : Maybe.of(f(this.$value))
   }
@@ -153,6 +168,19 @@ class Task {
   map (fn) {
     return new Task((reject, resolve) => this.fork(reject, compose(resolve, fn)))
   }
+
+  join () {
+    return this.chain(x => x)
+  }
+
+  chain (fn) {
+    return new Task((reject, reslove) => this.fork(reject, x => fn(x).fork(reject, reslove)))
+  }
+
+  inspect() { // eslint-disable-line class-methods-use-this
+    return 'Task(?)';
+  }
+
 }
 
 class Either {
@@ -194,8 +222,8 @@ class IO {
     this.unsafePerformIO = io
   }
 
-  static of (fn) {
-    return new IO(_ => fn)
+  static of (x) {
+    return new IO(_ => x)
   }
 
   map (fn) {
@@ -204,6 +232,10 @@ class IO {
 
   join () {
     return this.unsafePerformIO()
+  }
+
+  chain (fn) {
+    return this.map(fn).join()
   }
 }
 
@@ -217,6 +249,7 @@ if (typeof module === 'object') {
     split,
     replace,
     map,
+    chain,
     filter,
     match,
     reduce,
@@ -239,6 +272,7 @@ if (typeof module === 'object') {
     Right,
     Either,
     either,
+    join,
     IO
   }
 }
