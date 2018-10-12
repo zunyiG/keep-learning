@@ -17,6 +17,35 @@ const curry = function (fn) {
   })
 }
 
+function inspect (x) {
+  if (x && typeof x.inspect === 'function') {
+    return x.inspect()
+  }
+
+  function inspectFn (f) {
+    return f.name ? f.name : f.toString()
+  }
+
+  function inspectTerm (t) {
+    switch (typeof t) {
+      case 'string':
+        return `'${t}'`
+      case 'object': {
+        const ts = Object.keys(t).map(k => [k, inspect(t[k])])
+        return `{${ts.map(kv => kv.jion(': ')).jion(', ')}}`
+      }
+      default:
+        return String(t)
+    }
+  }
+
+  function inspectArgs(args) {
+    return Array.isArray(args) ? `[${args.map(inspect).join(', ')}]` : inspectTerm(args)
+  }
+
+  return (typeof x === 'function') ? inspectFn(x) : inspectArgs(x)
+}
+
 const split = curry(function split(s, str) {
   return str.split(s)
 })
@@ -99,7 +128,7 @@ const flip = curry(function (fn, a, b) {
 })
 
 const concat = curry(function (a, b) {
-  return a + b
+  return a.concat(b)
 })
 
 const map = curry(function map(fn, any_functor_arr) {
@@ -128,6 +157,22 @@ class Identity {
   map (f) {
     return Identity.of(f(this.$value))
   }
+
+  ap (f) {
+    return f.map(this.$value)
+  }
+
+  chain (fn) {
+    return this.map(fn).join()
+  }
+
+  jion () {
+    return this.$value
+  }
+
+  inspect () {
+    return `Identity(${inspect(this.$value)})`
+  }
 }
 
 class Maybe {
@@ -154,6 +199,14 @@ class Maybe {
   map (f) {
     return this.isNothing ? this : Maybe.of(f(this.$value))
   }
+
+  ap (f) {
+    return this.isNothing ? this : f.map(this.$value)
+  }
+
+  inspect () {
+    return this.isNothing ? 'Nothing' : `Just(${this.$value})`
+  }
 }
 
 class Task {
@@ -177,10 +230,13 @@ class Task {
     return new Task((reject, reslove) => this.fork(reject, x => fn(x).fork(reject, reslove)))
   }
 
-  inspect() { // eslint-disable-line class-methods-use-this
-    return 'Task(?)';
+  ap (f) {
+    return this.chain(x => f.map(x))
   }
 
+  inspect() { // eslint-disable-line class-methods-use-this
+    return `Task(${this.fork})`;
+  }
 }
 
 class Either {
@@ -202,6 +258,10 @@ class Left extends Either {
     return this
   }
 
+  ap () {
+    return this
+  }
+
   static of (x) {
     return new Left(x)
   }
@@ -214,6 +274,18 @@ class Right extends Either {
 
   map (fn) {
     return Either.of(fn(this.$value))
+  }
+
+  ap (f) {
+    return f.map(this.$value)
+  }
+
+  chain(fn) {
+    return fn(this.$value)
+  }
+
+  jion() {
+    return this.$value
   }
 }
 
@@ -237,11 +309,21 @@ class IO {
   chain (fn) {
     return this.map(fn).join()
   }
+
+  ap (f) {
+    return this.chain(x => f.map(x))
+  }
 }
 
 const either = curry(function (f, g, e) {
   return e.isLeft ? f(e.$value) : g(e.$value)
 })
+
+const liftA2 = curry((g, f1, f2) => f1.map(g).ap(f2))
+
+const liftA3 = curry((g, f1, f2, f3) => f1.map(g).ap(f2).ap(f3))
+
+
 
 if (typeof module === 'object') {
   module.exports = {
@@ -273,6 +355,8 @@ if (typeof module === 'object') {
     Either,
     either,
     join,
-    IO
+    IO,
+    liftA2,
+    liftA3
   }
 }
