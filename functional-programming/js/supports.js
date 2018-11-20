@@ -218,6 +218,10 @@ class Task {
     return new Task((_, resolve)=> resolve(x))
   }
 
+  static reject (x) {
+    return new Task((reject, _) => reject(x))
+  }
+
   map (fn) {
     return new Task((reject, resolve) => this.fork(reject, compose(resolve, fn)))
   }
