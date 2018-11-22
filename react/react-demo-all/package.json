@@ -1,0 +1,71 @@
+{
+  "name": "react-learn",
+  "version": "1.0.0",
+  "description": "react-learn",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.prod.conf.js",
+    "start": "webpack-dev-server --config webpack.dev.conf.js --color --progress"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    // babel 核心包
+    "@babel/core": "^7.1.6",
+    // 根据环境自动 polyfill
+    "@babel/preset-env": "^7.1.6",
+    // react jsx 编译
+    "@babel/preset-react": "^7.0.0",
+    // 让webpack 通过babel 编译js文件
+    "babel-loader": "^8.0.4",
+
+    // 将sass 编译成 css
+    "node-sass": "^4.10.0",
+    // 加载 sass
+    "sass-loader": "^7.1.0",
+    // 将css 引入
+    "css-loader": "^1.0.1",
+    // 通过 <style> 标签插入 css
+    "style-loader": "^0.23.1",
+    // 将css提取到单独文件
+    "mini-css-extract-plugin": "^0.4.4",
+    // css 压缩
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+
+    // 将文件加载为webpack 模块
+    "file-loader": "^2.0.0",
+    // 根据设置的文件大小，将文件转为base64编码的url
+    "url-loader": "^1.1.2",
+
+    // 删除打包文件夹
+    "clean-webpack-plugin": "^1.0.0",
+
+    // 通过模板自动生成html 文件
+    "html-webpack-plugin": "^3.2.0",
+
+    // react 局部刷新
+    "react-hot-loader": "^4.3.12",
+    // js 文件压缩
+    "uglifyjs-webpack-plugin": "^2.0.1",
+
+    // webpack 核心
+    "webpack": "^4.25.1",
+    // webpack 手动打包工具
+    "webpack-cli": "^3.1.2",
+    // webpack dev-server
+    "webpack-dev-server": "^3.1.10"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    // 懒加载
+    "bundle-loader": "^0.5.6",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "redux": "^4.0.1",
+    "react-redux": "^5.1.1",
+    "react-router-dom": "^4.3.1",
+    // redux 中间件， 运行action返回一个函数
+    "redux-thunk": "^2.3.0"
+  }
+}

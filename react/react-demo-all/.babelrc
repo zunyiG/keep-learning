@@ -1,0 +1,15 @@
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "modules": false, // 是否将ES6模块语法转换为其他类型（默认为commonjs）
+      "targets": {
+        "browsers": ["> 1%", "last 2 versions", "not ie <= 8"] // 浏览器环境
+        // "node": '6.10' node环境
+      }
+    }],
+    "@babel/preset-react" // 编译react jsx
+  ],
+  "plugins": [
+    "react-hot-loader/babel" // 配合 webpack HotModuleReplacement 局部刷新
+  ]
+}
