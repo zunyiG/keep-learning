@@ -1,0 +1,144 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>map china</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: rgb(132, 160, 234);
+    }
+
+    [class *= 'subunit'] {
+      fill: #e2e2e2;
+    }
+
+    .subunit_HKG {
+      fill: #cdc;
+    }
+
+    .subunit_CHH {
+      fill: #cdd;
+    }
+
+    .subunit_CHI {
+      fill: #dcd;
+    }
+    
+    .subunit-boundary {
+      fill: none;
+      stroke: #d4bc50;
+      stroke-dasharray: 2,2;
+      stroke-linejoin: round;
+    }
+
+    .subunit-boundary.CHI {
+      stroke: #333;
+    }
+
+    .place-lable {
+      font-size: 12px;
+    }
+
+    .subunit-label {
+      fill: #777;
+      fill-opacity: .5;
+      font-size: 20px;
+      font-weight: 300;
+      text-anchor: middle;
+    }
+
+  </style>
+</head>
+<body>
+  <script src="https://unpkg.com/topojson@3"></script>
+  <script src="https://d3js.org/d3.v5.js"></script>
+  <script>
+    
+    var width = document.body.clientWidth,
+    height = document.body.clientHeight;
+
+    var svg = d3.select('body').append('svg')
+      .attr('height', height)
+      .attr('width', width)
+
+    d3.json('./package/all.json').then(function(china, err) {
+      if(err) return console.error(err);
+      var subunits = topojson.feature(china, china.objects.all_subunits);
+      var projection = d3.geoMercator()
+        .center([107,31])
+        .scale(600)
+        .translate([width/2, height/5*3]);
+        
+      var path = d3.geoPath().projection(projection);
+
+      svg.selectAll('subunit')
+        .data(topojson.feature(china, china.objects.all_subunits).features)
+        .enter().append('path')
+        .attr('class', function(d){
+          return 'subunit_' + d.id;
+        })
+        .attr('d',path);
+
+      svg.append('path')
+        .datum(topojson.mesh(china, china.objects.all_subunits, function(a, b) {
+          return a!=b && a.id !== 'CHI';
+        }))
+        .attr('d', path)
+        .attr('class', 'subunit-boundary')
+
+      svg.append('path')
+        .datum(topojson.mesh(china, china.objects.all_subunits, function(a, b) {
+          return a!=b && a.id === 'CHI';
+        }))
+        .attr('d', path)
+        .attr('class', 'subunit-boundary CHI');
+
+      svg.append('path')
+        .datum(topojson.feature(china, china.objects.places))
+        .attr('d', path.pointRadius(0.8))
+        .attr('class', 'place')
+        
+      svg.selectAll('place-lable')
+        .data(topojson.feature(china, china.objects.places).features)
+        .enter()
+        .append('text')
+        .attr('class', 'place-lable')
+        .attr('transform', function(d){
+          return 'translate( ' + d.geometry.coordinates[0]*31 +', '+ d.geometry.coordinates[1]*50 + ')';
+        })
+        .attr('dy', '.35em')
+        .text(function(d) {
+          return d.properties.name;
+        });
+
+      svg.selectAll('place-lable')
+        .attr('x', function(d){
+          return d.geometry.coordinates[0] > -1 ? 6 : -6;
+        })
+        .style('text-anchor', function(d) {
+          return d.geometry.coordinates[0] > -1 ? 'start' : 'end';
+        });
+
+      svg.selectAll('subunit-label')
+        .data(topojson.feature(china, china.objects.all_subunits).features)
+        .enter()
+        .append('text')
+        .attr('class', function(d) {
+          return 'subunit-label ' +　d.id;
+        })
+        .attr('transform', function(d) {
+          return 'translate(' + path.centroid(d) +')';
+        })
+        .attr('dy', '.35em')
+        .text(function (d){
+          return d.properties.name;
+        })
+
+    });
+
+    // https://bost.ocks.org/mike/map/
+  </script>
+</body>
+</html>
