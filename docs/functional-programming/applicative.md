@@ -88,7 +88,7 @@ X.prototype.ap = function(other) {
 
 #### 定律
 
-`ap` 不会改变容器的类型， 这一点优于 `monad` 
+`ap` 不会改变容器的类型， 这一点优于 `monad`
 
 ```
 
@@ -142,4 +142,4 @@ A.of(compose).ap(u).ap(v).ap(w) == u.ap(v.ap(w))
 
 #### 练习
 
-=> [applicative.js](./js/applicative.js)
+=> [applicative.js](/src/functional-programming/applicative.js)
