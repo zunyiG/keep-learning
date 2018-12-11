@@ -14,8 +14,8 @@
 
 ---
 ##### 参考链接
-- [___mostly-adequate-guide___](https://mostly-adequate.gitbooks.io/mostly-adequate-guide/content/)
-- [___mostly-adequate-guide-chinese(中文翻译)___](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/)
-- [___你有必要知道的函数式编程___](https://www.jianshu.com/p/5efd21498192)
-- [___JavaScript函数式编程___](https://zhuanlan.zhihu.com/p/22094473)
-- [___函数式编程术语___](https://github.com/shfshanyue/fp-jargon-zh)
+- [mostly-adequate-guide](https://mostly-adequate.gitbooks.io/mostly-adequate-guide/content/)
+- [mostly-adequate-guide-中文翻译](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/)
+- [你有必要知道的函数式编程](https://www.jianshu.com/p/5efd21498192)
+- [JavaScript函数式编程](https://zhuanlan.zhihu.com/p/22094473)
+- [函数式编程术语](https://github.com/shfshanyue/fp-jargon-zh)
