@@ -8,9 +8,22 @@ module.exports = {
         link: '/'
       }
     ],
-    sidebar: [
-      '/',
-      ['/functional-programming/', '函数式编程']
-    ]
+    sidebar: {
+      '/functional-programming/': [
+        '',
+        'purity',
+        'curry',
+        'compose',
+        'hindley-milner',
+        'example',
+        'functor',
+        'monad',
+        'applicative'
+      ],
+      '/': [
+        ''
+      ]
+    },
+    sidebarDepth: 2
   }
 }
