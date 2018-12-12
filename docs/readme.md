@@ -1,6 +1,6 @@
 # 列表
 ## 函数式编程
-  - [js functional programming](./functional-programming/)
+  - [js functional programming](./functional-programming/js-fp/)
   - RxJS
   - Haskell
 
