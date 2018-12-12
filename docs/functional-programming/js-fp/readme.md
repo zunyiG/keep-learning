@@ -1,5 +1,4 @@
 # 介绍
----
 通过 js 介绍了函数式函数式编程的大致思想，让你对函数式编程有一个初步的了解。<br>
 下面是本人学习过程中的一部分总结，参考链接有更详细介绍
 
@@ -13,7 +12,7 @@
 8. applicative
 9. 附录
 
----
+
 ##### 参考链接
 - [mostly-adequate-guide](https://mostly-adequate.gitbooks.io/mostly-adequate-guide/content/)
 - [mostly-adequate-guide-中文翻译](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/)
