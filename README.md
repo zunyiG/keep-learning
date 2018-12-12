@@ -12,8 +12,8 @@
   - Haskell
 
 #### react
-  - react 全家桶
-  - react 官方教程
+  - [react 全家桶](./react/react-demo-all/)
+  - [react 官方教程](./docs/react/react-tutorial/)
 
 #### 数据可视化
   - d3
