@@ -9,7 +9,7 @@ module.exports = {
       }
     ],
     sidebar: {
-      '/functional-programming/': [
+      '/functional-programming/js-fp/': [
         '',
         'purity',
         'curry',
@@ -18,7 +18,8 @@ module.exports = {
         'example',
         'functor',
         'monad',
-        'applicative'
+        'applicative',
+        'appendix'
       ],
       '/': [
         ''
