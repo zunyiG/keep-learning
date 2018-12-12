@@ -1,11 +1,12 @@
-## Hindley-Milner (类型签名)
+# Hindley-Milner (类型签名)
 
+## 作用
 - 用来注释函数行为和目的
 - 可用作编译检测
 - 是最好的文档
 - 自由定理
 
-```
+``` js
 
 //  capitalize 接受一个 String 并返回了一个 String
 //  capitalize :: String -> String
@@ -30,9 +31,9 @@ var map = curry(function(f, xs){
 
 ```
 
-#### 自由定理
+## 自由定理
 
-```
+``` js
   // head :: [a] -> a
   compose(f, head) == compose(head, map(f))
 
@@ -46,10 +47,10 @@ var map = curry(function(f, xs){
 - 可以借用一些工具来声明的重写规则， 也可以使用compose函数来定义重写规则， 好处多多，可能性无限
 
 
-#### 类型约束
+## 类型约束
 可以用来了解函数要干什么，限制函数的作用范围
 
-```
+``` js
   // a 一定是个 Ord 对象。也就是说，a 必须要实现 Ord 接口。
   // sort :: Ord a => [a] -> [a]
 
