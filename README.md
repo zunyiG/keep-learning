@@ -7,7 +7,7 @@
 
 ## 目录
 #### 函数式编程
-  - [js functional programming](./docs/functional-programming/)
+  - [js functional programming](./docs/functional-programming/js-fb/)
   - RxJS
   - Haskell
 
