@@ -1,7 +1,11 @@
-## react 官网文档学习记录
+# react 官网教程
 
-1. [jsx](./01.jsx.md)
-2. [render](./02.render.md)
+1. jsx
+2. render
+3. components
+4. state
+5. event
+6.
 
 
 ---

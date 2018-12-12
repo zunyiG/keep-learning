@@ -21,6 +21,14 @@ module.exports = {
         'applicative',
         'appendix'
       ],
+      '/react/react-tutorial/': [
+        '',
+        '01.jsx',
+        '02.render',
+        '03.components',
+        '04.state',
+        '05.event'
+      ],
       '/': [
         ''
       ]
