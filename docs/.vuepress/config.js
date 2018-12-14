@@ -27,7 +27,9 @@ module.exports = {
         '02.render',
         '03.components',
         '04.state',
-        '05.event'
+        '05.event',
+        '06.ifelse',
+        '07.list'
       ],
       '/': [
         ''
