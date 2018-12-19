@@ -29,7 +29,8 @@ module.exports = {
         '04.state',
         '05.event',
         '06.ifelse',
-        '07.list'
+        '07.list',
+        '08.form'
       ],
       '/': [
         ''
