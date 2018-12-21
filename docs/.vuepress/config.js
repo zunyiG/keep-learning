@@ -30,7 +30,8 @@ module.exports = {
         '05.event',
         '06.ifelse',
         '07.list',
-        '08.form'
+        '08.form',
+        '09.lifting'
       ],
       '/': [
         ''
