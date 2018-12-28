@@ -9,11 +9,15 @@
 #### 函数式编程
   - [js functional programming](./docs/functional-programming/js-fp/)
   - RxJS
-  - Haskell
+    - vue-rxjs
+    - react-rxjs
+  - [Haskell](./docs/haskell/)
 
 #### react
   - [react 全家桶](./react/react-demo-all/)
   - [react 官方教程](./docs/react/react-tutorial/)
+
+#### typescript
 
 #### 数据可视化
   - d3

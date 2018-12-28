@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>state 和 生命周期 | Front-end-programming</title>
+    <meta name="description" content="Front end programming">
+    
+    
+    <link rel="preload" href="/assets/css/0.styles.cc2a2ebf.css" as="style"><link rel="preload" href="/assets/js/app.2f7a4d7a.js" as="script"><link rel="preload" href="/assets/js/16.dfaa2ca4.js" as="script"><link rel="prefetch" href="/assets/js/10.c92c51be.js"><link rel="prefetch" href="/assets/js/11.ffc2da93.js"><link rel="prefetch" href="/assets/js/12.2fc92c8e.js"><link rel="prefetch" href="/assets/js/13.d69d8942.js"><link rel="prefetch" href="/assets/js/14.a5b0411d.js"><link rel="prefetch" href="/assets/js/15.3c87745f.js"><link rel="prefetch" href="/assets/js/17.8c065f36.js"><link rel="prefetch" href="/assets/js/18.42f3cd96.js"><link rel="prefetch" href="/assets/js/19.c7b07917.js"><link rel="prefetch" href="/assets/js/2.5ae90992.js"><link rel="prefetch" href="/assets/js/20.d99228e7.js"><link rel="prefetch" href="/assets/js/21.c2ad7010.js"><link rel="prefetch" href="/assets/js/22.991426d2.js"><link rel="prefetch" href="/assets/js/23.888c6bc1.js"><link rel="prefetch" href="/assets/js/24.1aa16f53.js"><link rel="prefetch" href="/assets/js/25.dfbfd353.js"><link rel="prefetch" href="/assets/js/3.65c88191.js"><link rel="prefetch" href="/assets/js/4.7f39a3d8.js"><link rel="prefetch" href="/assets/js/5.1b8d22a8.js"><link rel="prefetch" href="/assets/js/6.d49d3124.js"><link rel="prefetch" href="/assets/js/7.4a677518.js"><link rel="prefetch" href="/assets/js/8.90e3d82b.js"><link rel="prefetch" href="/assets/js/9.e6844887.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.cc2a2ebf.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Front-end-programming</span></a> <div class="links" style="max-width:nullpx;"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">Home</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">Home</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/react/react-tutorial/" class="sidebar-link">react 官网教程</a></li><li><a href="/react/react-tutorial/01.jsx.html" class="sidebar-link">JSX</a></li><li><a href="/react/react-tutorial/02.render.html" class="sidebar-link">渲染</a></li><li><a href="/react/react-tutorial/03.components.html" class="sidebar-link">组件</a></li><li><a href="/react/react-tutorial/04.state.html" class="active sidebar-link">state 和 生命周期</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/react/react-tutorial/04.state.html#state的正确使用方式" class="sidebar-link">State的正确使用方式</a></li></ul></li><li><a href="/react/react-tutorial/05.event.html" class="sidebar-link">事件管理</a></li><li><a href="/react/react-tutorial/06.ifelse.html" class="sidebar-link">条件渲染</a></li><li><a href="/react/react-tutorial/07.list.html" class="sidebar-link">列表渲染</a></li><li><a href="/react/react-tutorial/08.form.html" class="sidebar-link">表单</a></li><li><a href="/react/react-tutorial/09.lifting.html" class="sidebar-link">状态提升</a></li><li><a href="/react/react-tutorial/10.composition.html" class="sidebar-link">组合</a></li></ul> </div> <div class="page"> <div class="content"><h1 id="state-和-生命周期"><a href="#state-和-生命周期" aria-hidden="true" class="header-anchor">#</a> state 和 生命周期</h1> <div class="language-jsx extra-class"><pre class="language-jsx"><code><span class="token comment">// class形式的组件， 可以有自己的状态 State</span>
+<span class="token keyword">class</span> <span class="token class-name">Clock</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span> <span class="token punctuation">(</span>props<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">super</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span>
+    <span class="token comment">// 初始化设置 state</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>state <span class="token operator">=</span> <span class="token punctuation">{</span> date<span class="token punctuation">:</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 组件挂载到dom后执行</span>
+  <span class="token function">componentDidMount</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>timerId <span class="token operator">=</span> <span class="token function">setInterval</span><span class="token punctuation">(</span>
+      _ <span class="token operator">=&gt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">tick</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token number">1000</span>
+    <span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">// 组件取消挂载时执行</span>
+  <span class="token function">componentWillUnmount</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">clearInterval</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>timerId<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">tick</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 调用setState来更新State</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      date<span class="token punctuation">:</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">render</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">Timer</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">It is </span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>date<span class="token punctuation">.</span><span class="token function">toLocaleTimeString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token plain-text"> </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+ReactDOM<span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Clock</span> <span class="token punctuation">/&gt;</span></span><span class="token punctuation">,</span>
+  document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'root'</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+
+</code></pre></div><p>执行过程:
+ReactDOM.render() =&gt; 解析<Clock></Clock> 调用Clock构造方法初始化state =&gt; 调用 Clock 的render方法 =&gt; 将要显示的内容更新到dom
+=&gt; 调用生命周期方法componentDidMount 生成计时器 =&gt; 每隔一秒调用一次tick 执行setState  =&gt; react 感知状态已更改再次调用render方法
+=&gt; render 方法发现时间内容已更改， 更改相应的dom =&gt; 当移除 Clock 组件后会调用 componentWillUnmount 来取消计时器</p> <h2 id="state的正确使用方式"><a href="#state的正确使用方式" aria-hidden="true" class="header-anchor">#</a> State的正确使用方式</h2> <ol><li>不能直接修改状态， 而是使用 setState()</li> <li>状态更新可能是异步的， 所有不能够依赖他们的值去更新下一个状态
+而是应该采用函数形式进行修改， 函数接受以前的state， 和更新时的props</li></ol> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// Wrong</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  counter<span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>counter <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>props<span class="token punctuation">.</span>increment<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// Correct</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span><span class="token punctuation">(</span>state<span class="token punctuation">,</span> props<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
+  counter<span class="token punctuation">:</span> state<span class="token punctuation">.</span>counter <span class="token operator">+</span> props<span class="token punctuation">.</span>increment
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><ol start="3"><li>合并状态更新；调用setState更新状态时，react会将传入的状态和当前状态合并,并且合并方式为浅拷贝合并。</li> <li>单向数据流；state 是组件自己内部的、本地的， 所以除了组件自身外其他组件都是不能访问的， 但是可以通过 props 向下传递。</li></ol></div> <div class="page-edit"><!----> <!----></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/react/react-tutorial/03.components.html" class="prev">
+          组件
+        </a></span> <span class="next"><a href="/react/react-tutorial/05.event.html">
+          事件管理
+        </a>
+        →
+      </span></p></div> </div> <!----></div></div>
+    <script src="/assets/js/16.dfaa2ca4.js" defer></script><script src="/assets/js/app.2f7a4d7a.js" defer></script>
+  </body>
+</html>

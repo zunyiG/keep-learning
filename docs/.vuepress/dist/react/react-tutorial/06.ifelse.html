@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>条件渲染 | Front-end-programming</title>
+    <meta name="description" content="Front end programming">
+    
+    
+    <link rel="preload" href="/assets/css/0.styles.cc2a2ebf.css" as="style"><link rel="preload" href="/assets/js/app.2f7a4d7a.js" as="script"><link rel="preload" href="/assets/js/18.42f3cd96.js" as="script"><link rel="prefetch" href="/assets/js/10.c92c51be.js"><link rel="prefetch" href="/assets/js/11.ffc2da93.js"><link rel="prefetch" href="/assets/js/12.2fc92c8e.js"><link rel="prefetch" href="/assets/js/13.d69d8942.js"><link rel="prefetch" href="/assets/js/14.a5b0411d.js"><link rel="prefetch" href="/assets/js/15.3c87745f.js"><link rel="prefetch" href="/assets/js/16.dfaa2ca4.js"><link rel="prefetch" href="/assets/js/17.8c065f36.js"><link rel="prefetch" href="/assets/js/19.c7b07917.js"><link rel="prefetch" href="/assets/js/2.5ae90992.js"><link rel="prefetch" href="/assets/js/20.d99228e7.js"><link rel="prefetch" href="/assets/js/21.c2ad7010.js"><link rel="prefetch" href="/assets/js/22.991426d2.js"><link rel="prefetch" href="/assets/js/23.888c6bc1.js"><link rel="prefetch" href="/assets/js/24.1aa16f53.js"><link rel="prefetch" href="/assets/js/25.dfbfd353.js"><link rel="prefetch" href="/assets/js/3.65c88191.js"><link rel="prefetch" href="/assets/js/4.7f39a3d8.js"><link rel="prefetch" href="/assets/js/5.1b8d22a8.js"><link rel="prefetch" href="/assets/js/6.d49d3124.js"><link rel="prefetch" href="/assets/js/7.4a677518.js"><link rel="prefetch" href="/assets/js/8.90e3d82b.js"><link rel="prefetch" href="/assets/js/9.e6844887.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.cc2a2ebf.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Front-end-programming</span></a> <div class="links" style="max-width:nullpx;"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">Home</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">Home</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/react/react-tutorial/" class="sidebar-link">react 官网教程</a></li><li><a href="/react/react-tutorial/01.jsx.html" class="sidebar-link">JSX</a></li><li><a href="/react/react-tutorial/02.render.html" class="sidebar-link">渲染</a></li><li><a href="/react/react-tutorial/03.components.html" class="sidebar-link">组件</a></li><li><a href="/react/react-tutorial/04.state.html" class="sidebar-link">state 和 生命周期</a></li><li><a href="/react/react-tutorial/05.event.html" class="sidebar-link">事件管理</a></li><li><a href="/react/react-tutorial/06.ifelse.html" class="active sidebar-link">条件渲染</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/react/react-tutorial/06.ifelse.html#将元素定义为属性" class="sidebar-link">将元素定义为属性</a></li><li class="sidebar-sub-header"><a href="/react/react-tutorial/06.ifelse.html#判断符" class="sidebar-link">判断符 &amp;&amp;</a></li><li class="sidebar-sub-header"><a href="/react/react-tutorial/06.ifelse.html#三元表达式" class="sidebar-link">三元表达式</a></li><li class="sidebar-sub-header"><a href="/react/react-tutorial/06.ifelse.html#阻止组件渲染" class="sidebar-link">阻止组件渲染</a></li></ul></li><li><a href="/react/react-tutorial/07.list.html" class="sidebar-link">列表渲染</a></li><li><a href="/react/react-tutorial/08.form.html" class="sidebar-link">表单</a></li><li><a href="/react/react-tutorial/09.lifting.html" class="sidebar-link">状态提升</a></li><li><a href="/react/react-tutorial/10.composition.html" class="sidebar-link">组合</a></li></ul> </div> <div class="page"> <div class="content"><h1 id="条件渲染"><a href="#条件渲染" aria-hidden="true" class="header-anchor">#</a> 条件渲染</h1> <p>在 react 中，你可以根据所需行为封装不同的组件，然后根据状态呈现其中某一部分。</p> <h2 id="将元素定义为属性"><a href="#将元素定义为属性" aria-hidden="true" class="header-anchor">#</a> 将元素定义为属性</h2> <div class="language-jsx extra-class"><pre class="language-jsx"><code>  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> isLoggedIn <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>isLoggedIn<span class="token punctuation">;</span>
+    <span class="token keyword">let</span> button<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>isLoggedIn<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      button <span class="token operator">=</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>LogoutButton</span> <span class="token attr-name">onClick</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>handleLogoutClick<span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      button <span class="token operator">=</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>LoginButton</span> <span class="token attr-name">onClick</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>handleLoginClick<span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Greeting</span> <span class="token attr-name">isLoggedIn</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>isLoggedIn<span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
+        </span><span class="token punctuation">{</span>button<span class="token punctuation">}</span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre></div><h2 id="判断符"><a href="#判断符" aria-hidden="true" class="header-anchor">#</a> 判断符 &amp;&amp;</h2> <div class="language-jsx extra-class"><pre class="language-jsx"><code>  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">Hello!</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+      </span><span class="token punctuation">{</span>unreadMessages<span class="token punctuation">.</span>length <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+          You have </span><span class="token punctuation">{</span>unreadMessages<span class="token punctuation">.</span>length<span class="token punctuation">}</span><span class="token plain-text"> unread messages.
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span>
+      <span class="token punctuation">}</span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>在 javascript 中<br>
+如果 &amp;&amp; 前的表达式为 true, 则会返回后面的表达式<br>
+如果 &amp;&amp; 前为fasle, 则返回 fasle react就会忽略并跳过它</p> <h2 id="三元表达式"><a href="#三元表达式" aria-hidden="true" class="header-anchor">#</a> 三元表达式</h2> <div class="language-jsx extra-class"><pre class="language-jsx"><code><span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> isLoggedIn <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">.</span>isLoggedIn<span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+      The user is </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>b</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>isLoggedIn <span class="token operator">?</span> <span class="token string">'currently'</span> <span class="token punctuation">:</span> <span class="token string">'not'</span><span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>b</span><span class="token punctuation">&gt;</span></span><span class="token plain-text"> logged in.
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code></pre></div><div class="language-jsx extra-class"><pre class="language-jsx"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+  </span><span class="token punctuation">{</span>isLoggedIn <span class="token operator">?</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>LogoutButton</span> <span class="token attr-name">onClick</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>handleLogoutClick<span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span>
+  <span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>LoginButton</span> <span class="token attr-name">onClick</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>handleLoginClick<span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span>
+  <span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token plain-text">
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h2 id="阻止组件渲染"><a href="#阻止组件渲染" aria-hidden="true" class="header-anchor">#</a> 阻止组件渲染</h2> <p>如果一个组件不想在另一个组件中被呈现，你需要在组件中返回 null</p> <div class="language-jsx extra-class"><pre class="language-jsx"><code><span class="token keyword">function</span> <span class="token function">WarningBanner</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>props<span class="token punctuation">.</span>warn<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>warning<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+      Warning!
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code></pre></div><blockquote><p>注： 组件返回空，并不会影响生命周期方法的执行</p></blockquote></div> <div class="page-edit"><!----> <!----></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/react/react-tutorial/05.event.html" class="prev">
+          事件管理
+        </a></span> <span class="next"><a href="/react/react-tutorial/07.list.html">
+          列表渲染
+        </a>
+        →
+      </span></p></div> </div> <!----></div></div>
+    <script src="/assets/js/18.42f3cd96.js" defer></script><script src="/assets/js/app.2f7a4d7a.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Funcoter (函子/容器) | Front-end-programming</title>
+    <meta name="description" content="Front end programming">
+    
+    
+    <link rel="preload" href="/assets/css/0.styles.cc2a2ebf.css" as="style"><link rel="preload" href="/assets/js/app.2f7a4d7a.js" as="script"><link rel="preload" href="/assets/js/8.90e3d82b.js" as="script"><link rel="prefetch" href="/assets/js/10.c92c51be.js"><link rel="prefetch" href="/assets/js/11.ffc2da93.js"><link rel="prefetch" href="/assets/js/12.2fc92c8e.js"><link rel="prefetch" href="/assets/js/13.d69d8942.js"><link rel="prefetch" href="/assets/js/14.a5b0411d.js"><link rel="prefetch" href="/assets/js/15.3c87745f.js"><link rel="prefetch" href="/assets/js/16.dfaa2ca4.js"><link rel="prefetch" href="/assets/js/17.8c065f36.js"><link rel="prefetch" href="/assets/js/18.42f3cd96.js"><link rel="prefetch" href="/assets/js/19.c7b07917.js"><link rel="prefetch" href="/assets/js/2.5ae90992.js"><link rel="prefetch" href="/assets/js/20.d99228e7.js"><link rel="prefetch" href="/assets/js/21.c2ad7010.js"><link rel="prefetch" href="/assets/js/22.991426d2.js"><link rel="prefetch" href="/assets/js/23.888c6bc1.js"><link rel="prefetch" href="/assets/js/24.1aa16f53.js"><link rel="prefetch" href="/assets/js/25.dfbfd353.js"><link rel="prefetch" href="/assets/js/3.65c88191.js"><link rel="prefetch" href="/assets/js/4.7f39a3d8.js"><link rel="prefetch" href="/assets/js/5.1b8d22a8.js"><link rel="prefetch" href="/assets/js/6.d49d3124.js"><link rel="prefetch" href="/assets/js/7.4a677518.js"><link rel="prefetch" href="/assets/js/9.e6844887.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.cc2a2ebf.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Front-end-programming</span></a> <div class="links" style="max-width:nullpx;"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">Home</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">Home</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/functional-programming/js-fp/" class="sidebar-link">介绍</a></li><li><a href="/functional-programming/js-fp/purity.html" class="sidebar-link">纯函数</a></li><li><a href="/functional-programming/js-fp/curry.html" class="sidebar-link">柯里化（curry）</a></li><li><a href="/functional-programming/js-fp/compose.html" class="sidebar-link">函数组合（compose）</a></li><li><a href="/functional-programming/js-fp/hindley-milner.html" class="sidebar-link">Hindley-Milner (类型签名)</a></li><li><a href="/functional-programming/js-fp/example.html" class="sidebar-link">应用示例</a></li><li><a href="/functional-programming/js-fp/functor.html" class="active sidebar-link">Funcoter (函子/容器)</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/functional-programming/js-fp/functor.html#函子的概念" class="sidebar-link">函子的概念</a></li><li class="sidebar-sub-header"><a href="/functional-programming/js-fp/functor.html#函子" class="sidebar-link">函子</a></li><li class="sidebar-sub-header"><a href="/functional-programming/js-fp/functor.html#maybe-函子" class="sidebar-link">Maybe 函子</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/functional-programming/js-fp/functor.html#用例" class="sidebar-link">用例</a></li><li class="sidebar-sub-header"><a href="/functional-programming/js-fp/functor.html#释放容器中的值-maybe函数" class="sidebar-link">释放容器中的值 maybe函数</a></li></ul></li><li class="sidebar-sub-header"><a href="/functional-programming/js-fp/functor.html#either-函子" class="sidebar-link">Either 函子</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/functional-programming/js-fp/functor.html#either-函数" class="sidebar-link">either 函数</a></li></ul></li><li class="sidebar-sub-header"><a href="/functional-programming/js-fp/functor.html#io-函子" class="sidebar-link">IO 函子</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/functional-programming/js-fp/functor.html#示例" class="sidebar-link">示例</a></li></ul></li><li class="sidebar-sub-header"><a href="/functional-programming/js-fp/functor.html#异步任务" class="sidebar-link">异步任务</a></li><li class="sidebar-sub-header"><a href="/functional-programming/js-fp/functor.html#lift" class="sidebar-link">lift</a></li><li class="sidebar-sub-header"><a href="/functional-programming/js-fp/functor.html#关于functor的理论" class="sidebar-link">关于functor的理论</a></li><li class="sidebar-sub-header"><a href="/functional-programming/js-fp/functor.html#functor-嵌套" class="sidebar-link">functor 嵌套</a></li><li class="sidebar-sub-header"><a href="/functional-programming/js-fp/functor.html#练习" class="sidebar-link">练习</a></li></ul></li><li><a href="/functional-programming/js-fp/monad.html" class="sidebar-link">Monad</a></li><li><a href="/functional-programming/js-fp/applicative.html" class="sidebar-link">applicative functor</a></li><li><a href="/functional-programming/js-fp/appendix.html" class="sidebar-link">附录</a></li></ul> </div> <div class="page"> <div class="content"><h1 id="funcoter-函子-容器"><a href="#funcoter-函子-容器" aria-hidden="true" class="header-anchor">#</a> Funcoter (函子/容器)</h1> <h2 id="函子的概念"><a href="#函子的概念" aria-hidden="true" class="header-anchor">#</a> 函子的概念</h2> <ul><li>函子是函数式编程里面最重要的数据类型，是基本的运算单位和功能单位</li> <li>它是一种范畴，也可以说是一种容器，包含了值和变形关系</li> <li>它的变形关系可以作用于每一个值，将当前容器变成另一个容器</li></ul> <h2 id="函子"><a href="#函子" aria-hidden="true" class="header-anchor">#</a> 函子</h2> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">class</span> <span class="token class-name">Functor</span> <span class="token punctuation">{</span>
+  <span class="token keyword">static</span> <span class="token keyword">of</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Functor</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">constructor</span> <span class="token punctuation">(</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>$value <span class="token operator">=</span> val
+  <span class="token punctuation">}</span>
+
+  <span class="token function">map</span> <span class="token punctuation">(</span>f<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Functor</span><span class="token punctuation">(</span><span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$value<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+Functor<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>x <span class="token operator">=&gt;</span> x <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">)</span>
+<span class="token comment">// =&gt; Functor(4)</span>
+
+</code></pre></div><blockquote><p><code>functor</code> 是实现了 map 函数并遵守一些特定规则的容器类型。
+将值传递给<code>map</code>函数后，可以做任意操作，操作后又放回<code>functor</code>，这样就能持续的调用<code>map</code> <code>functor</code> 就是一个合约接口
+这样让函子自己去运行函数，能将函数的运行抽象，当<code>map</code> 一个函数的时候，我们让函子自己来运行这个函数</p></blockquote> <h2 id="maybe-函子"><a href="#maybe-函子" aria-hidden="true" class="header-anchor">#</a> Maybe 函子</h2> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">class</span> <span class="token class-name">Maybe</span> <span class="token keyword">extends</span> <span class="token class-name">Functor</span> <span class="token punctuation">{</span>
+  <span class="token keyword">static</span> <span class="token keyword">of</span> <span class="token punctuation">(</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Maybe</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">map</span> <span class="token punctuation">(</span>f<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>isNothing <span class="token operator">?</span> Maybe<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> Maybe<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$value<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">isNothing</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$value <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token operator">||</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$value <span class="token operator">===</span> undefined
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// toLowerCase :: String -&gt; String</span>
+<span class="token comment">// Functor.of(null).map(_.toLowerCase)  报错</span>
+Maybe<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>_<span class="token punctuation">.</span>toLowerCase<span class="token punctuation">)</span> <span class="token comment">// 被中断不会报错</span>
+
+</code></pre></div><p><code>maybe</code> 会检查自己的值是否为空，然后再调用传入的函数，可以避免因为空值报错</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span>
+<span class="token keyword">const</span> map <span class="token operator">=</span> <span class="token function">curry</span><span class="token punctuation">(</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span> any_functor<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> any_functor<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+</code></pre></div><p><code>map</code> 可以使用 <code>curry</code> 函数的方式来代理任何 <code>functor</code>，可以保持 <code>pointforee</code> 的风格
+这样就可以像平常一样使用 <code>compose</code> 了</p> <h3 id="用例"><a href="#用例" aria-hidden="true" class="header-anchor">#</a> 用例</h3> <p>可以用在可能无法成功返回结果的函数中,以提升函数的健壮性</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// safeHead :: [a] -&gt; Maybe(a)</span>
+<span class="token keyword">const</span> <span class="token function-variable function">safeHead</span> <span class="token operator">=</span> xs <span class="token operator">=&gt;</span> Maybe<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span>xs<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 这里map 代理了functor</span>
+<span class="token keyword">const</span> streetName <span class="token operator">=</span> <span class="token function">compose</span><span class="token punctuation">(</span><span class="token function">map</span><span class="token punctuation">(</span>_<span class="token punctuation">.</span><span class="token function">prop</span><span class="token punctuation">(</span><span class="token string">'street'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> safeHead<span class="token punctuation">,</span> _<span class="token punctuation">.</span><span class="token function">prop</span><span class="token punctuation">(</span><span class="token string">'addresses'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token function">streetName</span><span class="token punctuation">(</span><span class="token punctuation">{</span>addresses<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment">// =&gt; Maybe(null)</span>
+
+<span class="token function">streetName</span><span class="token punctuation">(</span><span class="token punctuation">{</span>addresses<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>street<span class="token punctuation">:</span> <span class="token string">&quot;Shady Ln.&quot;</span><span class="token punctuation">,</span> number<span class="token punctuation">:</span> <span class="token number">4201</span><span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment">// =&gt; Maybe(&quot;Shady Ln.&quot;)</span>
+
+</code></pre></div><p>有时候可以明确返回 <code>Maybe(null)</code> 来表明失败</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// withdraw :: Number -&gt; Account -&gt; Maybe(Account)</span>
+<span class="token keyword">const</span> withdraw <span class="token operator">=</span> <span class="token function">curry</span><span class="token punctuation">(</span><span class="token punctuation">(</span>amount<span class="token punctuation">,</span> account<span class="token punctuation">)</span> <span class="token operator">=&gt;</span>
+  account<span class="token punctuation">.</span>blance <span class="token operator">&gt;=</span> amount <span class="token operator">?</span>
+  Maybe<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token punctuation">{</span>blance<span class="token punctuation">:</span> blance <span class="token operator">-</span> amount<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">:</span>
+  Maybe<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment">// updateLedger :: Account -&gt; Account</span>
+<span class="token keyword">const</span> <span class="token function-variable function">updateLedger</span> <span class="token operator">=</span> account <span class="token operator">=&gt;</span> account
+
+<span class="token comment">// remainingBalance :: Account -&gt; String</span>
+<span class="token keyword">const</span> <span class="token function-variable function">remainingBalance</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> balance <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token template-string"><span class="token string">`Your balance is $</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>balance<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span>
+
+<span class="token comment">// finishTransaction :: Account -&gt; String</span>
+<span class="token keyword">const</span> finishTransaction <span class="token operator">=</span> <span class="token function">compose</span><span class="token punctuation">(</span>remainingBalance<span class="token punctuation">,</span> updateLedger<span class="token punctuation">)</span>
+
+<span class="token comment">// getTwenty :: Account -&gt; Maybe(String)</span>
+<span class="token keyword">const</span> getTwenty <span class="token operator">=</span> <span class="token function">compose</span><span class="token punctuation">(</span><span class="token function">map</span><span class="token punctuation">(</span>finishTransaction<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">withdraw</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+
+<span class="token function">getTwenty</span><span class="token punctuation">(</span><span class="token punctuation">{</span> balance<span class="token punctuation">:</span> <span class="token number">200.00</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment">// =&gt; Maybe(&quot;Your balance is $180.00&quot;)</span>
+
+<span class="token function">getTwenty</span><span class="token punctuation">(</span><span class="token punctuation">{</span> balance<span class="token punctuation">:</span> <span class="token number">10.00</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment">// =&gt; Maybe(null)</span>
+
+</code></pre></div><h3 id="释放容器中的值-maybe函数"><a href="#释放容器中的值-maybe函数" aria-hidden="true" class="header-anchor">#</a> 释放容器中的值 maybe函数</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// maybe :: b -&gt; (a -&gt; b) -&gt; Maybe a -&gt; b</span>
+<span class="token keyword">const</span> maybe <span class="token operator">=</span> <span class="token function">curry</span><span class="token punctuation">(</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> f<span class="token punctuation">,</span> m<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> m<span class="token punctuation">.</span>isNothing <span class="token operator">?</span> x <span class="token punctuation">:</span> <span class="token function">f</span><span class="token punctuation">(</span>m<span class="token punctuation">.</span>$value<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> getTwenty <span class="token operator">=</span> <span class="token function">compose</span><span class="token punctuation">(</span><span class="token function">maybe</span><span class="token punctuation">(</span><span class="token string">&quot;You're broke!&quot;</span><span class="token punctuation">,</span> finishTransaction<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">withdraw</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token function">getTwenty</span><span class="token punctuation">(</span><span class="token punctuation">{</span> balance<span class="token punctuation">:</span> <span class="token number">200.00</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment">// =&gt; &quot;Your balance is $180.00&quot;</span>
+
+<span class="token function">getTwenty</span><span class="token punctuation">(</span><span class="token punctuation">{</span> balance<span class="token punctuation">:</span> <span class="token number">10.00</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment">// =&gt; &quot;You're broke!&quot;</span>
+
+</code></pre></div><h2 id="either-函子"><a href="#either-函子" aria-hidden="true" class="header-anchor">#</a> Either 函子</h2> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">class</span> <span class="token class-name">Either</span> <span class="token keyword">extends</span> <span class="token class-name">Functor</span> <span class="token punctuation">{</span>
+  <span class="token keyword">static</span> <span class="token keyword">of</span> <span class="token punctuation">(</span>left<span class="token punctuation">,</span> right<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Either</span><span class="token punctuation">(</span>left<span class="token punctuation">,</span> right<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">constructor</span> <span class="token punctuation">(</span>left<span class="token punctuation">,</span> right<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">super</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>$left <span class="token operator">=</span> left
+    <span class="token keyword">this</span><span class="token punctuation">.</span>$right <span class="token operator">=</span> right
+  <span class="token punctuation">}</span>
+
+  <span class="token function">map</span> <span class="token punctuation">(</span>f<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$right <span class="token operator">?</span>
+      Either<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$left<span class="token punctuation">,</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$right<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">:</span>
+      Either<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$left<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$right<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// addOne :: Number -&gt; Number</span>
+<span class="token keyword">var</span> <span class="token function-variable function">addOne</span> <span class="token operator">=</span> x <span class="token operator">=&gt;</span> x <span class="token operator">+</span> <span class="token number">1</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>Either<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>addOne<span class="token punctuation">)</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>Either<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>addOne<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">class</span> <span class="token class-name">Ether</span> <span class="token punctuation">{</span>
+  <span class="token keyword">static</span> <span class="token keyword">of</span> <span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Right</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">constructor</span> <span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>$value <span class="token operator">=</span> x
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Left</span> <span class="token keyword">extends</span> <span class="token class-name">Ether</span> <span class="token punctuation">{</span>
+  <span class="token function">map</span> <span class="token punctuation">(</span>f<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">inspect</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token template-string"><span class="token string">`Left(</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token function">inspect</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$value<span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">)`</span></span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Right</span> <span class="token keyword">extends</span> <span class="token class-name">Ether</span> <span class="token punctuation">{</span>
+  <span class="token function">map</span> <span class="token punctuation">(</span>f<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> Ether<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$value<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">inspect</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token template-string"><span class="token string">`Right(</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token function">inspect</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$value<span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">)`</span></span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">left</span> <span class="token operator">=</span> x <span class="token operator">=&gt;</span> <span class="token keyword">new</span> <span class="token class-name">Left</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>\
+
+Either<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token string">'rain'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>str <span class="token operator">=&gt;</span> <span class="token template-string"><span class="token string">`b</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>str<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span>
+<span class="token comment">// =&gt; Right('brain')</span>
+
+<span class="token function">left</span><span class="token punctuation">(</span><span class="token string">'rain'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>str <span class="token operator">=&gt;</span> <span class="token template-string"><span class="token string">`b</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>str<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span>
+<span class="token comment">// =&gt; Left('rain')</span>
+
+Either<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token punctuation">{</span>host<span class="token punctuation">:</span> <span class="token string">'localhost'</span><span class="token punctuation">,</span> port<span class="token punctuation">:</span> <span class="token number">80</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>_<span class="token punctuation">.</span><span class="token function">prop</span><span class="token punctuation">(</span><span class="token string">'host'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">// =&gt; Right('localhost')</span>
+
+<span class="token function">left</span><span class="token punctuation">(</span><span class="token string">'adesc'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>_<span class="token punctuation">.</span><span class="token function">prop</span><span class="token punctuation">(</span><span class="token string">'host'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">// =&gt; Left('adesc')</span>
+
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> moment <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'moment'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// getAge :: Date -&gt; User -&gt; Either(String, Number)</span>
+<span class="token keyword">const</span> getAge <span class="token operator">=</span> <span class="token function">curry</span><span class="token punctuation">(</span><span class="token punctuation">(</span>now<span class="token punctuation">,</span> user<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> birthDate <span class="token operator">=</span> <span class="token function">moment</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>birthDate<span class="token punctuation">,</span> <span class="token string">'YYYY-MM-DD'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> birthDate<span class="token punctuation">.</span><span class="token function">isValid</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token operator">?</span> Either<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span>now<span class="token punctuation">.</span><span class="token function">diff</span><span class="token punctuation">(</span>birthDate<span class="token punctuation">,</span> <span class="token string">'years'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">:</span> <span class="token function">left</span><span class="token punctuation">(</span><span class="token string">'Birth date could not be parsed'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// fortune :: Number -&gt; String</span>
+<span class="token keyword">const</span> fortune <span class="token operator">=</span> <span class="token function">compose</span><span class="token punctuation">(</span><span class="token function">concat</span><span class="token punctuation">(</span><span class="token string">'If you survive, you will be '</span><span class="token punctuation">)</span><span class="token punctuation">,</span> toString<span class="token punctuation">,</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// zoltar :: User -&gt; Either(String, _)</span>
+<span class="token keyword">const</span> zoltar <span class="token operator">=</span> <span class="token function">compose</span><span class="token punctuation">(</span><span class="token function">map</span><span class="token punctuation">(</span>console<span class="token punctuation">.</span>log<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">map</span><span class="token punctuation">(</span>fortune<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">getAge</span><span class="token punctuation">(</span><span class="token function">moment</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">zoltar</span><span class="token punctuation">(</span><span class="token punctuation">{</span> birthDate<span class="token punctuation">:</span> <span class="token string">'2005-12-12'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// =&gt; 'If you survive, you will be 10'</span>
+<span class="token comment">// =&gt; Right(undefined)</span>
+
+<span class="token function">zoltar</span><span class="token punctuation">(</span><span class="token punctuation">{</span> birthDate<span class="token punctuation">:</span> <span class="token string">'balloons!'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// =&gt; Left('Birth date could not be parsed')</span>
+
+</code></pre></div><h3 id="either-函数"><a href="#either-函数" aria-hidden="true" class="header-anchor">#</a> either 函数</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// either :: (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c</span>
+<span class="token keyword">const</span> either <span class="token operator">=</span> <span class="token function">curry</span><span class="token punctuation">(</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span> g<span class="token punctuation">,</span> e<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> result
+
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>e<span class="token punctuation">.</span>constructor<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> left<span class="token punctuation">:</span>
+      result <span class="token operator">=</span> <span class="token function">f</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>$value<span class="token punctuation">)</span>
+    <span class="token keyword">case</span> right<span class="token punctuation">:</span>
+      result <span class="token operator">=</span> <span class="token function">g</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>$value<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">return</span> result
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">// id :: x -&gt; x</span>
+<span class="token comment">// zoltar :: User -&gt; _</span>
+<span class="token keyword">const</span> zoltar <span class="token operator">=</span> <span class="token function">compose</span><span class="token punctuation">(</span>console<span class="token punctuation">.</span>log<span class="token punctuation">,</span> <span class="token function">either</span><span class="token punctuation">(</span>id<span class="token punctuation">,</span> fortune<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">getAge</span><span class="token punctuation">(</span><span class="token function">moment</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token function">zoltar</span><span class="token punctuation">(</span><span class="token punctuation">{</span>birthDate<span class="token punctuation">:</span> <span class="token string">'2005-12-12'</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment">// =&gt; 'If you survive, you will be 10'</span>
+<span class="token comment">// =&gt; undefined</span>
+
+<span class="token function">zoltar</span><span class="token punctuation">(</span><span class="token punctuation">{</span>birthDate<span class="token punctuation">:</span> <span class="token string">'abc'</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment">// =&gt; 'Birth date could not be parsed'</span>
+<span class="token comment">// =&gt; undefined</span>
+
+</code></pre></div><h2 id="io-函子"><a href="#io-函子" aria-hidden="true" class="header-anchor">#</a> IO 函子</h2> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">class</span> <span class="token class-name">IO</span> <span class="token punctuation">{</span>
+  <span class="token keyword">static</span> <span class="token keyword">of</span> <span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">IO</span><span class="token punctuation">(</span>_ <span class="token operator">=&gt;</span> x<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">constructor</span> <span class="token punctuation">(</span>fn<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>$value <span class="token operator">=</span> f
+  <span class="token punctuation">}</span>
+
+  <span class="token function">map</span> <span class="token punctuation">(</span>fn<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">IO</span><span class="token punctuation">(</span><span class="token function">compose</span><span class="token punctuation">(</span>fn<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$value<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">inspect</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token template-string"><span class="token string">`IO(</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token function">inspect</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$vaue<span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">)`</span></span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</code></pre></div><p><code>IO</code> 的 <code>$value</code> 是一个函数,不过可以不用把它看做一个函数。
+<code>IO</code> 的作用只是把非纯执行动作包裹起来延迟执行</p> <h3 id="示例"><a href="#示例" aria-hidden="true" class="header-anchor">#</a> 示例</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// io_window :: IO window</span>
+<span class="token keyword">const</span> io_window <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IO</span><span class="token punctuation">(</span>_ <span class="token operator">=&gt;</span> window<span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">dir</span><span class="token punctuation">(</span>io_window<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>win <span class="token operator">=&gt;</span> win<span class="token punctuation">.</span>innerWidth<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+console<span class="token punctuation">.</span><span class="token function">dir</span><span class="token punctuation">(</span>io_window
+  <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>_<span class="token punctuation">.</span><span class="token function">prop</span><span class="token punctuation">(</span><span class="token string">'location'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>_<span class="token punctuation">.</span><span class="token function">prop</span><span class="token punctuation">(</span><span class="token string">'heref'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>_<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">// $ :: String -&gt; IO [DOM]</span>
+<span class="token function-variable function">$</span> <span class="token operator">=</span> selector <span class="token operator">=&gt;</span> <span class="token keyword">new</span> <span class="token class-name">IO</span><span class="token punctuation">(</span>_ <span class="token operator">=&gt;</span>　document<span class="token punctuation">.</span><span class="token function">querySelectorAll</span><span class="token punctuation">(</span>selector<span class="token punctuation">)</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">dir</span><span class="token punctuation">(</span><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#doc'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>_<span class="token punctuation">.</span>head<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>div <span class="token operator">=&gt;</span> div<span class="token punctuation">.</span>innerHTML<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">// url :: IO String</span>
+<span class="token keyword">const</span> url <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IO</span><span class="token punctuation">(</span>_ <span class="token operator">=&gt;</span> window<span class="token punctuation">.</span>location<span class="token punctuation">.</span>href<span class="token punctuation">)</span>
+
+<span class="token comment">// toPairs :: Sting =&gt; [[String]]</span>
+<span class="token keyword">const</span> toPairs <span class="token operator">=</span> <span class="token function">compose</span><span class="token punctuation">(</span>_<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">'='</span><span class="token punctuation">)</span><span class="token punctuation">,</span> _<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">'&amp;'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">// params :: String -&gt; [[String]]</span>
+<span class="token keyword">const</span> params <span class="token operator">=</span> <span class="token function">compose</span><span class="token punctuation">(</span>toPairs<span class="token punctuation">,</span> _<span class="token punctuation">.</span>last<span class="token punctuation">,</span> _<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">'?'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">// findParam :: String -&gt; IO Maybe [String]</span>
+<span class="token keyword">const</span> <span class="token function-variable function">findParam</span> <span class="token operator">=</span> key <span class="token operator">=&gt;</span> <span class="token function">map</span><span class="token punctuation">(</span><span class="token function">compose</span><span class="token punctuation">(</span>Maybe<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">,</span> <span class="token function">filter</span><span class="token punctuation">(</span><span class="token function">compose</span><span class="token punctuation">(</span><span class="token function">eq</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">,</span> _<span class="token punctuation">.</span>head<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> params<span class="token punctuation">)</span><span class="token punctuation">,</span> url<span class="token punctuation">)</span>
+
+<span class="token comment">////// 非纯调用代码: main.js ///////</span>
+<span class="token function">findParam</span><span class="token punctuation">(</span><span class="token string">'searchTerm'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">$value</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">// =&gt; Maybe(['searchTerm', 'wafflehouse'])</span>
+
+</code></pre></div><h2 id="异步任务"><a href="#异步任务" aria-hidden="true" class="header-anchor">#</a> 异步任务</h2> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">var</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//  readFile :: String -&gt; Task(Error, JSON)</span>
+<span class="token keyword">var</span> <span class="token function-variable function">readFile</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>filename<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Task</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>reject<span class="token punctuation">,</span> result<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    fs<span class="token punctuation">.</span><span class="token function">readFile</span><span class="token punctuation">(</span>filename<span class="token punctuation">,</span> <span class="token string">'utf-8'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>err<span class="token punctuation">,</span> data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      err <span class="token operator">?</span> <span class="token function">reject</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token function">result</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token function">readFile</span><span class="token punctuation">(</span><span class="token string">&quot;metamorphosis&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">'\n'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>head<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+</code></pre></div><p>与 <code>IO</code> 类似，必须调用 fork 方法才能运行 Task
+与 IO 不同的是 fork 会 fork 一个子进程去运行参数代码，主线程不会阻塞，所以它是异步的。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// Postgres.connect :: url -&gt; IO DbConnection</span>
+<span class="token comment">// runQuery :: DbConnection -&gt; ResultSet</span>
+<span class="token comment">// readFile :: String -&gt; Task Error String</span>
+
+<span class="token comment">// pure application ---</span>
+
+<span class="token comment">// dbUrl :: config -&gt; Either Error Url</span>
+<span class="token keyword">const</span> <span class="token function-variable function">dbUrl</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> userName<span class="token punctuation">,</span> pass<span class="token punctuation">,</span> host<span class="token punctuation">,</span> db<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>userName <span class="token operator">&amp;&amp;</span> pass <span class="token operator">&amp;&amp;</span> host <span class="token operator">&amp;&amp;</span> db<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> Either<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`db:pg://</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>uname<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">:</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>pass<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">@</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>host<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">5432/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>db<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">return</span> <span class="token function">left</span><span class="token punctuation">(</span><span class="token function">Error</span><span class="token punctuation">(</span><span class="token string">'Inviod config'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// connectDb :: config -&gt; Either Error (IO DbConnection)</span>
+<span class="token keyword">const</span> connectDb <span class="token operator">=</span> <span class="token function">compose</span><span class="token punctuation">(</span><span class="token function">map</span><span class="token punctuation">(</span>Postgres<span class="token punctuation">.</span>connect<span class="token punctuation">)</span><span class="token punctuation">,</span> dbUrl<span class="token punctuation">)</span>
+
+<span class="token comment">// getConfig :: FileName -&gt; Task Error (Either Error (IO DbConnection))</span>
+<span class="token keyword">const</span> getConfig <span class="token operator">=</span> <span class="token function">compose</span><span class="token punctuation">(</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token function">compose</span><span class="token punctuation">(</span>connectDb<span class="token punctuation">,</span> <span class="token constant">JSON</span><span class="token punctuation">.</span>parse<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> readFile<span class="token punctuation">)</span>
+
+
+<span class="token comment">// Impure calling code ---</span>
+
+<span class="token function">getConfig</span><span class="token punctuation">(</span><span class="token string">'config.json'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">fork</span><span class="token punctuation">(</span>
+  <span class="token function">logErr</span><span class="token punctuation">(</span><span class="token string">'coldn\'t read file'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token function">either</span><span class="token punctuation">(</span>console<span class="token punctuation">.</span>log<span class="token punctuation">,</span> <span class="token function">map</span><span class="token punctuation">(</span>runQuery<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+
+</code></pre></div><h2 id="lift"><a href="#lift" aria-hidden="true" class="header-anchor">#</a> lift</h2> <p>一个函数被调用的时候，如果被map包裹，那么它就会从普通函数变成可以操作 <code>functor</code> 的函数，这个过程叫 <code>lift</code>
+普通函数更适合操作普通的数据类型而不是容器类型，在必要的时候再通过 <code>lift</code> 变为合适的容器去操作容器类型。</p> <h2 id="关于functor的理论"><a href="#关于functor的理论" aria-hidden="true" class="header-anchor">#</a> 关于functor的理论</h2> <p>functor 满足的定律</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// indentity</span>
+<span class="token function">map</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token operator">===</span> id
+
+<span class="token comment">// composition</span>
+<span class="token function">compose</span><span class="token punctuation">(</span><span class="token function">map</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">map</span><span class="token punctuation">(</span>g<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token function">map</span><span class="token punctuation">(</span><span class="token function">compose</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span> g<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+</code></pre></div><p>验证</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> idLaw1 <span class="token operator">=</span> <span class="token function">map</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span>
+<span class="token keyword">const</span> idLaw2 <span class="token operator">=</span> id
+
+<span class="token function">idLaw1</span><span class="token punctuation">(</span>functor<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">// =&gt; functor(2)</span>
+
+<span class="token function">idLaw2</span><span class="token punctuation">(</span>functor<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">// =&gt; functor(2)</span>
+
+</code></pre></div><h2 id="functor-嵌套"><a href="#functor-嵌套" aria-hidden="true" class="header-anchor">#</a> functor 嵌套</h2> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> nested <span class="token operator">=</span> Task<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token punctuation">[</span>Ethier<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token string">'pillows'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">left</span><span class="token punctuation">(</span><span class="token string">'no sleep for you'</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token function">map</span><span class="token punctuation">(</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token function">map</span><span class="token punctuation">(</span>toUpperCase<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> nested<span class="token punctuation">)</span>
+<span class="token comment">// Task([Ethier.of('PILLOWS'), left('no sleep for you')])</span>
+
+</code></pre></div><p>对于 map(map(map(f))) 这样的结构, 我们可以将 functor 嵌套</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">class</span> <span class="token class-name">Compose</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span>fgx<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>getCompose <span class="token operator">=</span> fgx
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">static</span> <span class="token keyword">of</span><span class="token punctuation">(</span>fgx<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Compose</span><span class="token punctuation">(</span>fgx<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">map</span> <span class="token punctuation">(</span>fn<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Compose</span><span class="token punctuation">(</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token function">map</span><span class="token punctuation">(</span>fn<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> tmd <span class="token operator">=</span> Task<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span>Maybe<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token string">', rock on, Chicago'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> ctmd <span class="token operator">=</span> Compose<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span>tmd<span class="token punctuation">)</span>
+
+<span class="token function">map</span><span class="token punctuation">(</span><span class="token function">concat</span><span class="token punctuation">(</span><span class="token string">'Rock over London'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> ctmd<span class="token punctuation">)</span>
+<span class="token comment">// Compose(Task(Just('Rock over London, rock on, Chicago')))</span>
+
+ctmd<span class="token punctuation">.</span>getCompose
+<span class="token comment">// =&gt; Task(Just('Rock over London, rock on, Chicago'))</span>
+
+</code></pre></div><h2 id="练习"><a href="#练习" aria-hidden="true" class="header-anchor">#</a> 练习</h2> <div class="language-js extra-class"><pre class="language-js"><code>
+<span class="token keyword">const</span> <span class="token punctuation">{</span>
+  map<span class="token punctuation">,</span>
+  add<span class="token punctuation">,</span>
+  head<span class="token punctuation">,</span>
+  prop<span class="token punctuation">,</span>
+  curry<span class="token punctuation">,</span>
+  compose<span class="token punctuation">,</span>
+  Maybe<span class="token punctuation">,</span>
+  Task<span class="token punctuation">,</span>
+  trace<span class="token punctuation">,</span>
+  Left<span class="token punctuation">,</span>
+  Right<span class="token punctuation">,</span>
+  Either<span class="token punctuation">,</span>
+  either<span class="token punctuation">,</span>
+  <span class="token constant">IO</span><span class="token punctuation">,</span>
+  toUpperCase<span class="token punctuation">,</span>
+  id<span class="token punctuation">,</span>
+  Identity<span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./supports'</span><span class="token punctuation">)</span>
+
+
+<span class="token comment">// 练习 1</span>
+<span class="token comment">// ==========</span>
+<span class="token comment">// 使用 _.add(x,y) 和 _.map(f,x) 创建一个能让 functor 里的值增加的函数</span>
+
+<span class="token keyword">const</span> ex1 <span class="token operator">=</span> undefined
+
+
+
+<span class="token comment">//练习 2</span>
+<span class="token comment">// ==========</span>
+<span class="token comment">// 使用 _.head 获取列表的第一个元素</span>
+<span class="token keyword">const</span> xs <span class="token operator">=</span> Identity<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'do'</span><span class="token punctuation">,</span> <span class="token string">'ray'</span><span class="token punctuation">,</span> <span class="token string">'me'</span><span class="token punctuation">,</span> <span class="token string">'fa'</span><span class="token punctuation">,</span> <span class="token string">'so'</span><span class="token punctuation">,</span> <span class="token string">'la'</span><span class="token punctuation">,</span> <span class="token string">'ti'</span><span class="token punctuation">,</span> <span class="token string">'do'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> ex2 <span class="token operator">=</span> undefined
+
+
+
+<span class="token comment">// 练习 3</span>
+<span class="token comment">// ==========</span>
+<span class="token comment">// 使用 safeProp 和 _.head 找到 user 的名字的首字母</span>
+<span class="token comment">// safeProp :: String -&gt; [a] -&gt; Maybe a</span>
+<span class="token keyword">const</span> safeProp <span class="token operator">=</span> <span class="token function">curry</span><span class="token punctuation">(</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> o<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> Maybe<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span>o<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> user <span class="token operator">=</span> <span class="token punctuation">{</span> id<span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span> name<span class="token punctuation">:</span> <span class="token string">&quot;Albert&quot;</span> <span class="token punctuation">}</span>
+<span class="token keyword">const</span> ex3 <span class="token operator">=</span> undefined
+
+
+<span class="token comment">// 练习 4</span>
+<span class="token comment">// ==========</span>
+<span class="token comment">// 使用 Maybe 重写 ex4，不要有 if 语句</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">ex4</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+
+
+<span class="token comment">// 练习 5</span>
+<span class="token comment">// ==========</span>
+<span class="token comment">// 写一个函数，先 getPost 获取一篇文章，然后 toUpperCase 让这片文章标题变为大写</span>
+
+<span class="token comment">// getPost :: Int -&gt; Future({id: Int, title: String})</span>
+<span class="token keyword">const</span> <span class="token function-variable function">getPost</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Task</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>rej<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token function">res</span><span class="token punctuation">(</span><span class="token punctuation">{</span>id<span class="token punctuation">:</span> i<span class="token punctuation">,</span> title<span class="token punctuation">:</span> <span class="token string">'Love them futures'</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">300</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> ex5 <span class="token operator">=</span> undefined
+
+
+
+<span class="token comment">// 练习 6</span>
+<span class="token comment">// ==========</span>
+<span class="token comment">// 写一个函数，使用 checkActive() 和 showWelcome() 分别允许访问或返回错误</span>
+
+<span class="token keyword">const</span> showWelcome <span class="token operator">=</span> <span class="token function">compose</span><span class="token punctuation">(</span><span class="token function">add</span><span class="token punctuation">(</span> <span class="token string">&quot;Welcome &quot;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">prop</span><span class="token punctuation">(</span><span class="token string">'name'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">checkActive</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+ <span class="token keyword">return</span> user<span class="token punctuation">.</span>active <span class="token operator">?</span> Right<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span> <span class="token punctuation">:</span> Left<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token string">'Your account is not active'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> ex6 <span class="token operator">=</span> undefined
+
+
+
+<span class="token comment">// 练习 7</span>
+<span class="token comment">// ==========</span>
+<span class="token comment">// 写一个验证函数，检查参数是否 length &gt; 3。如果是就返回 Right(x)，否则就返回</span>
+<span class="token comment">// Left(&quot;You need &gt; 3&quot;)</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">ex7</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> undefined <span class="token comment">// &lt;--- write me. (don't be pointfree)</span>
+<span class="token punctuation">}</span>
+
+
+
+<span class="token comment">// 练习 8</span>
+<span class="token comment">// ==========</span>
+<span class="token comment">// 使用练习 7 的 ex7 和 Either 构造一个 functor，如果一个 user 合法就保存它，否则</span>
+<span class="token comment">// 返回错误消息。别忘了 either 的两个参数必须返回同一类型的数据。</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">save</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">IO</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;SAVED USER!&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> x <span class="token operator">+</span> <span class="token string">'-saved'</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> ex8 <span class="token operator">=</span> undefined
+
+
+
+
+
+
+
+
+<span class="token comment">// 答案</span>
+
+<span class="token comment">// 1</span>
+<span class="token comment">// _ex1 :: Functor f =&gt; f Int -&gt; f Int</span>
+<span class="token keyword">const</span> _ex1 <span class="token operator">=</span> <span class="token function">map</span><span class="token punctuation">(</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">_ex1</span><span class="token punctuation">(</span>Identity<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 2</span>
+<span class="token comment">// _ex2 :: Functor f =&gt; f [a] -&gt; f a</span>
+<span class="token keyword">const</span> _ex2 <span class="token operator">=</span> xs<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>head<span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>_ex2<span class="token punctuation">)</span>
+
+
+<span class="token comment">// 3</span>
+<span class="token comment">// _ex3 :: Object -&gt; Maybe String</span>
+<span class="token keyword">const</span> _ex3 <span class="token operator">=</span> <span class="token function">compose</span><span class="token punctuation">(</span><span class="token function">map</span><span class="token punctuation">(</span>head<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">safeProp</span><span class="token punctuation">(</span><span class="token string">'name'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">_ex3</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 4</span>
+<span class="token comment">// ex4 :: String -&gt; Maybe int</span>
+<span class="token keyword">const</span> _ex4 <span class="token operator">=</span> <span class="token function">compose</span><span class="token punctuation">(</span><span class="token function">map</span><span class="token punctuation">(</span>parseInt<span class="token punctuation">)</span><span class="token punctuation">,</span> Maybe<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">_ex4</span><span class="token punctuation">(</span><span class="token string">'5'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+
+<span class="token comment">// 5</span>
+<span class="token comment">// _ex5 :: Int -&gt; Task String</span>
+<span class="token keyword">const</span> _ex5 <span class="token operator">=</span> <span class="token function">compose</span><span class="token punctuation">(</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token function">compose</span><span class="token punctuation">(</span>toUpperCase<span class="token punctuation">,</span> <span class="token function">prop</span><span class="token punctuation">(</span><span class="token string">'title'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> getPost<span class="token punctuation">)</span>
+<span class="token function">_ex5</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">fork</span><span class="token punctuation">(</span>err <span class="token operator">=&gt;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">,</span> res <span class="token operator">=&gt;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+
+<span class="token comment">// 6</span>
+<span class="token comment">// _ex6 :: User -&gt; Either String</span>
+<span class="token keyword">const</span> _ex6 <span class="token operator">=</span> <span class="token function">compose</span><span class="token punctuation">(</span><span class="token function">map</span><span class="token punctuation">(</span>showWelcome<span class="token punctuation">)</span><span class="token punctuation">,</span> checkActive<span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">_ex6</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+
+<span class="token comment">// 7</span>
+<span class="token comment">// _ex7 :: a -&gt; Either String a</span>
+<span class="token keyword">const</span> <span class="token function-variable function">_ex7</span> <span class="token operator">=</span> x <span class="token operator">=&gt;</span> x<span class="token punctuation">.</span>length <span class="token operator">&gt;</span> <span class="token number">3</span> <span class="token operator">?</span> Either<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token punctuation">:</span> Left<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token string">&quot;You need &gt; 3&quot;</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">_ex7</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+
+<span class="token comment">// 8</span>
+<span class="token comment">// _ex8 :: User -&gt; IO String</span>
+<span class="token keyword">const</span> _ex8 <span class="token operator">=</span> <span class="token function">compose</span><span class="token punctuation">(</span><span class="token function">either</span><span class="token punctuation">(</span><span class="token constant">IO</span><span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">,</span> save<span class="token punctuation">)</span><span class="token punctuation">,</span> _ex7<span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">_ex8</span><span class="token punctuation">(</span><span class="token string">'wall'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+
+</code></pre></div></div> <div class="page-edit"><!----> <!----></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/functional-programming/js-fp/example.html" class="prev">
+          应用示例
+        </a></span> <span class="next"><a href="/functional-programming/js-fp/monad.html">
+          Monad
+        </a>
+        →
+      </span></p></div> </div> <!----></div></div>
+    <script src="/assets/js/8.90e3d82b.js" defer></script><script src="/assets/js/app.2f7a4d7a.js" defer></script>
+  </body>
+</html>

@@ -31,7 +31,12 @@ module.exports = {
         '06.ifelse',
         '07.list',
         '08.form',
-        '09.lifting'
+        '09.lifting',
+        '10.composition'
+      ],
+      '/haskell/': [
+        '',
+        '01.types'
       ],
       '/': [
         ''
