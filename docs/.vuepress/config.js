@@ -37,7 +37,8 @@ module.exports = {
       '/haskell/': [
         '',
         '01.types',
-        '02.typeclass'
+        '02.typeclass',
+        '03.function'
       ],
       '/': [
         ''
