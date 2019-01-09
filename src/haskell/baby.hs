@@ -36,7 +36,9 @@ capital all@(x:xs) = "The first latter of " ++ all ++ " is " ++ [x]
 -- 守卫
 bmiTell :: (RealFloat a) => a -> a -> String
 bmiTell weight height
-  | weight / height ^ 2 <= 18.5 = "underweight!"
-  | weight / height ^ 2 <= 25.0 = "normal"
-  | weight / height ^ 2 <= 30.0 = "fat!"
+  | bmi <= skinny = "underweight!"
+  | bmi <= normal = "normal"
+  | bmi <= fat = "fat!"
   | otherwise                   = "faaaat!"
+  where bmi = weight / height ^ 2
+        (skinny, normal, fat) = (18.5, 25.0, 30.0)
