@@ -3,6 +3,8 @@
   - [js functional programming](./functional-programming/js-fp/)
   - RxJS
   - [Haskell](./haskell/)
+  - elm
+  - PureScript
 
 ## react
   - react 全家桶
@@ -12,3 +14,16 @@
   - d3
   - GIS
   - antV-L7
+
+## 开发语言
+  - typescript
+
+## 测试
+  - jest
+
+## API
+  - graphql + Apollo
+  - resetful
+
+## 服务端渲染
+  - nuxt.js
