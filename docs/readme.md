@@ -17,9 +17,14 @@
 
 ## 开发语言
   - typescript
+  - es6 - es7
 
 ## 测试
   - jest
+
+## 后端开发
+  - node
+  - koa2
 
 ## API
   - graphql + Apollo
@@ -27,3 +32,5 @@
 
 ## 服务端渲染
   - nuxt.js
+
+## 数据结构 + 算法
