@@ -41,6 +41,9 @@ module.exports = {
         '03.function',
         '04.recursion'
       ],
+      '/front-end-framework/': [
+        ''
+      ],
       '/': [
         ''
       ]
