@@ -41,6 +41,10 @@ module.exports = {
         '03.function',
         '04.recursion'
       ],
+      '/typescript/':[
+        '',
+        '01.types'
+      ],
       '/front-end-framework/': [
         ''
       ],
