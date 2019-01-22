@@ -18,7 +18,7 @@
   - antV-L7
 
 ## JavaScript 开发风格
-  - typescript
+  - [typescript](./typescript/)
   - es6 - es7
 
 ## 架构
