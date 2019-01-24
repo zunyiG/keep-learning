@@ -43,7 +43,8 @@ module.exports = {
       ],
       '/typescript/':[
         '',
-        '01.types'
+        '01.types',
+        '02.variable'
       ],
       '/front-end-framework/': [
         ''
