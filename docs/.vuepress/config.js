@@ -44,7 +44,8 @@ module.exports = {
       '/typescript/':[
         '',
         '01.types',
-        '02.variable'
+        '02.variable',
+        '03.interface'
       ],
       '/front-end-framework/': [
         ''
