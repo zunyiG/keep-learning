@@ -37,3 +37,16 @@ factorial :: (Integral a) => a -> a
 factorial n = fact_iter 1 1 n
 
 
+-- test 1.9
+
+dec x = x - 1
+inc x = x + 1
+
+add1 a b
+  | a == 0 = b
+  | otherwise = inc ( add1 (dec a) b)
+
+
+add2 a b
+  | a == 0 = b
+  | otherwise = add2 (dec a) (inc b)
