@@ -23,5 +23,17 @@ cube_iter guss x
 
 cube' x = cube_iter 1 x
 
-
 -- 阶乘的尾递归表述方式
+-- product <- counter * product
+-- counter < - counter + 1
+-- 线性递归过程和线性迭代过程的区别
+
+fact_iter :: (Ord t, Num t) => t -> t -> t -> t
+fact_iter product conter n
+  | conter > n = product
+  | otherwise = fact_iter (product * conter) (conter + 1) n
+
+factorial :: (Integral a) => a -> a
+factorial n = fact_iter 1 1 n
+
+

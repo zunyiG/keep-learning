@@ -50,6 +50,9 @@ module.exports = {
       '/front-end-framework/': [
         ''
       ],
+      '/computer-program/': [
+        ''
+      ],
       '/koa/':[
         ''
       ],
