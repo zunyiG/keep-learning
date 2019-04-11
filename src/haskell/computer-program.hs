@@ -50,3 +50,16 @@ add1 a b
 add2 a b
   | a == 0 = b
   | otherwise = add2 (dec a) (inc b)
+
+
+-- example 1.2.2
+
+fibonacci_iter :: (Eq t, Num t) => t -> t -> t -> t
+fibonacci_iter a b counter
+  | counter == 0 = a
+  | otherwise = fibonacci_iter b (a + b) (counter - 1)
+
+fibonacci :: (Num t, Eq t) => t -> t
+fibonacci n = fibonacci_iter 0 1 n
+
+
