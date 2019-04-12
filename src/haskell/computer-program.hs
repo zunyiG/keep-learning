@@ -62,4 +62,10 @@ fibonacci_iter a b counter
 fibonacci :: (Num t, Eq t) => t -> t
 fibonacci n = fibonacci_iter 0 1 n
 
+-- 换零钱 问题
+-- 将 a 现金换成 n 种硬币的不同方式的数目等于：
+-- 1.将现金数 a 换成除第一种硬币以外的其它硬币的数目
+-- 2.将现金数 a - d 换成所有种类的不同方式的数目， 其中 d 是第一种硬币的币值
 
+first_denomination kinds = head [x | (y, x) <- [(1, 1), (2, 5), (3, 10), (4, 25), (5, 50)], y == kinds]
+-- count_change amount =
