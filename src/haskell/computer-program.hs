@@ -68,4 +68,12 @@ fibonacci n = fibonacci_iter 0 1 n
 -- 2.将现金数 a - d 换成所有种类的不同方式的数目， 其中 d 是第一种硬币的币值
 
 first_denomination kinds = head [x | (y, x) <- [(1, 1), (2, 5), (3, 10), (4, 25), (5, 50)], y == kinds]
--- count_change amount =
+
+count_change_iter :: Integer -> Integer -> Integer
+count_change_iter amount kinds
+  | amount == 0 = 1
+  | amount < 0 || kinds == 0 = 0
+  | otherwise = (count_change_iter amount (kinds - 1)) + (count_change_iter (amount - (first_denomination kinds)) kinds)
+
+count_change :: Integer -> Integer
+count_change amount = count_change_iter amount 5
