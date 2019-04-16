@@ -1,3 +1,6 @@
+-- 内容来源于 计算机程序构造和解释 书中例题
+
+
 -- 牛顿法 求平方根
 improve guss x = (x/guss + guss)/2
 
@@ -123,3 +126,28 @@ golden_section = (1 + sqrt 5)/2
 
 golden_section_attest :: (Integral a, Floating b) => a -> b
 golden_section_attest n = sqrt (abs ((((1 + sqrt 5)/2) ^ n) - (fromIntegral (fibonacci n)) * (sqrt 5)))
+
+
+-- test 1.14
+-- 空间 θ(2^n)
+-- 步数(类似pascal triangle) θ(2^n)
+
+
+-- test 1.15
+-- 当角度 x 足够小时， 我们认为 sin x ≈ x
+-- 根据三角恒等式 sin x = 3 * sin(x/3) + 4 * (sin(x/3) ^ 3)
+
+cube x = x * x * x
+
+sine_p x = 3 * x - 4 * cube x
+sine' angle
+  | abs angle <= 0.1 = angle
+  | otherwise = sine_p (sine' (angle / 3))
+
+-- 4 次
+-- 空间 θ(log3(n/k))
+-- 步数 θ(log3(n/k))
+
+
+
+
