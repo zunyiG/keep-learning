@@ -28,6 +28,10 @@ cube' x = cube_iter 1 x
 -- counter < - counter + 1
 -- 线性递归过程和线性迭代过程的区别
 
+factorial' n
+  | n == 1 = 1
+  | otherwise = n * (factorial' (n - 1))
+
 fact_iter :: (Ord t, Num t) => t -> t -> t -> t
 fact_iter product conter n
   | conter > n = product
@@ -54,6 +58,11 @@ add2 a b
 
 -- example 1.2.2
 
+fibonacci' n
+  | n == 0 = 0
+  | n == 1 = 1
+  | otherwise = fibonacci' (n - 1) + fibonacci' (n - 2)
+
 fibonacci_iter :: (Eq t, Num t) => t -> t -> t -> t
 fibonacci_iter a b counter
   | counter == 0 = a
@@ -78,19 +87,39 @@ count_change :: Integer -> Integer
 count_change amount = count_change_iter amount 5
 
 -- test 1.11
-f1_11_recursion :: Integer -> Integer
-f1_11_recursion x
+t_1_11_recursion :: Integer -> Integer
+t_1_11_recursion x
   | x < 3 = x
-  | otherwise = (f1_11_recursion (x - 1)) + 2 * (f1_11_recursion (x - 2)) + 3 * (f1_11_recursion (x - 3))
+  | otherwise = (t_1_11_recursion (x - 1)) + 2 * (t_1_11_recursion (x - 2)) + 3 * (t_1_11_recursion (x - 3))
 
 
-
-f1_11_foreach :: Integer -> Integer
-f1_11_foreach n
+t_1_11_foreach :: Integer -> Integer
+t_1_11_foreach n
   | n < 3 = n
-  | otherwise = f1_11_foreach_iter 2 1 0 3 n
+  | otherwise = t_1_11_foreach_iter 2 1 0 3 n
 
-f1_11_foreach_iter :: Integer -> Integer -> Integer -> Integer -> Integer -> Integer
-f1_11_foreach_iter a b c counter n
+t_1_11_foreach_iter :: Integer -> Integer -> Integer -> Integer -> Integer -> Integer
+t_1_11_foreach_iter a b c counter n
   | counter > n = a
-  | otherwise = f1_11_foreach_iter (a + (2 * b) + (3 * c)) a b (counter + 1) n
+  | otherwise = t_1_11_foreach_iter (a + (2 * b) + (3 * c)) a b (counter + 1) n
+
+
+-- test 1.12
+--          1 => 2^0
+--        1   1 => 2^1
+--      1   2   1 => 2^2
+--    1   3   3   1 => 2^3
+--  1   4   6   4   1
+--1   5  10   10  5   1
+
+pascal_triangle x
+  | x == 1 = 1
+  | otherwise = 2^(x-1) + pascal_triangle(x-1)
+
+
+-- test 1.13
+golden_section :: Float
+golden_section = (1 + sqrt 5)/2
+
+golden_section_attest :: (Integral a, Floating b) => a -> b
+golden_section_attest n = sqrt (abs ((((1 + sqrt 5)/2) ^ n) - (fromIntegral (fibonacci n)) * (sqrt 5)))
