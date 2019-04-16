@@ -149,5 +149,41 @@ sine' angle
 -- 步数 θ(log3(n/k))
 
 
+-- example 1.2.4
+-- b^n = b * b ^ (n-1)
+-- b^0 = 1
+
+-- 01
+expt b n
+  | n == 0 = 1
+  | otherwise = b * expt b (n - 1)
+
+-- 02
+expt_iter' b n product
+  | n == 0 = product
+  | otherwise = expt_iter' b (n - 1) (product * b)
+
+expt' b n = expt_iter' b n 1
+
+-- 03
+square x = x * x
+
+-- TODO 类型还有点问题
+expt'' :: (Integral a1, Integral a2, Fractional a1) => a2 -> a1 -> a2
+expt'' b n
+  | n == 0 = 1
+  | even n = square (expt'' b (n/2))
+  | otherwise = b * (expt'' b ((n - 1)))
 
 
+-- test 1.16
+-- a <- a* (b ^ 2)
+-- n <- n / 2
+expt_iter :: (Integral a1, Fractional a1, Integral a2) => a2 -> a1 -> a2 -> a2
+expt_iter b n a
+  | n == 0 = a
+  | even n = expt_iter b (n/2) (square (a * b))
+  | otherwise = expt_iter b (n - 1) (b*a)
+
+iter_expt :: (Integral a1, Fractional a1, Integral a2) => a2 -> a1 -> a2
+iter_expt b n = expt_iter b n 1
