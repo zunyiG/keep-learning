@@ -154,36 +154,77 @@ sine' angle
 -- b^0 = 1
 
 -- 01
-expt b n
+power b n
   | n == 0 = 1
-  | otherwise = b * expt b (n - 1)
+  | otherwise = b * power b (n - 1)
 
 -- 02
-expt_iter' b n product
+power_iter' b n product
   | n == 0 = product
-  | otherwise = expt_iter' b (n - 1) (product * b)
+  | otherwise = power_iter' b (n - 1) (product * b)
 
-expt' b n = expt_iter' b n 1
+power' b n = power_iter' b n 1
 
 -- 03
 square x = x * x
 
--- TODO 类型还有点问题
-expt'' :: (Integral a1, Integral a2, Fractional a1) => a2 -> a1 -> a2
-expt'' b n
+power'' :: (Integral a1, Integral a2) => a2 -> a1 -> a2
+power'' b n
   | n == 0 = 1
-  | even n = square (expt'' b (n/2))
-  | otherwise = b * (expt'' b ((n - 1)))
+  | even n = square (power'' b (floor $ fromIntegral n/2))
+  | otherwise = b * (power'' b ((n - 1)))
 
 
--- test 1.16
--- a <- a* (b ^ 2)
--- n <- n / 2
-expt_iter :: (Eq a1, Real a1, Integral a2) => a2 -> a1 -> a2 -> a2
-expt_iter b n a
-  | n == 0 = a
-  | even $ floor n = expt_iter b (n/2) (square (a * b))
-  | otherwise = expt_iter b (n - 1) (b*a)
+-- test 1.16 使用乘法做乘幂
+-- a (odd n)<- a * b
+-- n (even n)<- n / 2
+-- n (odd n)<- n - 1
+-- b (even n)<- b ^ 2
 
-iter_expt :: (Real a1, Eq a1, Integral a2) => a2 -> a1 -> a2
-iter_expt b n = expt_iter b n 1
+power_iter :: (Integral a1, Integral a2) => a2 -> a1 -> a2 -> a2
+power_iter b n a
+  | n == 1 = a*b
+  | even n = power_iter (square b) (floor $ fromIntegral n / 2) a
+  | otherwise = power_iter b (n - 1) a*b
+
+power_fast :: (Integral a1, Integral a2) => a2 -> a1 -> a2
+power_fast b n
+  | n < 0 = error "N must > 0"
+  | n == 0 = 1
+  | otherwise = power_iter b n 1
+
+
+-- test 1.17 使用加法做乘法
+double :: Integer -> Integer
+double x = x + x
+
+halve :: Integer -> Integer
+halve x 
+  | even x = floor $ fromIntegral x / 2
+  | otherwise = x
+
+product_fast :: Integer -> Integer -> Integer
+product_fast a b
+  | b == 1 = a
+  | even b = double $ product_fast a (halve b)
+  | otherwise = a + product_fast a (b - 1)
+
+
+-- test 1.18 使用加法做乘法 的 迭代运算过程
+-- p (odd b)<- a + p
+-- a (even b)<- a * 2
+-- b (even b)<- b / 2
+-- b (odd b)<- b - 1
+
+product_iter :: Integer -> Integer -> Integer -> Integer
+product_iter a b p
+  | b == 1 = a + p
+  | even b = product_iter (double a) (halve b) p
+  | otherwise = product_iter a (b - 1) (a + p)
+
+product_fast_iter :: Integer -> Integer -> Integer
+product_fast_iter a b
+  | b < 0 = error "b must > 0"
+  | b == 0 = 0
+  | otherwise = product_iter a b 0 
+
