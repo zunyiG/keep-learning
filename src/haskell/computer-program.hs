@@ -228,3 +228,12 @@ product_fast_iter a b
   | b == 0 = 0
   | otherwise = product_iter a b 0 
 
+-- test 1.19 斐波那契 的对数复杂度求法
+fib_fast :: Integer -> Integer
+fib_fast n = fib_fast_iter 1 0 0 1 n
+
+fib_fast_iter :: (Integral b) => b -> b -> b -> b -> b -> b
+fib_fast_iter a b p q counter
+  | counter == 0 = b
+  | even counter = fib_fast_iter a b (p*p + q*q) (p*q + q*q + q*p) (floor $ fromIntegral counter / 2)
+  | otherwise = fib_fast_iter (b*q + a*q + a*p) (b*p + a*q) p q (counter - 1)
