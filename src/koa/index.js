@@ -127,22 +127,33 @@ const app = new Koa()
 // })
 
 // 05.redirect
-// app.use(route.get('/redirect', ctx => {
-//   ctx.response.redirect('/')
-// }))
+app.use(route.get('/redirect', ctx => {
+  ctx.response.redirect('/')
+}))
 
 // 04.static
-// app.use(serve(path.join(__dirname)))
+app.use(serve(path.join(__dirname)))
 
 // 03.route
-// app.use(route.get('/', ctx => {
+app.use(route.get('/', ctx => {
+  ctx.response.type = 'html'
+  ctx.response.body = '<h1>index</h1></h1><a href="/hello">say hello</a>'
+}))
+app.use(route.get('/hello', ctx => {
+  ctx.response.type = 'html'
+  ctx.response.body = fs.createReadStream('./pages/index.html')
+}))
+
+
+// 02.path
+// app.use(ctx => {
 //   ctx.response.type = 'html'
-//   ctx.response.body = '<h1>index</h1></h1><a href="/hello">say hello</a>'
-// }))
-// app.use(route.get('/hello', ctx => {
-//   ctx.response.type = 'html'
-//   ctx.response.body = fs.createReadStream('./pages/index.html')
-// }))
+//   if (ctx.request.path !== '/') {
+//     ctx.response.body = fs.createReadStream('./pages/index.html')
+//   } else {
+//     ctx.response.body = '<h1>index</h1></h1><a href="/hello">say hello</a>'
+//   }
+// })
 
 
 // 01.response.body
@@ -152,16 +163,6 @@ const app = new Koa()
 //     ctx.response.body = '<data>Hello World</data>'
 //   } else if (ctx.request.accepts('html')) {
 //     ctx.response.body = '<h1>hello world</h1>'
-//   }
-// })
-
-// 02.path
-// app.use(ctx => {
-//   ctx.response.type = 'html'
-//   if (ctx.request.path !== '/') {
-//     ctx.response.body = fs.createReadStream('./pages/index.html')
-//   } else {
-//     ctx.response.body = '<h1>index</h1></h1><a href="/hello">say hello</a>'
 //   }
 // })
 
