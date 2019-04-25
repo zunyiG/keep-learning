@@ -1,5 +1,12 @@
 -- 内容来源于 计算机程序构造和解释 书中例题
 
+-- test 1.5
+p = (p)
+test_p x y
+  | x == 0 = 0
+  | otherwise = y
+-- 正则序会返回0
+-- 应用序会栈溢出
 
 -- 牛顿法 求平方根
 improve guss x = (x/guss + guss)/2
@@ -199,7 +206,7 @@ double :: Integer -> Integer
 double x = x + x
 
 halve :: Integer -> Integer
-halve x 
+halve x
   | even x = floor $ fromIntegral x / 2
   | otherwise = x
 
@@ -226,7 +233,7 @@ product_fast_iter :: Integer -> Integer -> Integer
 product_fast_iter a b
   | b < 0 = error "b must > 0"
   | b == 0 = 0
-  | otherwise = product_iter a b 0 
+  | otherwise = product_iter a b 0
 
 -- test 1.19 斐波那契 的对数复杂度求法
 fib_fast :: Integer -> Integer
@@ -237,3 +244,10 @@ fib_fast_iter a b p q counter
   | counter == 0 = b
   | even counter = fib_fast_iter a b (p*p + q*q) (p*q + q*q + q*p) (floor $ fromIntegral counter / 2)
   | otherwise = fib_fast_iter (b*q + a*q + a*p) (b*p + a*q) p q (counter - 1)
+
+-- example 1.2.5 使用 欧几里得算法 求最大公约数 GCD
+-- 步数 n >= Fib(k) .= θ^k/sqrt 5 => θ(log n)
+gcd' :: Integer -> Integer -> Integer
+gcd' a b
+  | b == 0 = a
+  | otherwise = gcd' b $ rem a b
