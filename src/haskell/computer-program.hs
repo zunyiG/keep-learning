@@ -251,3 +251,37 @@ gcd' :: Integer -> Integer -> Integer
 gcd' a b
   | b == 0 = a
   | otherwise = gcd' b $ rem a b
+
+-- test 1.20
+-- 正则序 求余 18 次
+-- 应用序 求余 4 次
+
+-- example 1.2.6
+-- 求一个数是否是质数
+-- 步数具有 θ(sqrt n ) 的增长阶
+
+prime n = small_divisor n == n
+
+small_divisor n = find_divisor n 2
+
+find_divisor n test_divisor
+  | square test_divisor > n = n
+  | rem n test_divisor == 0 = test_divisor
+  | otherwise = find_divisor n $ test_divisor + 1
+
+primes = [x|x <- [1,2..], prime x]
+
+-- 费马检查
+-- θ(log n)
+
+-- import Random
+import System.Random
+drawInt :: Int -> Int -> IO Int
+drawInt x y = getStdRandom (randomR (x,y))
+
+random_list :: Int -> IO [Int]
+random_list 0 = return []
+random_list n = do
+    a <- drawInt 1 20
+    rest <- (random_list(n-1))
+    return (a : rest)

@@ -88,3 +88,8 @@ elem' a (x:xs)
 quicksort :: (Ord a) => [a] -> [a]
 quicksort [] = []
 quicksort (x:xs) = quicksort [a | a <- xs, a <= x] ++ [x] ++ quicksort [b | b <- xs, b > x]
+
+-- 递归法的一般解决问题思路
+-- 找到边境
+-- 找到单比特（比如乘法的单比特是1， 加法的单比特是 0）
+-- 找到递归的模式
