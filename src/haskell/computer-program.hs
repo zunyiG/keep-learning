@@ -1,3 +1,4 @@
+import `system.random`
 -- 内容来源于 计算机程序构造和解释 书中例题
 
 -- test 1.5
@@ -275,7 +276,6 @@ primes = [x|x <- [1,2..], prime x]
 -- θ(log n)
 
 -- import Random
-import System.Random
 drawInt :: Int -> Int -> IO Int
 drawInt x y = getStdRandom (randomR (x,y))
 
