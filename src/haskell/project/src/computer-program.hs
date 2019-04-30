@@ -1,4 +1,3 @@
-import `system.random`
 -- 内容来源于 计算机程序构造和解释 书中例题
 
 -- test 1.5
