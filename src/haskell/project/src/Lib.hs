@@ -275,9 +275,13 @@ gcd' a b
 -- 求一个数是否是质数
 -- 步数具有 θ(sqrt n ) 的增长阶
 
-prime n = small_divisor n == n
+prime n = smallest_divisor n == n
 
-small_divisor n = find_divisor n 2
+smallest_divisor n = find_divisor n 2
+
+find_divisor_next 2 = 3
+find_divisor_next n = n + 2
+
 
 find_divisor n test_divisor
   | square test_divisor > n = n
@@ -344,3 +348,25 @@ search_for_primes start count = do
         else do
           rest <- search_for_primes (start + 2) count
           return rest
+
+
+search_for_primes' _ 0 = []
+search_for_primes' n count
+  | even n = search_for_primes' (n + 1) count
+  | prime n = n : search_for_primes' (n + 2) (count - 1)
+  | otherwise = search_for_primes' (n + 2) count
+
+-- 查找大于1000的3个质数和大于10000的3个质数的运行时间相差不大
+-- 步数并非正比于运行时间
+
+-- test 1.23
+-- 比值不是一半
+-- 17/15
+-- 虽然减少了一半的直接计算，但是同样又增加了一些计算
+
+-- test 1.24
+-- 应该是两倍的时间
+-- 实际为1.5倍左右
+-- 个人认为应该是cpu的执行或者系统执行了优化算法
+
+-- test 1.25
