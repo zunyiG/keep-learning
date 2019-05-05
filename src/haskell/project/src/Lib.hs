@@ -293,30 +293,30 @@ primes = [x|x <- [1,2..], prime x]
 -- 费马检查
 -- θ(log n)
 
-drawInt :: Int -> Int -> IO Int
+drawInt :: Integer -> Integer -> IO Integer
 drawInt x y = getStdRandom (randomR (x,y))
 
-random_list :: Int -> IO [Int]
+random_list :: Integer -> IO [Integer]
 random_list 0 = return []
 random_list n = do
     a <- drawInt 1 20
     rest <- (random_list(n-1))
     return (a : rest)
 
-expmod :: Int -> Int -> Int -> Int
+expmod :: Integer -> Integer -> Integer -> Integer
 expmod base exp m
   | exp == 0 = 1
   | even exp = rem (square (expmod base (floor $ fromIntegral exp / 2) m)) m
   | otherwise = rem (base * (expmod base (exp -1) m)) m
 
-fermat_test :: Int -> Int -> IO Bool
+fermat_test :: Integer -> Integer -> IO Bool
 fermat_test _ 0 = return True
 fermat_test n times = do
   a <- drawInt 1 $ n-1
   rest <- fermat_test n $ times - 1
   return $ ((expmod a n n) == a) && rest
 
-primes_fast :: Int -> IO [Int]  
+primes_fast :: Integer -> IO [Integer]  
 primes_fast 0 = return []
 primes_fast n = do
     rest <- primes_fast $ n - 1
@@ -370,3 +370,51 @@ search_for_primes' n count
 -- 个人认为应该是cpu的执行或者系统执行了优化算法
 
 -- test 1.25
+-- 不能用于检查
+-- 求一个数的 n 次方，会产生一个非常巨大的数， 在进行求余会效率低下，容易出错
+
+-- test 1.26
+-- 使用显示的乘法而不是平方，会造成程序运算步骤出现指数型增长，1变成2变成4.., 所以θ(log n) 变成了 θ(n)
+
+-- test 1.27
+test_carmichael_iter n count
+  | count >= n = True
+  | expmod count n n == count = test_carmichael_iter n (count + 1)
+  | otherwise = False
+
+test_carmichael n = test_carmichael_iter n 1
+
+carmichael = [x|x<-[1,2..], not $ prime x, test_carmichael x]
+
+-- test 1.28
+-- Miller-Rabin 检查
+
+expmod_improve :: Integer -> Integer -> Integer -> Integer
+expmod_improve base exp m
+  | exp == 0 = 1
+  | even exp = if x /= 1 then 0 else x
+  | otherwise = rem (base * (expmod_improve base (exp -1) m)) m
+  where x = rem (square (expmod base (floor $ fromIntegral exp / 2) m)) m
+
+fermat_test_improve :: Integer -> Integer -> IO Bool
+fermat_test_improve _ 0 = return True
+fermat_test_improve n times = do
+  a <- drawInt 1 $ n-1
+  rest <- fermat_test_improve n $ times - 1
+  return $ ((expmod_improve a (n - 1) n) == 1) && rest
+
+search_for_primes_improve _ 0 = return []
+search_for_primes_improve n count = do
+  if even n
+    then do
+      rest <- (search_for_primes_improve (n + 1) count)
+      return rest
+    else do
+      is_prime <- fermat_test_improve n 3
+      if is_prime
+        then do
+          rest <- search_for_primes_improve (n + 2) (count - 1)
+          return (n : rest)
+        else do
+          rest <- search_for_primes_improve (n + 2) count
+          return rest
