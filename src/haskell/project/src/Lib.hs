@@ -1,7 +1,7 @@
 module Lib
 ( someFunc
 ) where
-  
+
 import System.Random
 
 someFunc :: IO ()
@@ -316,7 +316,7 @@ fermat_test n times = do
   rest <- fermat_test n $ times - 1
   return $ ((expmod a n n) == a) && rest
 
-primes_fast :: Integer -> IO [Integer]  
+primes_fast :: Integer -> IO [Integer]
 primes_fast 0 = return []
 primes_fast n = do
     rest <- primes_fast $ n - 1
@@ -325,7 +325,7 @@ primes_fast n = do
     return list
 
 -- test 1.21
-{- 
+{-
   199 -> 199
   1999 -> 1999
   19999 -> 19999
@@ -342,7 +342,7 @@ search_for_primes start count = do
     else do
       is_prime <- fermat_test start 3
       if is_prime
-        then do 
+        then do
           rest <- search_for_primes (start + 2) (count - 1)
           return (start : rest)
         else do
@@ -418,4 +418,3 @@ search_for_primes_improve n count = do
         else do
           rest <- search_for_primes_improve (n + 2) count
           return rest
-
