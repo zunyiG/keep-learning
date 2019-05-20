@@ -1,4 +1,4 @@
-const { ApolloServer } = require('apollo-server'); // zunyiGuo-9348
+const { ApolloServer } = require('apollo-server');
 const typeDefs = require('./schema');
 const { createStore } = require('./utils')
 const resolvers = require('./resolvers');
