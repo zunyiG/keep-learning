@@ -9,11 +9,27 @@ const LOGIN_USER = gql`
     login(email: $email)
   }
 `;
-
 export default function Login() {
   return (
-    <Mutation mutation={LOGIN_USER}>
-      {(login, { data }) => <LoginForm login={login} />}
-    </Mutation>
+    <ApolloConsumer>
+      {client => (
+        <Mutation
+          mutation={LOGIN_USER}
+          onCompleted={({ login }) => {
+            localStorage.setItem('token', login);
+            client.writeData({ data: { isLoggedIn: true } });
+          }}
+        >
+          {(login, { loading, error }) => {
+            // this loading state will probably never show, but it's helpful to
+            // have for testing
+            if (loading) return <Loading />;
+            if (error) return <p>An error occurred</p>;
+
+            return <LoginForm login={login} />;
+          }}
+        </Mutation>
+      )}
+    </ApolloConsumer>
   );
 }

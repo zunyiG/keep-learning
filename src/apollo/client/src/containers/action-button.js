@@ -5,6 +5,12 @@ import gql from 'graphql-tag';
 import { GET_LAUNCH_DETAILS } from '../pages/launch';
 import Button from '../components/button';
 
+const TOGGLE_CART = gql`
+  mutation addOrRemoveFromCart($launchId: ID!) {
+    addOrRemoveFromCart(id: $launchId) @client
+  }
+`;
+
 const CANCEL_TRIP = gql`
   mutation cancel($launchId: ID!) {
     cancelTrip(launchId: $launchId) {

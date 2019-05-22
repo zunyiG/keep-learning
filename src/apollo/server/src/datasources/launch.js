@@ -43,5 +43,4 @@ class LaunchAPI extends RESTDataSource {
   }
 }
 
-
 module.exports = LaunchAPI;
