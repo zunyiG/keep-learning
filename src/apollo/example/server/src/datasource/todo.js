@@ -10,8 +10,8 @@ class TodoAPI extends DataSource {
     this.context = config.context;
   }
 
-  async getAllTodos () {
-    const found = await this.store.todo.findAll();
+  async getAllTodos ({ filter: state }) {
+    const found = await this.store.todo.findAll(state ? { where: { state } } : {});
     return found && found.length ? found : []
   }
 
@@ -20,12 +20,16 @@ class TodoAPI extends DataSource {
     return todo && todo.length ? todo[0] : null
   }
 
-  async getTodoListByUser () {
+  async getTodoListByUser ({ filter: state } = {}) {
     const createBy = this.context.user.id;
-    const found = await this.store.todo.findAll({ where: { createBy }});
+    const where = state ? { state, createBy} : { createBy }
+    const found = await this.store.todo.findAll({ where });
     return found && found.length ? found : []
   }
 
+  async changeState ({ id, state }) {
+    const res = await this.store.todo.update({ state }, { where: { id } })
+  }
 }
 
 module.exports = TodoAPI

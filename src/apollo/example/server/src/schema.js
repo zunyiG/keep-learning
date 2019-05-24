@@ -2,21 +2,21 @@ const { gql } = require('apollo-server');
 
 const typeDefs = gql`
   type Query {
-    todoList: [Todo]!
+    todoList(filter: TodoState): [Todo]!
     todo(id: ID!): Todo
     me: User
   }
 
   type Mutation {
-    do(todoId: ID!): TodoUpdateResponse!
-    finish(todoId: ID!): TodoUpdateResponse!
+    changeState(id: ID!, state: TodoState): TodoUpdateResponse!
     login(account: String): String # login Token
+    create(note: String): TodoUpdateResponse!
   }
 
   type TodoUpdateResponse {
     success: Boolean!
     message: String
-    todoList: [Todo]
+    todo: Todo
   }
 
   type Todo {
