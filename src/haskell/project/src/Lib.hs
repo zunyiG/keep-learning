@@ -57,9 +57,9 @@ factorial' n
   | otherwise = n * (factorial' (n - 1))
 
 fact_iter :: (Ord t, Num t) => t -> t -> t -> t
-fact_iter product conter n
-  | conter > n = product
-  | otherwise = fact_iter (product * conter) (conter + 1) n
+fact_iter product counter n
+  | counter > n = product
+  | otherwise = fact_iter (product * counter) (counter + 1) n
 
 factorial :: (Integral a) => a -> a
 factorial n = fact_iter 1 1 n
