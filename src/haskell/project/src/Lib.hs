@@ -418,3 +418,13 @@ search_for_primes_improve n count = do
         else do
           rest <- search_for_primes_improve (n + 2) count
           return rest
+
+-- example 1.3.1
+sum' term a next b
+  | a > b = 0
+  | otherwise = term a + sum' term (next a) next b
+
+-- 求 1-5 的和
+-- sum' id 1 succ 5
+-- 求 1-5 的立方和
+-- sum' cube 1 succ 5
