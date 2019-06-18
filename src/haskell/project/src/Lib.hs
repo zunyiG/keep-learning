@@ -428,3 +428,11 @@ sum' term a next b
 -- sum' id 1 succ 5
 -- 求 1-5 的立方和
 -- sum' cube 1 succ 5
+
+sum_pi a b =
+  let pi_term x = 1 / (x * (x + 2))
+      pi_next x = x + 4
+  in sum' pi_term a pi_next b
+
+-- 可以求pi的近似值 (sum_pi 1 1000) * 8 => 3.139592655589783
+
