@@ -436,4 +436,41 @@ sum_pi a b =
 
 -- 可以求pi的近似值 (sum_pi 1 1000) * 8 => 3.139592655589783
 
-定积分
+-- 求积分
+integral f a b dx =
+  let add_dx x = x + dx
+  in (sum' f (a + dx / 2) add_dx b) * dx
+
+-- intergral cube 0 1 0.00001 => 0.24999999998662864 ≈ 1/4
+
+-- test 1.29
+integral' :: (Fractional a, Eq a, Integral b) => (a -> a) -> a -> a -> b -> a
+integral' f a b n =
+  let h = (b - a) / fromIntegral n
+      f' k
+        | k == 0 = f a
+        | k == n = f b
+        | odd k = 4 * f (a + fromIntegral k * h)
+        | otherwise = 2 * f (a + fromIntegral k * h)
+  in h / 3 * sum' f' 1 succ n
+
+-- integral' cube 0 1 100 => 0.24999999999999992
+-- integral' cube 0 1 1000 => 0.2500000000000003
+
+-- test 1.30
+sum'' term a next b =
+  let iter a result
+        | a > b = result
+        | otherwise = iter (next a) (result + term a)
+  in iter a 0
+
+-- test 1.31
+product' term a next b =
+  let iter a result
+        | a > b = result
+        | otherwise = iter (next a) (result * term a)
+  in iter a 1
+
+factorial'' x = product' id 1 succ x
+
+
