@@ -511,3 +511,9 @@ sum_prime a b = filtered_accumulate prime (+) 0 id a succ b
 product_n_prime n = filtered_accumulate (\ x -> gcd x n == 1) (*) 1 id 2 succ (n - 1)
 -- product_n_prime 10 => 189
 
+-- lamubda
+-- (\x -> x+1) 1 => 2
+
+-- test 1.34
+f g = g 2
+-- 会报错的因为 f f => f 2 => 2 2 没有意义
