@@ -473,4 +473,41 @@ product' term a next b =
 
 factorial'' x = product' id 1 succ x
 
+product_pi n = product' (\ x -> x * (x + 2) / square ( x + 1)) 2 (\ x -> x + 2) n * 4
+-- product_pi 10000000 => 3.1415928106708866
+
+product'' term a next b
+  | a > b = 1
+  | otherwise = term a * product' term (next a) next b
+
+-- test 1.32
+accumulate combiner null_value term a next b =
+  let iter a result
+        | a > b = result
+        | otherwise = iter (next a) (combiner result (term a))
+  in iter a null_value
+
+sum_accumulate term a next b = accumulate (+) 0 term a next b
+
+product_accumulate term a next b = accumulate (*) 1 term a next b
+
+accumulate' combiner null_value term a next b
+  | a > b = null_value
+  | otherwise = combiner (term a) (accumulate' combiner null_value term (next a) next b)
+
+-- test 1.33
+filtered_accumulate filter combiner null_value term a next b =
+  let iter a result
+        | a > b = result
+        | filter a = iter (next a) (combiner result (term a))
+        | otherwise = iter (next a) result
+  in iter a null_value
+
+-- a
+sum_prime a b = filtered_accumulate prime (+) 0 id a succ b
+-- sum_prime 0 100 => 1061
+
+-- b
+product_n_prime n = filtered_accumulate (\ x -> gcd x n == 1) (*) 1 id 2 succ (n - 1)
+-- product_n_prime 10 => 189
 
