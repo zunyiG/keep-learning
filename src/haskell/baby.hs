@@ -93,3 +93,12 @@ quicksort (x:xs) = quicksort [a | a <- xs, a <= x] ++ [x] ++ quicksort [b | b <-
 -- 找到边境
 -- 找到单比特（比如乘法的单比特是1， 加法的单比特是 0）
 -- 找到递归的模式
+
+collatz_chain :: (Integral a) => a -> [a]
+collatz_chain 1 = [1]
+collatz_chain n
+  | odd n = n : collatz_chain (n * 3 + 1)
+  | otherwise = n : collatz_chain (n `div` 2)
+
+numLongChains = length (filter isLong (map collatz_chain [1..100]))
+  where isLong xs = length xs > 15
