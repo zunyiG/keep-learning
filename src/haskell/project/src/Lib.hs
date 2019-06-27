@@ -517,3 +517,5 @@ product_n_prime n = filtered_accumulate (\ x -> gcd x n == 1) (*) 1 id 2 succ (n
 -- test 1.34
 f g = g 2
 -- 会报错的因为 f f => f 2 => 2 2 没有意义
+
+-- example 1.3.3

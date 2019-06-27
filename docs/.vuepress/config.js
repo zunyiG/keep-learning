@@ -1,6 +1,6 @@
 module.exports = {
-  title: 'Front-end-programming',
-  description: 'Front end programming',
+  title: 'Keep learning',
+  description: 'keep learning',
   themeConfig: {
     nav: [
       {
@@ -40,7 +40,8 @@ module.exports = {
         '02.typeclass',
         '03.function',
         '04.recursion',
-        '05.high-order'
+        '05.high-order',
+        '06.module'
       ],
       '/typescript/':[
         '',
@@ -54,6 +55,9 @@ module.exports = {
       '/computer-program/': [
         '',
         '01.abstraction-building'
+      ],
+      '/programming-language/': [
+        ''
       ],
       '/koa/':[
         ''
