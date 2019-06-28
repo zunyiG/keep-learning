@@ -3,6 +3,7 @@ module Lib
 ) where
 
 import System.Random
+import Debug.Trace
 
 someFunc :: IO ()
 -- someFunc = putStrLn $ drawInt 4 100
@@ -558,8 +559,40 @@ fixed_point f guess
 -- 求平方根
 sqrt'' x = fixed_point (\y -> (x/y + y)/2) 1
 
-
 -- test 1.35 求黄金分割比例
 -- x^2 = x + 1
 -- => x = 1 + 1/x
 golden_section' = fixed_point (\x -> 1 + 1/x) 1
+
+-- test 1.36
+fixed_point_print f guess =
+  let iter f guess count
+        | is_close_enough guess next = next
+        | otherwise = iter f next (count + 1)
+        where next = trace (show guess ++ " " ++ show count) f guess
+  in iter f guess 1
+
+-- 求 x^x = 1000
+-- log(x^x) = log1000
+-- xlogx = log1000
+-- x = log1000/logx
+-- x + x = log1000/logx + x
+
+-- fixed_point_print (\x->log 1000 / (log x)) 2 => 4.555535422664798 40次
+
+-- 采用平均阻尼
+-- x = log1000/logx
+-- x + x = log1000/logx + x
+-- x = (log1000/logx + x)/2
+
+-- fixed_point_print (\x -> (log 1000 / (log x) + x) / 2) 2 => 4.555535422664798 11次
+
+
+-- test 1.37
+cont_frac n d k =
+  let iter k frac
+        | k == 0 = frac
+        | otherwise = iter (k - 1) (n k / (d k + frac))
+  in iter k 0
+
+-- todo h5 端可实现性
