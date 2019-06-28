@@ -1,12 +1,12 @@
 function Spy(target, method) {
-  var beforeMethod = target[method]
+  var originalMethod = target[method]
   var counter = {
     count: 0
   }
 
   target[method] = function (...args) {
     counter.count ++
-    return beforeMethod.apply(target, args)
+    return originalMethod.apply(target, args)
   }
 
   return counter

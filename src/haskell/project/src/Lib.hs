@@ -519,3 +519,47 @@ f g = g 2
 -- 会报错的因为 f f => f 2 => 2 2 没有意义
 
 -- example 1.3.3
+-- 通过区间折半法寻找方程的根
+is_close_enough x y = abs (x - y) < 0.000001
+is_positive x = abs x == x
+average x y = (x + y) / 2
+
+search f neg_point pos_point
+  | is_close_enough neg_point pos_point = midpoint
+  | test_value == 0 = midpoint
+  | is_positive test_value = search f neg_point midpoint
+  | otherwise = search f midpoint pos_point
+  where midpoint = average neg_point pos_point
+        test_value = f midpoint
+
+half_interval_method f a b
+  | is_positive a_value && not (is_positive b_value) = search f b a
+  | is_positive b_value && not (is_positive a_value) = search f a b
+  | otherwise = error ("Value are not of opposite sign " ++ show a ++ "," ++ show b)
+  where a_value = f a
+        b_value = f b
+-- half_interval_method sin 2 4 => 3.141592502593994
+-- half_interval_method (\x -> x*x*x - 2*x - 3) 1 2 => 1.8932890892028809
+
+-- 寻找函数不动点
+
+fixed_point f guess
+  | is_close_enough guess next = next
+  | otherwise = fixed_point f next
+  where next = f guess
+
+-- fixed_point cos 1 => 0.7390855263619245
+-- fixed_point (\x -> sin x + cos x) 1 => 1.2587277968014188
+
+-- y^2 = x
+-- => y = x/y
+-- => y + y = x/y + y
+-- => y = (x/y + y)/2
+-- 求平方根
+sqrt'' x = fixed_point (\y -> (x/y + y)/2) 1
+
+
+-- test 1.35 求黄金分割比例
+-- x^2 = x + 1
+-- => x = 1 + 1/x
+golden_section' = fixed_point (\x -> 1 + 1/x) 1
