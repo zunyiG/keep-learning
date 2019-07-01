@@ -604,5 +604,3 @@ cont_frac' n d k =
         | count == k = n count / d count
         | otherwise = n count / (d count + iter (count + 1))
   in iter 1
-
--- todo h5 端可实现性
