@@ -619,3 +619,16 @@ tan_cf x k = cont_frac (\n -> if n == 1 then x else - x * x) (\n -> n * 2 - 1) k
 -- example 1.3.4 过程作为返回值
 -- 平均阻尼
 average_damp f = \x -> average x (f x)
+
+sqrt_damp x = fixed_point (average_damp (\y -> x / y)) 1
+
+cube_root x = fixed_point (average_damp (\y -> x / square y)) 1
+
+-- 牛顿法
+deriv g = \x -> (g (x + dx) - g x) / dx
+  where dx = 0.00001
+-- deriv cube 5 =>  3 * 5 ^ 2 = 75
+newton_transform g = \x -> x - g x / deriv g x
+newton_method g guess = fixed_point (newton_transform g) guess
+
+sqrt_newton x = newton_method (\y -> square y - x) 1
