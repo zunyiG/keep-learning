@@ -596,7 +596,7 @@ cont_frac n d k =
   in iter k 0
 
 -- a)  cont_frac (\x -> 1) (\x -> 1) 12 => 0.6180257510729613
--- 大概要11-12的k
+-- 1/(2^13) 0.0001220703125 大概要13的k
 
 -- b) 递归写法
 cont_frac' n d k =
@@ -604,3 +604,18 @@ cont_frac' n d k =
         | count == k = n count / d count
         | otherwise = n count / (d count + iter (count + 1))
   in iter 1
+
+-- test 1.38
+-- d: 1,2,1,1,4,1,1,6,1,1,8,1,...
+-- n: 1,1,1,...
+e_cf k = cont_frac (\x -> 1) (\x -> if rem x 3 == 2 then fromIntegral $ div x 3 * 2 + 2 else 1) k + 2
+
+-- test 1.39
+-- d: 1,3,5,7,...
+-- n: x, -x^2, -x^2,...
+tan_cf x k = cont_frac (\n -> if n == 1 then x else - x * x) (\n -> n * 2 - 1) k
+
+
+-- example 1.3.4 过程作为返回值
+-- 平均阻尼
+average_damp f = \x -> average x (f x)
