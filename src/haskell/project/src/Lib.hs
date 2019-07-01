@@ -595,4 +595,14 @@ cont_frac n d k =
         | otherwise = iter (k - 1) (n k / (d k + frac))
   in iter k 0
 
+-- a)  cont_frac (\x -> 1) (\x -> 1) 12 => 0.6180257510729613
+-- 大概要11-12的k
+
+-- b) 递归写法
+cont_frac' n d k =
+  let iter count
+        | count == k = n count / d count
+        | otherwise = n count / (d count + iter (count + 1))
+  in iter 1
+
 -- todo h5 端可实现性
