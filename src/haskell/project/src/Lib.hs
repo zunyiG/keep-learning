@@ -645,3 +645,31 @@ sqrt_damp_transform x = fixed_point_of_transform average_damp (\y -> x / y) 1
 
 sqrt_newton_transform x = fixed_point_of_transform newton_transform (\y -> square y - x) 1
 
+-- 总结
+-- 第一层 一般性方法被抽象
+-- 第二层 复合一般性方法
+-- 第三层 用高阶函数操作方法，进一步抽象
+
+-- test 1.40
+-- x^3 + a*x^2 + b*x + c = 0
+cubic a b c x = cube x + a * square x + b * x + c
+--  newton_method (cubic 1 2 (-88)) 1 => 4.000000000000325
+
+-- test 1.41
+apply_twice g = g . g
+-- apply_twice (+1) 1 => 3
+-- apply_twice apply_twice apply_twice (+1) 5
+-- => apply_twice.apply_twice apply_twice (+1) 5
+-- => apply_twice.apply_twice.apply_twice.apply_twice (+1) 5
+-- 2^4
+-- => 16
+
+-- test 1.42
+compose f g = \x -> f (g x)
+
+-- test 1.43
+repeated f n
+  | n == 1 = f
+  | otherwise = f . repeated f (n - 1)
+-- repeated square 2 5 => 625
+
