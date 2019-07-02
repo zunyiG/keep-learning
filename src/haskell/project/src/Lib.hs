@@ -543,7 +543,7 @@ half_interval_method f a b
 -- half_interval_method (\x -> x*x*x - 2*x - 3) 1 2 => 1.8932890892028809
 
 -- 寻找函数不动点
-
+fixed_point :: (Ord a, Fractional a) => (a -> a) -> a -> a
 fixed_point f guess
   | is_close_enough guess next = next
   | otherwise = fixed_point f next
@@ -624,11 +624,24 @@ sqrt_damp x = fixed_point (average_damp (\y -> x / y)) 1
 
 cube_root x = fixed_point (average_damp (\y -> x / square y)) 1
 
--- 牛顿法
+-- 求导
 deriv g = \x -> (g (x + dx) - g x) / dx
   where dx = 0.00001
 -- deriv cube 5 =>  3 * 5 ^ 2 = 75
+
+-- 牛顿法
 newton_transform g = \x -> x - g x / deriv g x
 newton_method g guess = fixed_point (newton_transform g) guess
 
 sqrt_newton x = newton_method (\y -> square y - x) 1
+
+-- 抽象和第一级过程
+fixed_point_of_transform :: (Ord a, Fractional a) => (t -> a -> a) -> t -> a -> a
+fixed_point_of_transform transform = fixed_point . transform
+-- fixed_point_of_transform transform g x = fixed_point (transform g) x
+
+sqrt_damp_transform :: (Ord a, Fractional a) => a -> a
+sqrt_damp_transform x = fixed_point_of_transform average_damp (\y -> x / y) 1
+
+sqrt_newton_transform x = fixed_point_of_transform newton_transform (\y -> square y - x) 1
+
