@@ -673,3 +673,23 @@ repeated f n
   | otherwise = f . repeated f (n - 1)
 -- repeated square 2 5 => 625
 
+-- test 1.44
+smooth f = \x -> (f(x - dx) + f x + f (x + dx)) / 3
+  where dx = 0.00001
+
+smooth_repeated f n = repeated (smooth f) n
+
+-- smooth_repeated (\x->x*x) 2 2
+-- repeated (smooth (\x->x*x)) 2 2
+-- repeated (\x-> ((x-dx)*(x-dx)+x*x + (x+dx)*(x+dx))/3) 2 2
+-- repeated (\x-> ((x-dx)*(x-dx)+x*x + (x+dx)*(x+dx))/3) 2 2
+-- (\x-> ((x-dx)*(x-dx)+x*x + (x+dx)*(x+dx))/3) . (\x-> ((x-dx)*(x-dx)+x*x + (x+dx)*(x+dx))/3) 2
+-- 16
+
+-- test 1.45
+
+-- fixed_point((\x -> repeated (average_damp (\y-> x/y )) 2) 4) 1
+
+root_n x n = fixed_point (repeated (average_damp
+
+fixed_point((\x -> repeated average_damp 2 (\y-> x/(y^7) )) 64) 1
