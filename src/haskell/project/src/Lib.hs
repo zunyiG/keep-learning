@@ -689,11 +689,11 @@ smooth_repeated f n = repeated (smooth f) n
 -- test 1.45
 -- fixed_point((\x -> repeated average_damp 3 (\y-> x/(y^11) )) 64) 1
 -- fixed_point_print ((\x -> repeated average_damp 13 (\y-> x/(y^11) )) 19660800) 1
--- 196608 -> 13次 -> 2^17 + 2^16 -> 2^17 + 2^(2^4) // 有时会不收敛
--- 768 -> 8次 -> 2^9 + 2^8 -> 2^9 + 2^(2^3) // 有时会不收敛
--- 48 -> 3次 -> 2^5 + 2^4 -> 2^5 + 2^(2^2) // 有时会不收敛
+-- 196608 -> 13次 -> 2^17 + 2^16 -> 2^17 + 2^(2^4) // 有时会收敛
+-- 768 -> 8次 -> 2^9 + 2^8 -> 2^9 + 2^(2^3) // 有时会收敛
+-- 48 -> 3次 -> 2^5 + 2^4 -> 2^5 + 2^(2^2) // 有时会收敛
 -- 32 -> 5次 -> 2^5
--- 24 -> 3次 -> 2^4 + 2^3 // 有时会不收敛
+-- 24 -> 3次 -> 2^4 + 2^3 // 有时会收敛
 -- 17 -> 4次 -> 2^4 + 1
 -- 16 -> 4次 -> 2^4
 -- 15 -> 3次 -> 2^3 + 7
@@ -710,7 +710,7 @@ smooth_repeated f n = repeated (smooth f) n
 -- 4 -> 2次 -> 2^2
 -- 3 -> 1次 -> 2^1 + 1
 -- 2 -> 1次 -> 2^1
--- 总结: 至少需要 log2(k) (k为n的最小2的n次和) 次的平均阻尼，小指数时 log2(k) - r (r为剩余次数m的log2(m))
+-- 总结: 至少需要 log2(k) (k为n的最小2的n次和) 次的平均阻尼，小指数时 log2(k) - r (r为剩余次数m的log2(m)) 大指数时可能会不收敛。
 
 root_n x n =
   let biggest_2_pwoer m count
@@ -718,3 +718,11 @@ root_n x n =
         | otherwise = biggest_2_pwoer count_m (count + 1)
         where count_m = div m 2
   in fixed_point (repeated average_damp (biggest_2_pwoer n 1) (\y -> x / (y ^ (n-1)))) 1
+
+-- test 1.46
+iterative_improve is_close improve =
+  \x -> if is_close x (improve x) then x else iterative_improve is_close improve(improve x)
+
+sqrt_iterative_improve x = iterative_improve is_close_enough (\y -> (x/y + y)/2) 1
+
+fixed_point_iterative_improve = iterative_improve is_close_enough
