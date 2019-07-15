@@ -687,9 +687,34 @@ smooth_repeated f n = repeated (smooth f) n
 -- 16
 
 -- test 1.45
+-- fixed_point((\x -> repeated average_damp 3 (\y-> x/(y^11) )) 64) 1
+-- fixed_point_print ((\x -> repeated average_damp 13 (\y-> x/(y^11) )) 19660800) 1
+-- 196608 -> 13次 -> 2^17 + 2^16 -> 2^17 + 2^(2^4) // 有时会不收敛
+-- 768 -> 8次 -> 2^9 + 2^8 -> 2^9 + 2^(2^3) // 有时会不收敛
+-- 48 -> 3次 -> 2^5 + 2^4 -> 2^5 + 2^(2^2) // 有时会不收敛
+-- 32 -> 5次 -> 2^5
+-- 24 -> 3次 -> 2^4 + 2^3 // 有时会不收敛
+-- 17 -> 4次 -> 2^4 + 1
+-- 16 -> 4次 -> 2^4
+-- 15 -> 3次 -> 2^3 + 7
+-- 14 -> 3次 -> 2^3 + 6
+-- 13 -> 3次 -> 2^3 + 5
+-- 12 -> 2次 -> 2^3 + 2^2
+-- 11 -> 3次 -> 2^3 + 3
+-- 10 -> 3次 -> 2^3 + 2
+-- 9 -> 3次 -> 2^3 + 1
+-- 8 -> 3次 -> 2^3
+-- 7 -> 2次 -> 2^2 + 3
+-- 6 -> 1次 -> 2^2 + 2^1
+-- 5 -> 2次 -> 2^2 + 1
+-- 4 -> 2次 -> 2^2
+-- 3 -> 1次 -> 2^1 + 1
+-- 2 -> 1次 -> 2^1
+-- 总结: 至少需要 log2(k) (k为n的最小2的n次和) 次的平均阻尼，小指数时 log2(k) - r (r为剩余次数m的log2(m))
 
--- fixed_point((\x -> repeated (average_damp (\y-> x/y )) 2) 4) 1
-
-root_n x n = fixed_point (repeated (average_damp
-
-fixed_point((\x -> repeated average_damp 2 (\y-> x/(y^7) )) 64) 1
+root_n x n =
+  let biggest_2_pwoer m count
+        | count_m == 1 = count
+        | otherwise = biggest_2_pwoer count_m (count + 1)
+        where count_m = div m 2
+  in fixed_point (repeated average_damp (biggest_2_pwoer n 1) (\y -> x / (y ^ (n-1)))) 1
