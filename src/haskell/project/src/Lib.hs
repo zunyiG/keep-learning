@@ -576,7 +576,6 @@ fixed_point_print f guess =
 -- log(x^x) = log1000
 -- xlogx = log1000
 -- x = log1000/logx
--- x + x = log1000/logx + x
 
 -- fixed_point_print (\x->log 1000 / (log x)) 2 => 4.555535422664798 40次
 
