@@ -54,7 +54,8 @@ module.exports = {
       ],
       '/computer-program/': [
         '',
-        '01.abstraction-building'
+        '01.abstraction-process-building',
+        '02.abstraction-data-building',
       ],
       '/programming-language/': [
         ''

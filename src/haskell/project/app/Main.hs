@@ -1,6 +1,6 @@
 module Main where
 
-import Lib
+import ProcessBuild
 
 main :: IO ()
 main = someFunc
