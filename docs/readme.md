@@ -1,5 +1,13 @@
 # 列表
 
+## 计算机程序基础
+
+- [计算机程序的构造和解释（第2版）](./computer-program/)
+- [程序设计语言——实践之路](./programming-language/)
+- 逻辑编程 Prolog
+- 用位运算实现简单计算器
+- 数据结构 + 算法
+
 ## 函数式编程
 
 - [js functional programming](./functional-programming/js-fp/)
@@ -73,13 +81,5 @@
 ## WebAssembly
 
 - AssemblyScript
-
-## 计算机程序基础
-
-- [计算机程序的构造和解释（第2版）](./computer-program/)
-- [程序设计语言——实践之路](./programming-language/)
-- 逻辑编程 Prolog
-- 用位运算实现简单计算器
-- 数据结构 + 算法
 
 方法的三要素 `输入` `输出` `环境`
