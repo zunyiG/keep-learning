@@ -2,6 +2,8 @@ module DataBuild
 (
 ) where
 
+import Debug.Trace
+
 make_rat :: (Integral a) => a -> a -> (a, a)
 make_rat n d = (floor $ fromIntegral n / fromIntegral g, floor $ fromIntegral d / fromIntegral g)
   where g = gcd n d
@@ -113,17 +115,35 @@ cdr' z = z (\p q -> q)
 -- 由于 2 和 3 互质，所有她们的n次方也将互质，所以对于任意 2^a*3^b 都只有唯一的 a 和 b
 cons'' x y = 2^x * 3^y
 
-car'' :: (Integral a) => a -> a
-car'' n
-  | gcd n 3 /= 1 = car'' $ round (fromIntegral n / 3)
-  | otherwise = round $ ((log $ fromIntegral n) / log 2)
+-- 小数取整的方法
+-- ceiling :: (RealFrac a, Integral b) => a -> b
+-- floor :: (RealFrac a, Integral b) => a -> b
+-- truncate :: (RealFrac a, Integral b) => a -> b
+-- round :: (RealFrac a, Integral b) => a -> b
 
-  -- ceiling :: (RealFrac a, Integral b) => a -> b
-  -- floor :: (RealFrac a, Integral b) => a -> b
-  -- truncate :: (RealFrac a, Integral b) => a -> b
-  -- round :: (RealFrac a, Integral b) => a -> b
+-- car'' :: (Integral a) => a -> a
+car'' p
+  | gcd (round p) 3 /= 1 = car'' $ p / 3
+  | otherwise = log p / log 2
 -- cdr'' :: (Integral a) => a -> a
--- cdr'' n = round (((log $ fromIntegral n) - (fromIntegral (car'' n)) * log 2) / log 3)
-cdr'' n
-  | gcd n 2 /=1 = cdr'' $ round (fromIntegral n / 2)
-  | otherwise = round $ ((log $ fromIntegral n) / log 3)
+-- cdr'' p = round (((log $ fromIntegral p) - (fromIntegral (car'' p)) * log 2) / log 3)
+
+cdr'' p
+  | gcd (round p) 2 /=1 = cdr'' (p / 2)
+  | otherwise = log p / log 3
+
+-- 当 y > 33 或 x > 971 时会出现计算错误，可能因为除法会被表示为科学技术法,会被 round 于出，造成误差
+-- 改进版本
+
+car''' p =
+  let iter g
+        | gcd p (g * 2) == g = (log $ fromIntegral g) / log 2
+        | otherwise = iter (g * 2)
+  in iter 1
+
+cdr''' p =
+  let iter g
+        | gcd p (g * 3) == g = (log $ fromIntegral g) / log 3
+        | otherwise = iter (g * 3)
+  in iter 1
+-- log 限制 x < 1024, y < 647 位
