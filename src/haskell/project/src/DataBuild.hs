@@ -115,5 +115,15 @@ cons'' x y = 2^x * 3^y
 
 car'' :: (Integral a) => a -> a
 car'' n
-  | gcd n 3 /= 1 = car'' $ floor (fromIntegral n / 3)
-  | otherwise = floor $ ((log $ fromIntegral n) / log 2)
+  | gcd n 3 /= 1 = car'' $ round (fromIntegral n / 3)
+  | otherwise = round $ ((log $ fromIntegral n) / log 2)
+
+  -- ceiling :: (RealFrac a, Integral b) => a -> b
+  -- floor :: (RealFrac a, Integral b) => a -> b
+  -- truncate :: (RealFrac a, Integral b) => a -> b
+  -- round :: (RealFrac a, Integral b) => a -> b
+-- cdr'' :: (Integral a) => a -> a
+-- cdr'' n = round (((log $ fromIntegral n) - (fromIntegral (car'' n)) * log 2) / log 3)
+cdr'' n
+  | gcd n 2 /=1 = cdr'' $ round (fromIntegral n / 2)
+  | otherwise = round $ ((log $ fromIntegral n) / log 3)
