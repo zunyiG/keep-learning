@@ -110,9 +110,10 @@ car' z = z (\p q -> p)
 cdr' z = z (\p q -> q)
 
 -- test 2.5
--- 由于 2 和 3 互质，她们的n次方也将互质，所以对于任意 2^a*3^b 都只有唯一的 a 和 b
+-- 由于 2 和 3 互质，所有她们的n次方也将互质，所以对于任意 2^a*3^b 都只有唯一的 a 和 b
 cons'' x y = 2^x * 3^y
+
+car'' :: (Integral a) => a -> a
 car'' n
-  | g /= 1 = car'' (n / 3)
-  | otherwise = log n / log 2
-  where g = gcd n 3
+  | gcd n 3 /= 1 = car'' $ floor (fromIntegral n / 3)
+  | otherwise = floor $ ((log $ fromIntegral n) / log 2)
