@@ -147,3 +147,37 @@ cdr''' p =
         | otherwise = iter (g * 3)
   in iter 1
 -- log 限制 x < 1024, y < 647 位
+
+-- test 2.6
+zero = \f -> (\x -> x)
+add_1 n = \f -> (\x -> f ((n f) x))
+-- add_1 zero
+-- => \f -> (\x -> f (((\f -> (\x -> x)) f) x))
+-- => \f -> (\x -> f ((\x -> x) x))
+-- => \f -> (\x -> f x) => 1
+
+-- add_1 add_1
+-- => \f -> (\x -> f (((\f -> (\x -> f ((n f) x))) f) x))
+-- => \f -> (\x -> f (f((n f) x))))
+
+-- add_1 add_1 zero
+-- => \f -> (\x -> f (f(((\f -> (\x -> x)) f) x))))
+-- => \f -> (\x -> f (f x)) => 2
+
+one = \f -> (\x -> f x)
+two = \f -> (\x -> f (f x))
+
+lambda_add m n = \f -> (\x -> (\x -> ((m f) x)) ((m f) x))
+
+-- lambda_add one one
+-- => \f -> (\x -> (\x -> ((\f -> (\x -> f x) f) x)) ((\f -> (\x -> f x) f) x))
+-- => \f -> (\x -> (\x -> (((\f -> (\x -> f x)) f) x)) (((\f -> (\x -> f x)) f) x))
+-- => \f -> (\x -> (\x -> f x) (f x))
+-- => \f -> (\x -> f (f x))
+-- => 2
+
+-- lambda_add one two
+-- => \f -> (\x -> (\x -> f x) (((\f -> (\x -> f (f x))) f) x))
+-- => \f -> (\x -> (\x -> f x) (f (f x)))
+-- => \f -> (\x -> f (f (f x)))
+-- => 3
