@@ -181,3 +181,31 @@ lambda_add m n = \f -> (\x -> (\x -> ((m f) x)) ((m f) x))
 -- => \f -> (\x -> (\x -> f x) (f (f x)))
 -- => \f -> (\x -> f (f (f x)))
 -- => 3
+
+
+add_interval x y =
+  make_interval (lower_bound x + lower_bound y)
+                (upper_bound x + upper_bound y)
+
+mul_interval x y =
+    let p1 = lower_bound x * lower_bound y
+        p2 = lower_bound x * upper_bound y
+        p3 = upper_bound x * lower_bound y
+        p4 = upper_bound x * upper_bound y
+    in make_interval (minimum [p1, p2, p3, p4])
+                     (maximum [p1, p2, p3, p4])
+
+div_interval x y =
+  mul_interval x
+              (make_interval (1 / upper_bound y) (1 / lower_bound y))
+
+-- test 2.7
+make_interval a b = (a, b)
+upper_bound (_, b) = b
+lower_bound (a, _) = a
+
+-- test 2.8
+sub_interval x y =
+  add_interval x
+               (make_interval (- upper_bound y) (- lower_bound y))
+
