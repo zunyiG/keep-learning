@@ -209,3 +209,29 @@ sub_interval x y =
   add_interval x
                (make_interval (- upper_bound y) (- lower_bound y))
 
+-- test 2.9
+width_interval x =
+  (upper_bound x - lower_bound x) / 2
+
+
+-- width_interval (add_interval x y)
+-- => width_interval ( make_interval (lower_bound x + lower_bound y) (upper_bound x + upper_bound y))
+-- => ((upper_bound x + upper_bound y) - (lower_bound x + lower_bound y)) / 2
+-- => (upper_bound x + upper_bound y - lower_bound x - lower_bound y) / 2
+-- => ((upper_bound x - lower_bound x) + (upper_bound y - lower_bound y)) / 2
+-- => (upper_bound x - lower_bound x) / 2 + (upper_bound y - lower_bound y) / 2
+-- => width_interval x + width_interval y
+
+-- width_interval (sub_interval x y)
+-- => width_interval (add_interval x (make_interval (- upper_bound y) (- lower_bound y)))
+-- => width_interval (add_interval x (make_interval (- upper_bound y) (- lower_bound y)))
+-- => width_interval (make_interval (lower_bound x - upper_bound y) (upper_bound x - lower_bound y)
+-- => ((upper_bound x - lower_bound y) - (lower_bound x - upper_bound y)) / 2
+-- => (upper_bound x  - lower_bound x + upper_bound y - lower_bound y) / 2
+-- => (upper_bound x  - lower_bound x) / 2 + (upper_bound y - lower_bound y) / 2
+-- => width_interval x + width_interval y
+
+-- width_interval (7,10) / width_interval (3,4) => 3.0
+-- width_interval $ div_interval (7,10) (3,4) => 0.7916666666666665
+-- width_interval $ mul_interval (7,10) (3,4) => 9.5
+
