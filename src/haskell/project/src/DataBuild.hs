@@ -276,3 +276,28 @@ mul_interval' x y
         b = upper_bound x
         c = lower_bound y
         d = upper_bound y
+
+make_center_width c w = make_interval (c - w) (c + w)
+
+center i = (lower_bound i + upper_bound i) / 2
+
+width i = (upper_bound i - lower_bound i) / 2
+
+-- test 2.12
+make_center_percent c p = make_interval (c - c * p) (c + c * p)
+
+percent i = (upper_bound i - lower_bound i) / 2 / center i
+
+-- test 2.13
+-- percent (mul_interval (make_center_percent c1 p1) (make_center_percent c2 p2)) 假设区间端点都为正
+-- => percent (mul_interval (make_center_percent c1 p1) (make_center_percent c2 p2))
+-- => percent (mul_interval (make_interval (c1 - c1 * p1) (c1 + c1 * p1)) (make_interval (c2 - c2 * p2) (c2 + c2 * p2)))
+-- => percent (make_interval ((c1 - c1 * p1) * (c2 - c2 * p2)) ((c1 + c1 * p1) * (c2 + c2 * p2)))
+-- => (((c1 + c1 * p1) * (c2 + c2 * p2)) - ((c1 - c1 * p1) * (c2 - c2 * p2))) / 2 / (( (((c1 + c1 * p1) * (c2 + c2 * p2)) + ((c1 - c1 * p1) * (c2 - c2 * p2))) ) /2)
+-- => (((c1 + c1 * p1) * (c2 + c2 * p2)) - ((c1 - c1 * p1) * (c2 - c2 * p2))) / (((c1 + c1 * p1) * (c2 + c2 * p2)) + ((c1 - c1 * p1) * (c2 - c2 * p2)))
+-- =>(c1c2 + c1c2p2 + c1p1c2 + c1p1c2p2 - (c1c2 - c1c2p2 - c1p1c2 + c1p1c2p2)) / (c1c2 + c1c2p2 + c1p1c2 + c1p1c2p2 + (c1c2 - c1c2p2 - c1p1c2 + c1p1c2p2))
+-- => (2*c1c2p2 + 2*c1p1c2) / (2*c1c2 + 2*c1p1c2p2)
+-- => (p2 + p1) / (1 + p1p2)
+
+mul_percent p1 p2 = (p2 + p1) / (1 + p1*p2)
+
