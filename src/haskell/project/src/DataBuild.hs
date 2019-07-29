@@ -235,3 +235,10 @@ width_interval x =
 -- width_interval $ div_interval (7,10) (3,4) => 0.7916666666666665
 -- width_interval $ mul_interval (7,10) (3,4) => 9.5
 
+-- test 2.10
+div_interval' x y
+  | upper_bound y == 0 || lower_bound y == 0 = error "Zero cannot be divided"
+  | otherwise = mul_interval x
+                             (make_interval (1 / upper_bound y) (1 / lower_bound y))
+
+-- test 2.11
