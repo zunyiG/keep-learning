@@ -242,3 +242,37 @@ div_interval' x y
                              (make_interval (1 / upper_bound y) (1 / lower_bound y))
 
 -- test 2.11
+-- (a,b) (c,d)
+-- 1. a,b,c,d >= 0 => (a*c, b*d)
+-- 2. a < 0; b,c,d >= 0 => (a*d, b*d)
+-- 3. b < 0; a,c,d >= 0 => (b*d, a*d) X
+-- 4. c < 0; a,b,d >= 0 => (b*c, b*d)
+-- 5. d < 0; a,b,c >= 0 => (b*d, b*c) X
+-- 6. a,b < 0; c,d >= 0 => (b*d, a*c)
+-- 7. a,c < 0; b,d >= 0 => (a*d || b*c, a*c || b*d)
+-- 8. a,d < 0; b,c >= 0 => (b*d, a*c) X
+-- 9. b,c < 0; a,d >= 0 => (b*d, a*c) X
+-- 10. b,d < 0; a,c >= 0 => (b*c, b*d) X
+-- 11. c,d < 0; a,b >= 0 => (b*d, a*c)
+-- 12. a,b,c < 0; d >= 0 => (b*d, b*c)
+-- 13. a,b,d < 0; c >= 0 => (b*c, b*d) X
+-- 14. a,c,d < 0; b >= 0 => (b*d, a*d)
+-- 15. b,c,d < 0; a >= 0 => (a*d, b*d) X
+-- 16. a,b,c,d < 0 => (a*c, b*d)
+
+mul_interval' x y
+  | a >= 0 && b >= 0 && c >= 0 && d >= 0 = make_interval (a*c) (b*d)
+  | c < 0 && d < 0 && a < 0 && b < 0 = make_interval (a*c) (b*d)
+  | a < 0 && b >= 0 && c >= 0 && d >= 0 = make_interval (a*d) (b*d)
+  | c < 0 && a >= 0 && b >= 0 && d >= 0 = make_interval (b*c) (b*d)
+  | a < 0 && b < 0 && c >= 0 && d >= 0 = make_interval (b*d) (a*c)
+  | c < 0 && d < 0 && a >= 0 && b >= 0 = make_interval (b*d) (a*c)
+  | a < 0 && b < 0 && c < 0 && d >= 0 = make_interval (b*d) (b*c)
+  | a < 0 && c < 0 && d < 0 && b >= 0 = make_interval (b*d) (a*d)
+  | a < 0 && c < 0 && b >= 0 && d >= 0 = make_interval (if a*d < b*c then a*d else b*c)
+                                                       (if a*c > b*d then a*c else b*d)
+  | otherwise = error "cannot be multiplication"
+  where a = lower_bound x
+        b = upper_bound x
+        c = lower_bound y
+        d = upper_bound y
