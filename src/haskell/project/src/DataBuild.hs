@@ -299,6 +299,9 @@ percent i = width i / center i
 -- => (2*c1c2p2 + 2*c1p1c2) / (2*c1c2 + 2*c1p1c2p2)
 -- => (p2 + p1) / (1 + p1p2)  当p1 p2 都非常小时，可以忽略p1p2
 -- => p1 + p2
+-- 除法计算也是 (p2 + p1) / (1 + p1p2)
+-- 加法 (c1p1 + c2p2)/ (c1 + c2)
+
 
 mul_percent p1 p2 = (p2 + p1) / (1 + p1*p2)
 
