@@ -301,3 +301,12 @@ percent i = (upper_bound i - lower_bound i) / 2 / center i
 
 mul_percent p1 p2 = (p2 + p1) / (1 + p1*p2)
 
+-- test 2.14
+par1 r1 r2 = div_interval (mul_interval r1 r2)
+                          (add_interval r1 r2)
+
+par2 r1 r2 = div_interval one
+                          (add_interval (div_interval one r1)
+                                        (div_interval one r2))
+  where one = make_interval 1 1
+
