@@ -286,7 +286,7 @@ width i = (upper_bound i - lower_bound i) / 2
 -- test 2.12
 make_center_percent c p = make_interval (c - c * p) (c + c * p)
 
-percent i = (upper_bound i - lower_bound i) / 2 / center i
+percent i = width i / center i
 
 -- test 2.13
 -- percent (mul_interval (make_center_percent c1 p1) (make_center_percent c2 p2)) 假设区间端点都为正
@@ -297,7 +297,8 @@ percent i = (upper_bound i - lower_bound i) / 2 / center i
 -- => (((c1 + c1 * p1) * (c2 + c2 * p2)) - ((c1 - c1 * p1) * (c2 - c2 * p2))) / (((c1 + c1 * p1) * (c2 + c2 * p2)) + ((c1 - c1 * p1) * (c2 - c2 * p2)))
 -- =>(c1c2 + c1c2p2 + c1p1c2 + c1p1c2p2 - (c1c2 - c1c2p2 - c1p1c2 + c1p1c2p2)) / (c1c2 + c1c2p2 + c1p1c2 + c1p1c2p2 + (c1c2 - c1c2p2 - c1p1c2 + c1p1c2p2))
 -- => (2*c1c2p2 + 2*c1p1c2) / (2*c1c2 + 2*c1p1c2p2)
--- => (p2 + p1) / (1 + p1p2)
+-- => (p2 + p1) / (1 + p1p2)  当p1 p2 都非常小时，可以忽略p1p2
+-- => p1 + p2
 
 mul_percent p1 p2 = (p2 + p1) / (1 + p1*p2)
 
@@ -310,3 +311,21 @@ par2 r1 r2 = div_interval one
                                         (div_interval one r2))
   where one = make_interval 1 1
 
+-- par1 (make_interval 2 3) (make_interval 3 4) => (0.8571428571428571,2.4000000000000004)
+-- par2 (make_interval 2 3) (make_interval 3 4) => (1.2000000000000002,1.7142857142857144)
+-- mul_interval (div_interval (make_interval 1 2) (make_interval 3 4)) (make_interval 3 4) => (0.75,2.6666666666666665)
+-- div_interval (make_interval 2 3) (make_interval 4 5) => (0.4,0.75)
+-- div_interval (make_interval 2 3) (make_interval 2 3) => (0.6666666666666666,1.5)
+-- div_interval (make_center_percent 100 0.001) (make_center_percent 100 0.001) => (0.9980019980019981,1.002002002002002)
+-- mul_interval (div_interval (make_center_percent 100 0.001) (make_center_percent 100 0.001)) (make_center_percent 100 0.001) => (99.7003996003996,100.30040040040039)
+-- 区间宽度更小时可以使结果更加精确
+
+-- test 2.15
+-- par2 = div_interval (mul_interval r1 r2) (add_interval r1 r2)
+-- => mul_interval (mul_interval r1 r2) (div_interval one (add_interval r1 r2))
+-- 说法正确, 减少非确定性区间的乘积计算可以是结果更加准确
+-- 如果宽度变化为0，乘法或除法运算后的区间宽度百分比变化为 0
+
+-- test 2.16
+-- 因为非确定区间的运算会随着乘除运算的进行使区间宽度不断增加
+--  (p1 + p2) / (1 + p1*p2)
