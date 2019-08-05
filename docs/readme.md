@@ -81,5 +81,3 @@
 ## WebAssembly
 
 - AssemblyScript
-
-方法的三要素 `输入` `输出` `环境`

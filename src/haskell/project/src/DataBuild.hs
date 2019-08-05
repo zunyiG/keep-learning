@@ -339,3 +339,13 @@ par2 r1 r2 = div_interval one
 --      2.假定另一个区间的误差为 0， 计算出值 s2
 --      3.取区间的最大最小值为区间值
 -- 目前没有想到解决方案
+
+-- test 2.17
+last_pair (x:[]) = x
+last_pair (x:xs) = last_pair xs
+
+-- test 2.18
+reverse' (x:[]) = [x]
+reverse' (x:xs) = reverse xs ++ [x]
+
+-- test 2.19
