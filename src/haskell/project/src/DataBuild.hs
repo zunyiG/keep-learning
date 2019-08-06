@@ -360,3 +360,12 @@ cc amount coin_values
         except_first_denomination (_:xs) = xs
         no_more = null
 -- 不会影响， 因为此递归过程会将所包含的组合都计算一遍，顺序不影响所包含的组合
+
+-- test 2.20
+same_parity (x:[]) = [x]
+same_parity (x:xs)
+        | odd x == odd (head xs) = x : same_parity xs
+        | otherwise = same_parity (x : tail xs)
+-- same_parity [2,3,4,5,6,7,8,9] => [2,4,6,8]
+-- same_parity [1,2,3,4,5,6,7] => [1,3,5,7]
+
