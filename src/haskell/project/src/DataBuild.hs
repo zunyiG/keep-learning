@@ -349,3 +349,14 @@ reverse' (x:[]) = [x]
 reverse' (x:xs) = reverse xs ++ [x]
 
 -- test 2.19
+us_coins = [50, 25, 10, 5, 1]
+uk_coins = [100, 50, 20, 10, 5, 2, 1, 0.5]
+cc amount coin_values
+  | amount == 0                       = 1
+  | amount < 0 || no_more coin_values = 0
+  | otherwise                         = (+) (cc amount (except_first_denomination coin_values))
+                                            (cc (amount - first_denomination coin_values) coin_values)
+  where first_denomination (x:_) = x
+        except_first_denomination (_:xs) = xs
+        no_more = null
+-- 不会影响， 因为此递归过程会将所包含的组合都计算一遍，顺序不影响所包含的组合
