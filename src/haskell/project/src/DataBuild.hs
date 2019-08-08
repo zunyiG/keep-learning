@@ -369,3 +369,24 @@ same_parity (x:xs)
 -- same_parity [2,3,4,5,6,7,8,9] => [2,4,6,8]
 -- same_parity [1,2,3,4,5,6,7] => [1,3,5,7]
 
+-- test 2.21
+square_list [] = []
+square_list (x:xs) = (x*x) : square_list xs
+
+square_list' = map (\x -> x*x)
+
+-- test 2.22
+square_list'' items =
+  let iter things answer
+        | null things = answer
+        | otherwise = iter (tail things) (answer ++ [head things * head things])
+  in iter items []
+
+-- test 2.23
+for_each f items =
+  let iter things none
+        | null things = none
+        | otherwise = iter (tail things) (f (head things) + none)
+  in iter items (head items)
+
+-- 在 haskell 中不能计算没有返回值的方法
