@@ -4,8 +4,8 @@ module DataBuild
 
 import Debug.Trace
 
-make_rat :: (Integral a) => a -> a -> (a, a)
-make_rat n d = (floor $ fromIntegral n / fromIntegral g, floor $ fromIntegral d / fromIntegral g)
+makeRat :: (Integral a) => a -> a -> (a, a)
+makeRat n d = (floor $ fromIntegral n / fromIntegral g, floor $ fromIntegral d / fromIntegral g)
   where g = gcd n d
 
 number :: (Integral a) => (a, a) -> a
@@ -14,26 +14,26 @@ number (a, _) = a
 denom :: (Integral a) => (a, a) -> a
 denom (_, a) = a
 
-add_rat :: (Integral a) => (a, a) -> (a, a) -> (a, a)
-add_rat x y = ((number x * denom y) + (number y * denom x), denom x * denom y)
+addRat :: (Integral a) => (a, a) -> (a, a) -> (a, a)
+addRat x y = ((number x * denom y) + (number y * denom x), denom x * denom y)
 
-sub_rat :: (Integral a) => (a, a) -> (a, a) -> (a, a)
-sub_rat x y = ((number x * denom y) - (number y * denom x), denom x * denom y)
+subRat :: (Integral a) => (a, a) -> (a, a) -> (a, a)
+subRat x y = ((number x * denom y) - (number y * denom x), denom x * denom y)
 
-mul_rat :: (Integral a) => (a, a) -> (a, a) -> (a, a)
-mul_rat x y = (number x * number y, denom x * denom y)
+mulRat :: (Integral a) => (a, a) -> (a, a) -> (a, a)
+mulRat x y = (number x * number y, denom x * denom y)
 
-div_rat :: (Integral a) => (a, a) -> (a, a) -> (a, a)
-div_rat x y = (number x * denom y, denom x * number y)
+divRat :: (Integral a) => (a, a) -> (a, a) -> (a, a)
+divRat x y = (number x * denom y, denom x * number y)
 
-equal_rat :: (Integral a) => (a, a) -> (a, a) -> Bool
-equal_rat x y = number x * denom y == denom x * number y
+equalRat :: (Integral a) => (a, a) -> (a, a) -> Bool
+equalRat x y = number x * denom y == denom x * number y
 
-print_rat :: (Integral a, Show a) => (a, a) -> String
-print_rat (a, b) = show a ++ "/" ++ show b
+printRat :: (Integral a, Show a) => (a, a) -> String
+printRat (a, b) = show a ++ "/" ++ show b
 
 -- test 2.1
-make_rat' n d
+makeRat' n d
   | n * d > 0 = (abs n', abs d')
   | otherwise = (- abs n', abs d')
   where g  = gcd n d
@@ -43,53 +43,53 @@ make_rat' n d
 
 
 -- test 2.2
-make_segment :: a -> a -> (a, a)
-make_segment start end = (start, end)
+makeSegment :: a -> a -> (a, a)
+makeSegment start end = (start, end)
 
-start_segment :: (a,a) -> a
-start_segment (start, _) = start
-end_segment (_, end) = end
+startSegment :: (a,a) -> a
+startSegment (start, _) = start
+endSegment (_, end) = end
 
-make_point :: a -> a -> (a, a)
-make_point x y = (x, y)
+makePoint :: a -> a -> (a, a)
+makePoint x y = (x, y)
 
-x_point :: (a,a) -> a
-x_point (x, _) = x
-y_point (_, y) = y
+xPoint :: (a,a) -> a
+xPoint (x, _) = x
+yPoint (_, y) = y
 
-midpoint_segment seg = ((x_point start_point + x_point end_point)/2, (y_point start_point + y_point end_point)/2)
-  where start_point = start_segment(seg)
-        end_point = end_segment(seg)
+midpointSegment seg = ((xPoint startPoint + xPoint endPoint)/2, (yPoint startPoint + yPoint endPoint)/2)
+  where startPoint = startSegment(seg)
+        endPoint = endSegment(seg)
 
--- midpoint_segment $ make_segment (make_point 1 5) (make_point 3 8) => (2.0, 6.5)
+-- midpointSegment $ makeSegment (makePoint 1 5) (makePoint 3 8) => (2.0, 6.5)
 
 -- test 2.3
-make_rect :: a -> a -> a -> a -> (a, a, a, a)
-make_rect p1 p2 p3 p4 = (p1, p2, p3, p4)
+makeRect :: a -> a -> a -> a -> (a, a, a, a)
+makeRect p1 p2 p3 p4 = (p1, p2, p3, p4)
 
--- top_left (point, _, _, _) = point
--- top_right (_, point, _, _) = point
--- bottom_left (_, _, point, _) = point
--- bottom_right (_, _, _, point) = point
+-- topLeft (point, _, _, _) = point
+-- topRight (_, point, _, _) = point
+-- bottomLeft (_, _, point, _) = point
+-- bottomRight (_, _, _, point) = point
 
-perimeters_rect rect =((x_point (top_right rect) - x_point (bottom_left rect))
-                      + (y_point (top_right rect) - y_point (bottom_left rect))) * 2
-area_rect rect = (x_point (top_right rect) - x_point (bottom_left rect))
-                 * (y_point (top_right rect) - y_point (bottom_left rect))
+perimetersRect rect =((xPoint (topRight rect) - xPoint (bottomLeft rect))
+                      + (yPoint (topRight rect) - yPoint (bottomLeft rect))) * 2
+areaRect rect = (xPoint (topRight rect) - xPoint (bottomLeft rect))
+                 * (yPoint (topRight rect) - yPoint (bottomLeft rect))
 
--- perimeters_rect $ make_rect (make_point 0 2) (make_point 4 2) (make_point 0 0) (make_point 4 0)
--- area_rect $ make_rect (make_point 0 2) (make_point 4 2) (make_point 0 0) (make_point 4 0)
+-- perimetersRect $ makeRect (makePoint 0 2) (makePoint 4 2) (makePoint 0 0) (makePoint 4 0)
+-- areaRect $ makeRect (makePoint 0 2) (makePoint 4 2) (makePoint 0 0) (makePoint 4 0)
 
-make_rect' :: a -> a -> a -> a -> ((a, a), (a, a))
-make_rect' p1 p2 p3 p4 = ((p1, p2), (p3, p4))
+makeRect' :: a -> a -> a -> a -> ((a, a), (a, a))
+makeRect' p1 p2 p3 p4 = ((p1, p2), (p3, p4))
 
-top_left ((point, _), _) = point
-top_right ((_, point), _) = point
-bottom_left (_, (point, _)) = point
-bottom_right (_, ( _, point)) = point
+topLeft ((point, _), _) = point
+topRight ((_, point), _) = point
+bottomLeft (_, (point, _)) = point
+bottomRight (_, ( _, point)) = point
 
--- perimeters_rect $ make_rect' (make_point 0 2) (make_point 4 2) (make_point 0 0) (make_point 4 0)
--- area_rect $ make_rect' (make_point 0 2) (make_point 4 2) (make_point 0 0) (make_point 4 0)
+-- perimetersRect $ makeRect' (makePoint 0 2) (makePoint 4 2) (makePoint 0 0) (makePoint 4 0)
+-- areaRect $ makeRect' (makePoint 0 2) (makePoint 4 2) (makePoint 0 0) (makePoint 4 0)
 
 -- example 2.1.3
 -- 分层的概念不仅可以用于更高层次的数据，更底层次的数据的定义也可以
@@ -150,96 +150,96 @@ cdr''' p =
 
 -- test 2.6
 zero = \f -> (\x -> x)
-add_1 n = \f -> (\x -> f ((n f) x))
--- add_1 zero
+add1 n = \f -> (\x -> f ((n f) x))
+-- add1 zero
 -- => \f -> (\x -> f (((\f -> (\x -> x)) f) x))
 -- => \f -> (\x -> f ((\x -> x) x))
 -- => \f -> (\x -> f x) => 1
 
--- add_1 add_1
+-- add1 add1
 -- => \f -> (\x -> f (((\f -> (\x -> f ((n f) x))) f) x))
 -- => \f -> (\x -> f (f((n f) x))))
 
--- add_1 add_1 zero
+-- add1 add1 zero
 -- => \f -> (\x -> f (f(((\f -> (\x -> x)) f) x))))
 -- => \f -> (\x -> f (f x)) => 2
 
 one = \f -> (\x -> f x)
 two = \f -> (\x -> f (f x))
 
-lambda_add m n = \f -> (\x -> (\x -> ((m f) x)) ((n f) x))
+lambdaAdd m n = \f -> (\x -> (\x -> ((m f) x)) ((n f) x))
 
--- lambda_add one one
+-- lambdaAdd one one
 -- => \f -> (\x -> (\x -> ((\f -> (\x -> f x) f) x)) ((\f -> (\x -> f x) f) x))
 -- => \f -> (\x -> (\x -> (((\f -> (\x -> f x)) f) x)) (((\f -> (\x -> f x)) f) x))
 -- => \f -> (\x -> (\x -> f x) (f x))
 -- => \f -> (\x -> f (f x))
 -- => 2
 
--- lambda_add one two
+-- lambdaAdd one two
 -- => \f -> (\x -> (\x -> f x) (((\f -> (\x -> f (f x))) f) x))
 -- => \f -> (\x -> (\x -> f x) (f (f x)))
 -- => \f -> (\x -> f (f (f x)))
 -- => 3
 
 
-add_interval x y =
-  make_interval (lower_bound x + lower_bound y)
-                (upper_bound x + upper_bound y)
+addInterval x y =
+  makeInterval (lowerBound x + lowerBound y)
+                (upperBound x + upperBound y)
 
-mul_interval x y =
-    let p1 = lower_bound x * lower_bound y
-        p2 = lower_bound x * upper_bound y
-        p3 = upper_bound x * lower_bound y
-        p4 = upper_bound x * upper_bound y
-    in make_interval (minimum [p1, p2, p3, p4])
+mulInterval x y =
+    let p1 = lowerBound x * lowerBound y
+        p2 = lowerBound x * upperBound y
+        p3 = upperBound x * lowerBound y
+        p4 = upperBound x * upperBound y
+    in makeInterval (minimum [p1, p2, p3, p4])
                      (maximum [p1, p2, p3, p4])
 
-div_interval x y =
-  mul_interval x
-              (make_interval (1 / upper_bound y) (1 / lower_bound y))
+divInterval x y =
+  mulInterval x
+              (makeInterval (1 / upperBound y) (1 / lowerBound y))
 
 -- test 2.7
-make_interval a b = (a, b)
-upper_bound (_, b) = b
-lower_bound (a, _) = a
+makeInterval a b = (a, b)
+upperBound (_, b) = b
+lowerBound (a, _) = a
 
 -- test 2.8
-sub_interval x y =
-  add_interval x
-               (make_interval (- upper_bound y) (- lower_bound y))
+subInterval x y =
+  addInterval x
+               (makeInterval (- upperBound y) (- lowerBound y))
 
 -- test 2.9
-width_interval x =
-  (upper_bound x - lower_bound x) / 2
+widthInterval x =
+  (upperBound x - lowerBound x) / 2
 
 
--- width_interval (add_interval x y)
--- => width_interval ( make_interval (lower_bound x + lower_bound y) (upper_bound x + upper_bound y))
--- => ((upper_bound x + upper_bound y) - (lower_bound x + lower_bound y)) / 2
--- => (upper_bound x + upper_bound y - lower_bound x - lower_bound y) / 2
--- => ((upper_bound x - lower_bound x) + (upper_bound y - lower_bound y)) / 2
--- => (upper_bound x - lower_bound x) / 2 + (upper_bound y - lower_bound y) / 2
--- => width_interval x + width_interval y
+-- widthInterval (addInterval x y)
+-- => widthInterval ( makeInterval (lowerBound x + lowerBound y) (upperBound x + upperBound y))
+-- => ((upperBound x + upperBound y) - (lowerBound x + lowerBound y)) / 2
+-- => (upperBound x + upperBound y - lowerBound x - lowerBound y) / 2
+-- => ((upperBound x - lowerBound x) + (upperBound y - lowerBound y)) / 2
+-- => (upperBound x - lowerBound x) / 2 + (upperBound y - lowerBound y) / 2
+-- => widthInterval x + widthInterval y
 
--- width_interval (sub_interval x y)
--- => width_interval (add_interval x (make_interval (- upper_bound y) (- lower_bound y)))
--- => width_interval (add_interval x (make_interval (- upper_bound y) (- lower_bound y)))
--- => width_interval (make_interval (lower_bound x - upper_bound y) (upper_bound x - lower_bound y)
--- => ((upper_bound x - lower_bound y) - (lower_bound x - upper_bound y)) / 2
--- => (upper_bound x  - lower_bound x + upper_bound y - lower_bound y) / 2
--- => (upper_bound x  - lower_bound x) / 2 + (upper_bound y - lower_bound y) / 2
--- => width_interval x + width_interval y
+-- widthInterval (subInterval x y)
+-- => widthInterval (addInterval x (makeInterval (- upperBound y) (- lowerBound y)))
+-- => widthInterval (addInterval x (makeInterval (- upperBound y) (- lowerBound y)))
+-- => widthInterval (makeInterval (lowerBound x - upperBound y) (upperBound x - lowerBound y)
+-- => ((upperBound x - lowerBound y) - (lowerBound x - upperBound y)) / 2
+-- => (upperBound x  - lowerBound x + upperBound y - lowerBound y) / 2
+-- => (upperBound x  - lowerBound x) / 2 + (upperBound y - lowerBound y) / 2
+-- => widthInterval x + widthInterval y
 
--- width_interval (7,10) / width_interval (3,4) => 3.0
--- width_interval $ div_interval (7,10) (3,4) => 0.7916666666666665
--- width_interval $ mul_interval (7,10) (3,4) => 9.5
+-- widthInterval (7,10) / widthInterval (3,4) => 3.0
+-- widthInterval $ divInterval (7,10) (3,4) => 0.7916666666666665
+-- widthInterval $ mulInterval (7,10) (3,4) => 9.5
 
 -- test 2.10
-div_interval' x y
-  | upper_bound y == 0 || lower_bound y == 0 = error "Zero cannot be divided"
-  | otherwise = mul_interval x
-                             (make_interval (1 / upper_bound y) (1 / lower_bound y))
+divInterval' x y
+  | upperBound y == 0 || lowerBound y == 0 = error "Zero cannot be divided"
+  | otherwise = mulInterval x
+                             (makeInterval (1 / upperBound y) (1 / lowerBound y))
 
 -- test 2.11
 -- (a,b) (c,d)
@@ -260,39 +260,39 @@ div_interval' x y
 -- 15. b,c,d < 0; a >= 0 => (a*d, b*d) X
 -- 16. a,b,c,d < 0 => (a*c, b*d)
 
-mul_interval' x y
-  | a >= 0 && b >= 0 && c >= 0 && d >= 0 = make_interval (a*c) (b*d)
-  | c < 0 && d < 0 && a < 0 && b < 0 = make_interval (a*c) (b*d)
-  | a < 0 && b >= 0 && c >= 0 && d >= 0 = make_interval (a*d) (b*d)
-  | c < 0 && a >= 0 && b >= 0 && d >= 0 = make_interval (b*c) (b*d)
-  | a < 0 && b < 0 && c >= 0 && d >= 0 = make_interval (b*d) (a*c)
-  | c < 0 && d < 0 && a >= 0 && b >= 0 = make_interval (b*d) (a*c)
-  | a < 0 && b < 0 && c < 0 && d >= 0 = make_interval (b*d) (b*c)
-  | a < 0 && c < 0 && d < 0 && b >= 0 = make_interval (b*d) (a*d)
-  | a < 0 && c < 0 && b >= 0 && d >= 0 = make_interval (if a*d < b*c then a*d else b*c)
+mulInterval' x y
+  | a >= 0 && b >= 0 && c >= 0 && d >= 0 = makeInterval (a*c) (b*d)
+  | c < 0 && d < 0 && a < 0 && b < 0 = makeInterval (a*c) (b*d)
+  | a < 0 && b >= 0 && c >= 0 && d >= 0 = makeInterval (a*d) (b*d)
+  | c < 0 && a >= 0 && b >= 0 && d >= 0 = makeInterval (b*c) (b*d)
+  | a < 0 && b < 0 && c >= 0 && d >= 0 = makeInterval (b*d) (a*c)
+  | c < 0 && d < 0 && a >= 0 && b >= 0 = makeInterval (b*d) (a*c)
+  | a < 0 && b < 0 && c < 0 && d >= 0 = makeInterval (b*d) (b*c)
+  | a < 0 && c < 0 && d < 0 && b >= 0 = makeInterval (b*d) (a*d)
+  | a < 0 && c < 0 && b >= 0 && d >= 0 = makeInterval (if a*d < b*c then a*d else b*c)
                                                        (if a*c > b*d then a*c else b*d)
   | otherwise = error "cannot be multiplication"
-  where a = lower_bound x
-        b = upper_bound x
-        c = lower_bound y
-        d = upper_bound y
+  where a = lowerBound x
+        b = upperBound x
+        c = lowerBound y
+        d = upperBound y
 
-make_center_width c w = make_interval (c - w) (c + w)
+makeCenterWidth c w = makeInterval (c - w) (c + w)
 
-center i = (lower_bound i + upper_bound i) / 2
+center i = (lowerBound i + upperBound i) / 2
 
-width i = (upper_bound i - lower_bound i) / 2
+width i = (upperBound i - lowerBound i) / 2
 
 -- test 2.12
-make_center_percent c p = make_interval (c - c * p) (c + c * p)
+makeCenterPercent c p = makeInterval (c - c * p) (c + c * p)
 
 percent i = width i / center i
 
 -- test 2.13
--- percent (mul_interval (make_center_percent c1 p1) (make_center_percent c2 p2)) 假设区间端点都为正
--- => percent (mul_interval (make_center_percent c1 p1) (make_center_percent c2 p2))
--- => percent (mul_interval (make_interval (c1 - c1 * p1) (c1 + c1 * p1)) (make_interval (c2 - c2 * p2) (c2 + c2 * p2)))
--- => percent (make_interval ((c1 - c1 * p1) * (c2 - c2 * p2)) ((c1 + c1 * p1) * (c2 + c2 * p2)))
+-- percent (mulInterval (makeCenterPercent c1 p1) (makeCenterPercent c2 p2)) 假设区间端点都为正
+-- => percent (mulInterval (makeCenterPercent c1 p1) (makeCenterPercent c2 p2))
+-- => percent (mulInterval (makeInterval (c1 - c1 * p1) (c1 + c1 * p1)) (makeInterval (c2 - c2 * p2) (c2 + c2 * p2)))
+-- => percent (makeInterval ((c1 - c1 * p1) * (c2 - c2 * p2)) ((c1 + c1 * p1) * (c2 + c2 * p2)))
 -- => (((c1 + c1 * p1) * (c2 + c2 * p2)) - ((c1 - c1 * p1) * (c2 - c2 * p2))) / 2 / (( (((c1 + c1 * p1) * (c2 + c2 * p2)) + ((c1 - c1 * p1) * (c2 - c2 * p2))) ) /2)
 -- => (((c1 + c1 * p1) * (c2 + c2 * p2)) - ((c1 - c1 * p1) * (c2 - c2 * p2))) / (((c1 + c1 * p1) * (c2 + c2 * p2)) + ((c1 - c1 * p1) * (c2 - c2 * p2)))
 -- =>(c1c2 + c1c2p2 + c1p1c2 + c1p1c2p2 - (c1c2 - c1c2p2 - c1p1c2 + c1p1c2p2)) / (c1c2 + c1c2p2 + c1p1c2 + c1p1c2p2 + (c1c2 - c1c2p2 - c1p1c2 + c1p1c2p2))
@@ -305,29 +305,29 @@ percent i = width i / center i
 -- 乘除法(宽度) (c1w2 + c2w1)
 
 
-mul_percent p1 p2 = (p2 + p1) / (1 + p1*p2)
+mulPercent p1 p2 = (p2 + p1) / (1 + p1*p2)
 
 -- test 2.14
-par1 r1 r2 = div_interval (mul_interval r1 r2)
-                          (add_interval r1 r2)
+par1 r1 r2 = divInterval (mulInterval r1 r2)
+                          (addInterval r1 r2)
 
-par2 r1 r2 = div_interval one
-                          (add_interval (div_interval one r1)
-                                        (div_interval one r2))
-  where one = make_interval 1 1
+par2 r1 r2 = divInterval one
+                          (addInterval (divInterval one r1)
+                                        (divInterval one r2))
+  where one = makeInterval 1 1
 
--- par1 (make_interval 2 3) (make_interval 3 4) => (0.8571428571428571,2.4000000000000004)
--- par2 (make_interval 2 3) (make_interval 3 4) => (1.2000000000000002,1.7142857142857144)
--- mul_interval (div_interval (make_interval 1 2) (make_interval 3 4)) (make_interval 3 4) => (0.75,2.6666666666666665)
--- div_interval (make_interval 2 3) (make_interval 4 5) => (0.4,0.75)
--- div_interval (make_interval 2 3) (make_interval 2 3) => (0.6666666666666666,1.5)
--- div_interval (make_center_percent 100 0.001) (make_center_percent 100 0.001) => (0.9980019980019981,1.002002002002002)
--- mul_interval (div_interval (make_center_percent 100 0.001) (make_center_percent 100 0.001)) (make_center_percent 100 0.001) => (99.7003996003996,100.30040040040039)
+-- par1 (makeInterval 2 3) (makeInterval 3 4) => (0.8571428571428571,2.4000000000000004)
+-- par2 (makeInterval 2 3) (makeInterval 3 4) => (1.2000000000000002,1.7142857142857144)
+-- mulInterval (divInterval (makeInterval 1 2) (makeInterval 3 4)) (makeInterval 3 4) => (0.75,2.6666666666666665)
+-- divInterval (makeInterval 2 3) (makeInterval 4 5) => (0.4,0.75)
+-- divInterval (makeInterval 2 3) (makeInterval 2 3) => (0.6666666666666666,1.5)
+-- divInterval (makeCenterPercent 100 0.001) (makeCenterPercent 100 0.001) => (0.9980019980019981,1.002002002002002)
+-- mulInterval (divInterval (makeCenterPercent 100 0.001) (makeCenterPercent 100 0.001)) (makeCenterPercent 100 0.001) => (99.7003996003996,100.30040040040039)
 -- 区间宽度更小时可以使结果更加精确
 
 -- test 2.15
--- par2 = div_interval (mul_interval r1 r2) (add_interval r1 r2)
--- => mul_interval (mul_interval r1 r2) (div_interval one (add_interval r1 r2))
+-- par2 = divInterval (mulInterval r1 r2) (addInterval r1 r2)
+-- => mulInterval (mulInterval r1 r2) (divInterval one (addInterval r1 r2))
 -- 说法正确, 减少非确定性区间的乘积计算可以是结果更加准确
 -- 如果宽度变化为0，乘法或除法运算后的区间宽度百分比变化为 0
 
@@ -341,52 +341,59 @@ par2 r1 r2 = div_interval one
 -- 目前没有想到解决方案
 
 -- test 2.17
-last_pair (x:[]) = x
-last_pair (x:xs) = last_pair xs
+lastPair (x:[]) = x
+lastPair (x:xs) = lastPair xs
 
 -- test 2.18
 reverse' (x:[]) = [x]
 reverse' (x:xs) = reverse xs ++ [x]
 
 -- test 2.19
-us_coins = [50, 25, 10, 5, 1]
-uk_coins = [100, 50, 20, 10, 5, 2, 1, 0.5]
-cc amount coin_values
+usCoins = [50, 25, 10, 5, 1]
+ukCoins = [100, 50, 20, 10, 5, 2, 1, 0.5]
+cc amount coinValues
   | amount == 0                       = 1
-  | amount < 0 || no_more coin_values = 0
-  | otherwise                         = (+) (cc amount (except_first_denomination coin_values))
-                                            (cc (amount - first_denomination coin_values) coin_values)
-  where first_denomination (x:_) = x
-        except_first_denomination (_:xs) = xs
-        no_more = null
+  | amount < 0 || noMore coinValues = 0
+  | otherwise                         = (+) (cc amount (exceptFirstDenomination coinValues))
+                                            (cc (amount - firstDenomination coinValues) coinValues)
+  where firstDenomination (x:_) = x
+        exceptFirstDenomination (_:xs) = xs
+        noMore = null
 -- 不会影响， 因为此递归过程会将所包含的组合都计算一遍，顺序不影响所包含的组合
 
 -- test 2.20
-same_parity (x:[]) = [x]
-same_parity (x:xs)
-        | odd x == odd (head xs) = x : same_parity xs
-        | otherwise = same_parity (x : tail xs)
--- same_parity [2,3,4,5,6,7,8,9] => [2,4,6,8]
--- same_parity [1,2,3,4,5,6,7] => [1,3,5,7]
+sameParity (x:[]) = [x]
+sameParity (x:xs)
+        | odd x == odd (head xs) = x : sameParity xs
+        | otherwise = sameParity (x : tail xs)
+-- sameParity [2,3,4,5,6,7,8,9] => [2,4,6,8]
+-- sameParity [1,2,3,4,5,6,7] => [1,3,5,7]
 
 -- test 2.21
-square_list [] = []
-square_list (x:xs) = (x*x) : square_list xs
+squareList [] = []
+squareList (x:xs) = (x*x) : squareList xs
 
-square_list' = map (\x -> x*x)
+squareList' = map (\x -> x*x)
 
 -- test 2.22
-square_list'' items =
+squareList'' items =
   let iter things answer
         | null things = answer
         | otherwise = iter (tail things) (answer ++ [head things * head things])
   in iter items []
 
 -- test 2.23
-for_each f items =
+forEach f items =
   let iter things none
         | null things = none
         | otherwise = iter (tail things) (f (head things) + none)
   in iter items (head items)
+-- forEach (\x -> trace (show x) x) [1,2,3,4,5]
 
 -- 在 haskell 中不能计算没有返回值的方法
+
+-- example 2.2.2
+countLeavels :: (L a)
+countLeavels [x]
+countLeavels [x]
+countLeavels (x:xs)
