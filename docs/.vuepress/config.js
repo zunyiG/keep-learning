@@ -41,7 +41,8 @@ module.exports = {
         '03.function',
         '04.recursion',
         '05.high-order',
-        '06.module'
+        '06.module',
+        '07.build-typeclass',
       ],
       '/typescript/':[
         '',
