@@ -94,13 +94,13 @@ bottomRight (_, ( _, point)) = point
 -- example 2.1.3
 -- 分层的概念不仅可以用于更高层次的数据，更底层次的数据的定义也可以
 -- 实现一个序对
-cons x y = \m -> if m == 0 then x else if m == 1 then y else error "Argument not 0 or 1 -- CONS "
-car x = x 0
-cdr x = x 1
+cons' x y = \m -> if m == 0 then x else if m == 1 then y else error "Argument not 0 or 1 -- CONS "
+car' x = x 0
+cdr' x = x 1
 
 -- test 2.4
-cons' x y = \m -> m x y
-car' z = z (\p q -> p)
+cons x y = \m -> m x y
+car z = z (\p q -> p)
 
 -- 代换模型
 -- car' (cons' x y)
@@ -109,7 +109,7 @@ car' z = z (\p q -> p)
 -- => (\p q -> p) x y
 -- => x
 
-cdr' z = z (\p q -> q)
+cdr z = z (\p q -> q)
 
 -- test 2.5
 -- 由于 2 和 3 互质，所有她们的n次方也将互质，所以对于任意 2^a*3^b 都只有唯一的 a 和 b
@@ -341,6 +341,8 @@ varCalc f x y =
       p4 = upperBound (f (makeCenterWidth (upperBound x) 0) (makeCenterWidth (upperBound y) 0))
   in makeInterval (minimum [p1, p2, p3, p4])
                 (maximum [p1, p2, p3, p4])
+-- varCalc par1 (3,4) (5,6) => (1.875,2.4000000000000004)
+-- varCalc par2 (3,4) (5,6) => (1.875,2.4000000000000004)
 
 -- test 2.17
 lastPair (x:[]) = x
