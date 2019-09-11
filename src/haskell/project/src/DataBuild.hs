@@ -328,17 +328,19 @@ par2 r1 r2 = divInterval one
 -- test 2.15
 -- par2 = divInterval (mulInterval r1 r2) (addInterval r1 r2)
 -- => mulInterval (mulInterval r1 r2) (divInterval one (addInterval r1 r2))
--- 说法正确, 减少非确定性区间的乘积计算可以是结果更加准确
+-- 说法正确, 减少非确定性区间的乘积计算可以使结果更加准确
 -- 如果宽度变化为0，乘法或除法运算后的区间宽度百分比变化为 0
 
 -- test 2.16
 -- 因为非确定区间的运算会随着运算的进行使区间宽度不断增加
---  (p1 + p2) / (1 + p1*p2)
-
--- todo 1.先假定其中区间的误差为 0， 计算出值 s1
---      2.假定另一个区间的误差为 0， 计算出值 s2
---      3.取区间的最大最小值为区间值
--- 目前没有想到解决方案
+-- 分别取各个区间的最小值最大值，计算出的值得最小值最大值即为结果区间
+varCalc f x y =
+  let p1 = upperBound (f (makeCenterWidth (lowerBound x) 0) (makeCenterWidth (lowerBound y) 0))
+      p2 = upperBound (f (makeCenterWidth (lowerBound x) 0) (makeCenterWidth (upperBound y) 0))
+      p3 = upperBound (f (makeCenterWidth (upperBound x) 0) (makeCenterWidth (lowerBound y) 0))
+      p4 = upperBound (f (makeCenterWidth (upperBound x) 0) (makeCenterWidth (upperBound y) 0))
+  in makeInterval (minimum [p1, p2, p3, p4])
+                (maximum [p1, p2, p3, p4])
 
 -- test 2.17
 lastPair (x:[]) = x
@@ -393,8 +395,8 @@ forEach f items =
 -- 在 haskell 中不能计算没有返回值的方法
 
 -- example 2.2.2
-countLeavels :: (L a)
-countLeavels [x]
-countLeavels [x]
-countLeavels (x:xs)
+-- countLeavels :: (L a)
+-- countLeavels [x]
+-- countLeavels [x]
+-- countLeavels (x:xs)
 
