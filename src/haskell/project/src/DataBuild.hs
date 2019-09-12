@@ -376,8 +376,6 @@ listReverse :: List a -> List a
 listReverse Nil = Nil
 listReverse (Cons x xs) = listAppend (listReverse xs) (Cons x Nil)
 
-
-
 -- test 2.19
 usCoins = [50, 25, 10, 5, 1]
 ukCoins = [100, 50, 20, 10, 5, 2, 1, 0.5]
