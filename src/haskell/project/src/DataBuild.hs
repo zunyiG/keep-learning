@@ -350,21 +350,33 @@ varCalc f x y =
 
 data List a = Nil | Cons a (List a) deriving (Show)
 
-fromList :: [a] -> List a
-fromList (x:xs) = Cons x (fromList xs)
-fromList []     = Nil
+listFrom :: [a] -> List a
+listFrom (x:xs) = Cons x (listFrom xs)
+listFrom []     = Nil
 
 listRef :: Int -> List a -> a
 listRef 0 (Cons x _) = x
 listRef n (Cons x xs) = listRef (n-1) xs
 
+listLength :: (Integral b) => List a -> b
+listLength (Nil) = 0
+listLength (Cons _ xs) = 1 + listLength xs
+
+listAppend :: List a -> List a -> List a
+listAppend (Nil) xs = xs
+listAppend (Cons x xs) ys = Cons x (listAppend xs ys)
+
 -- test 2.17
-lastPair (x:[]) = x
-lastPair (x:xs) = lastPair xs
+listLast :: List a -> a
+listLast (Cons x Nil) = x
+listLast (Cons x xs) = listLast xs
 
 -- test 2.18
-reverse' (x:[]) = [x]
-reverse' (x:xs) = reverse xs ++ [x]
+listReverse :: List a -> List a
+listReverse Nil = Nil
+listReverse (Cons x xs) = listAppend (listReverse xs) (Cons x Nil)
+
+
 
 -- test 2.19
 usCoins = [50, 25, 10, 5, 1]
