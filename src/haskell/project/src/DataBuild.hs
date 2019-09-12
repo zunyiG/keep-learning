@@ -348,6 +348,16 @@ varCalc f x y =
 -- varCalc par1 (3,4) (5,6) => (1.875,2.4000000000000004)
 -- varCalc par2 (3,4) (5,6) => (1.875,2.4000000000000004)
 
+data List a = Nil | Cons a (List a) deriving (Show)
+
+fromList :: [a] -> List a
+fromList (x:xs) = Cons x (fromList xs)
+fromList []     = Nil
+
+listRef :: Int -> List a -> a
+listRef 0 (Cons x _) = x
+listRef n (Cons x xs) = listRef (n-1) xs
+
 -- test 2.17
 lastPair (x:[]) = x
 lastPair (x:xs) = lastPair xs

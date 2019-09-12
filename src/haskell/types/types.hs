@@ -19,3 +19,9 @@ treeElem x (Node a left right)
 
 treeFromList :: (Ord a) => [a] -> Tree a
 treeFromList = foldr treeInsert EmptyTree
+
+data Pair a b = Pair a b | PairEmpty | TestPair a deriving (Show, Read, Eq)
+
+patternMatch (TestPair a) = a
+
+data CalendarTime = CalendarTime {aa :: Int, bb :: String} deriving (Show)
