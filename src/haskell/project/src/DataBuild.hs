@@ -99,7 +99,10 @@ car' x = x 0
 cdr' x = x 1
 
 -- test 2.4
+cons :: a -> b -> (a -> b -> c) -> c
 cons x y = \m -> m x y
+
+car :: ((a -> b -> a) -> a) -> a
 car z = z (\p q -> p)
 
 -- 代换模型
@@ -109,6 +112,7 @@ car z = z (\p q -> p)
 -- => (\p q -> p) x y
 -- => x
 
+cdr :: ((a -> b -> b) -> b) -> b
 cdr z = z (\p q -> q)
 
 -- test 2.5
@@ -401,4 +405,3 @@ forEach f items =
 -- countLeavels [x]
 -- countLeavels [x]
 -- countLeavels (x:xs)
-
