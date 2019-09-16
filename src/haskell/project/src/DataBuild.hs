@@ -348,15 +348,17 @@ varCalc f x y =
 -- varCalc par1 (3,4) (5,6) => (1.875,2.4000000000000004)
 -- varCalc par2 (3,4) (5,6) => (1.875,2.4000000000000004)
 
-data List a = Nil | Cons a (List a) deriving (Eq)
+data List a = Nil | Cons a (List a) | Tree (List a) (List a) deriving (Eq)
 
 instance (Show a) => Show (List a) where
   show (Nil) = "nil"
   show (Cons x xs) = show x ++ " -> " ++ show xs
+  show (Tree l r) = "(" ++ show l ++ ", " ++ show r ++ ")"
 
 instance Foldable List where
   foldr _ m Nil = m
   foldr f m (Cons x xs) = foldr f (f x m) xs
+  foldr f m (Tree l r) = foldr f (foldr f m l) r
 
 listSingle :: a -> List a
 listSingle x = Cons x Nil
@@ -449,11 +451,37 @@ forEach f y (Cons x xs) = forEach f (f x y) xs
 -- forEach (\x y -> trace (show y) x) 0 (listFrom [1,2,3,4,5,6,7])
 
 -- example 2.2.2
-data Tree a = Empty | Leaf a | Node a (Tree a) (Tree a) deriving (Show)
+data Tree a = Empty | Leaf a | Node (Tree a) (Tree a) deriving (Eq)
+
+instance (Show a) => Show (Tree a) where
+  show (Empty)    = "empty"
+  show (Leaf a)   = show a
+  show (Node l r) = " -> (" ++ show l ++ ", " ++ show r ++ ")"
 
 treeLength :: (Num b) => Tree a -> b
-treeLength (Empty) = 0
-treeLength (Leaf _) = 1
-treeLength (Node _ l r) = treeLength l + 1 + treeLength r
+treeLength (Empty)      = 0
+treeLength (Leaf _)     = 1
+treeLength (Node l r) = treeLength l + treeLength r
 
 -- test 2.24
+-- [1, ->] -> [2, ->] -> [3, 4]
+-- Node 1 (Node 2 (Leaf 3) (Leaf 4)) Empty
+-- 1 -> (2 -> (3, 4), empty)
+
+-- test 2.25
+-- 1. (1 3 (5 7) 9)
+-- let l = cons 1 (cons 3 (cons (cons 5 (cons 7 Nil)) (cons 9 Nil)))
+-- car (cdr (car (cdr (cdr l))))
+
+-- 2. ((7))
+-- let l = cons (cons 7 Nil) Nil
+-- car (car l)
+
+-- 3. (1 (2 (3 (4 (5 (6, 7))))))
+-- let l = cons 1 (cons 2 (cons 3 (cons 4 (cons 5 (cons 6 7)))))
+-- cdr (cdr (cdr (cdr (cdr (cdr l)))))
+
+-- test 2.26
+-- 1. 1 -> 2 -> 3 -> 4 -> 5 -> 6
+-- 2. (1 -> 2 -> 3, 4 -> 5 -> 6)
+-- 3. (1-> 2 -> 3) -> (4 -> 5 -> 6)
