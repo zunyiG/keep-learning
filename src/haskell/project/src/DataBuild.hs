@@ -354,6 +354,10 @@ instance (Show a) => Show (List a) where
   show (Nil) = "nil"
   show (Cons x xs) = show x ++ " -> " ++ show xs
 
+instance Foldable List where
+  foldr _ m Nil = m
+  foldr f m (Cons x xs) = foldr f (f x m) xs
+
 listSingle :: a -> List a
 listSingle x = Cons x Nil
 
@@ -369,8 +373,7 @@ listRef 0 (Cons x _) = x
 listRef n (Cons x xs) = listRef (n-1) xs
 
 listLength :: (Integral b) => List a -> b
-listLength (Nil) = 0
-listLength (Cons _ xs) = 1 + listLength xs
+listLength = foldr (\_ len -> len + 1) 0
 
 listAppend :: List a -> List a -> List a
 listAppend (Nil) xs = xs
@@ -423,30 +426,34 @@ sameParity all@(Cons x xs) = listFilter (\y -> odd x == odd y) all
 -- sameParity [1,2,3,4,5,6,7] => [1,3,5,7]
 
 -- test 2.21
-squareList [] = []
-squareList (x:xs) = (x*x) : squareList xs
+squareList :: (Num a) => List a -> List a
+squareList Nil = Nil
+squareList (Cons x xs) = listInsert (x * x) (squareList xs)
 
-squareList' = map (\x -> x*x)
+squareList' = listMap (\x -> x * x)
 
 -- test 2.22
 squareList'' items =
-  let iter things answer
-        | null things = answer
-        | otherwise = iter (tail things) (answer ++ [head things * head things])
-  in iter items []
+  let
+      iter (Nil) answer = answer
+      iter (Cons x xs) answer = iter xs (listInsert (x * x) answer)
+  in iter items Nil
+
+-- 1. 因为插入过程是反向的，先插入最里层，最后插入最外层， 所有最后结果是反向的: cons 4 (cons 3 (cons 2 ( cons 1 nil)))
+-- 2. 还是不行是因为，只是把cons的参数交换了，但是插入顺序还是反向的: cons (cons (cons (cons nil 1) 2) 3) 4
 
 -- test 2.23
-forEach f items =
-  let iter things none
-        | null things = none
-        | otherwise = iter (tail things) (f (head things) + none)
-  in iter items (head items)
--- forEach (\x -> trace (show x) x) [1,2,3,4,5]
-
--- 在 haskell 中不能计算没有返回值的方法
+forEach :: (a -> b -> b) -> b -> List a -> b
+forEach _ y (Nil) = y
+forEach f y (Cons x xs) = forEach f (f x y) xs
+-- forEach (\x y -> trace (show y) x) 0 (listFrom [1,2,3,4,5,6,7])
 
 -- example 2.2.2
--- countLeavels :: (L a)
--- countLeavels [x]
--- countLeavels [x]
--- countLeavels (x:xs)
+data Tree a = Empty | Leaf a | Node a (Tree a) (Tree a) deriving (Show)
+
+treeLength :: (Num b) => Tree a -> b
+treeLength (Empty) = 0
+treeLength (Leaf _) = 1
+treeLength (Node _ l r) = treeLength l + 1 + treeLength r
+
+-- test 2.24
