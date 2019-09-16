@@ -348,11 +348,21 @@ varCalc f x y =
 -- varCalc par1 (3,4) (5,6) => (1.875,2.4000000000000004)
 -- varCalc par2 (3,4) (5,6) => (1.875,2.4000000000000004)
 
-data List a = Nil | Cons a (List a) deriving (Show)
+data List a = Nil | Cons a (List a) deriving (Eq)
+
+instance (Show a) => Show (List a) where
+  show (Nil) = "nil"
+  show (Cons x xs) = show x ++ " -> " ++ show xs
+
+listSingle :: a -> List a
+listSingle x = Cons x Nil
+
+listInsert :: a -> List a -> List a
+listInsert x Nil = listSingle x
+listInsert x xs = Cons x xs
 
 listFrom :: [a] -> List a
-listFrom (x:xs) = Cons x (listFrom xs)
-listFrom []     = Nil
+listFrom = foldr listInsert Nil
 
 listRef :: Int -> List a -> a
 listRef 0 (Cons x _) = x
@@ -364,7 +374,20 @@ listLength (Cons _ xs) = 1 + listLength xs
 
 listAppend :: List a -> List a -> List a
 listAppend (Nil) xs = xs
-listAppend (Cons x xs) ys = Cons x (listAppend xs ys)
+listAppend (Cons x xs) ys = listInsert x (listAppend xs ys)
+
+listFirst :: List a -> a
+listFirst = listRef 0
+
+listFilter :: (a -> Bool) -> List a -> List a
+listFilter _ (Nil) = Nil
+listFilter f (Cons x xs) = if (f x)
+                              then listInsert x (listFilter f xs)
+                              else listFilter f xs
+
+listMap :: (a -> b) -> List a -> List b
+listMap _ (Nil) = Nil
+listMap f (Cons x xs) = listInsert (f x) (listMap f xs)
 
 -- test 2.17
 listLast :: List a -> a
@@ -374,26 +397,28 @@ listLast (Cons x xs) = listLast xs
 -- test 2.18
 listReverse :: List a -> List a
 listReverse Nil = Nil
-listReverse (Cons x xs) = listAppend (listReverse xs) (Cons x Nil)
+listReverse (Cons x xs) = listAppend (listReverse xs) (listSingle x)
 
 -- test 2.19
-usCoins = [50, 25, 10, 5, 1]
-ukCoins = [100, 50, 20, 10, 5, 2, 1, 0.5]
+usCoins :: (Fractional a) => List a
+usCoins = listFrom [50, 25, 10, 5, 1]
+ukCoins :: (Fractional a) => List a
+ukCoins = listFrom [100, 50, 20, 10, 5, 2, 1, 0.5]
+
+cc :: (Num a, Num b, Ord a) => a -> List a -> b
 cc amount coinValues
   | amount == 0                       = 1
   | amount < 0 || noMore coinValues = 0
   | otherwise                         = (+) (cc amount (exceptFirstDenomination coinValues))
                                             (cc (amount - firstDenomination coinValues) coinValues)
-  where firstDenomination (x:_) = x
-        exceptFirstDenomination (_:xs) = xs
-        noMore = null
+  where firstDenomination (Cons x xs) = x
+        exceptFirstDenomination (Cons x xs) = xs
+        noMore = (==) Nil
 -- 不会影响， 因为此递归过程会将所包含的组合都计算一遍，顺序不影响所包含的组合
 
 -- test 2.20
-sameParity (x:[]) = [x]
-sameParity (x:xs)
-        | odd x == odd (head xs) = x : sameParity xs
-        | otherwise = sameParity (x : tail xs)
+sameParity :: (Integral a) => List a -> List a
+sameParity all@(Cons x xs) = listFilter (\y -> odd x == odd y) all
 -- sameParity [2,3,4,5,6,7,8,9] => [2,4,6,8]
 -- sameParity [1,2,3,4,5,6,7] => [1,3,5,7]
 
