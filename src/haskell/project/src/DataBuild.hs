@@ -136,7 +136,7 @@ cdr'' p
   | gcd (round p) 2 /=1 = cdr'' (p / 2)
   | otherwise = log p / log 3
 
--- 当 y > 33 或 x > 971 时会出现计算错误，可能因为除法会被表示为科学技术法,会被 round 于出，造成误差
+-- 当 y > 33 或 x > 971 时会出现计算错误，可能因为除法会被表示为科学技术法,会被 round 于除，造成误差
 -- 改进版本
 
 car''' p =
@@ -607,4 +607,5 @@ totalWeight' m
   | isLeafBranch m = branchWight' m
 
 -- (Mobile' (LeafBranch' 1 2) (Branch' 1 ( Mobile' (Branch' 2 ( Mobile' (LeafBranch' 3 4) (LeafBranch' 3 5) )) (LeafBranch' 2 3) )))
+-- => 14
 
