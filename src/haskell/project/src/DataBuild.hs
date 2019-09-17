@@ -348,17 +348,17 @@ varCalc f x y =
 -- varCalc par1 (3,4) (5,6) => (1.875,2.4000000000000004)
 -- varCalc par2 (3,4) (5,6) => (1.875,2.4000000000000004)
 
-data List a = Nil | Cons a (List a) | Tree (List a) (List a) deriving (Eq)
+data List a = Nil | Cons a (List a) | Cons2 (List a) (List a) deriving (Eq)
 
 instance (Show a) => Show (List a) where
   show (Nil) = "nil"
   show (Cons x xs) = show x ++ " -> " ++ show xs
-  show (Tree l r) = "(" ++ show l ++ ", " ++ show r ++ ")"
+  show (Cons2 l r) = "(" ++ show l ++ ", " ++ show r ++ ")"
 
 instance Foldable List where
   foldr _ m Nil = m
   foldr f m (Cons x xs) = foldr f (f x m) xs
-  foldr f m (Tree l r) = foldr f (foldr f m l) r
+  foldr f m (Cons2 l r) = foldr f (foldr f m l) r
 
 listSingle :: a -> List a
 listSingle x = Cons x Nil
@@ -378,21 +378,24 @@ listLength :: (Integral b) => List a -> b
 listLength = foldr (\_ len -> len + 1) 0
 
 listAppend :: List a -> List a -> List a
-listAppend (Nil) xs = xs
-listAppend (Cons x xs) ys = listInsert x (listAppend xs ys)
+-- listAppend (Nil) xs = xs
+-- listAppend (Cons x xs) ys = listInsert x (listAppend xs ys)
+listAppend = flip (foldl (flip listInsert))
 
 listFirst :: List a -> a
 listFirst = listRef 0
 
 listFilter :: (a -> Bool) -> List a -> List a
-listFilter _ (Nil) = Nil
-listFilter f (Cons x xs) = if (f x)
-                              then listInsert x (listFilter f xs)
-                              else listFilter f xs
+-- listFilter _ (Nil) = Nil
+-- listFilter f (Cons x xs) = if (f x)
+--                               then listInsert x (listFilter f xs)
+--                               else listFilter f xs
+listFilter f = foldl (\ys x -> if f x then listInsert x ys else ys) Nil
 
 listMap :: (a -> b) -> List a -> List b
-listMap _ (Nil) = Nil
-listMap f (Cons x xs) = listInsert (f x) (listMap f xs)
+-- listMap _ (Nil) = Nil
+-- listMap f (Cons x xs) = listInsert (f x) (listMap f xs)
+listMap f = foldl (\ys x -> listInsert (f x) ys) Nil
 
 -- test 2.17
 listLast :: List a -> a
@@ -401,8 +404,9 @@ listLast (Cons x xs) = listLast xs
 
 -- test 2.18
 listReverse :: List a -> List a
-listReverse Nil = Nil
-listReverse (Cons x xs) = listAppend (listReverse xs) (listSingle x)
+-- listReverse Nil = Nil
+-- listReverse (Cons x xs) = listAppend (listReverse xs) (listSingle x)
+listReverse = foldr (\x ys -> listInsert x ys) Nil
 
 -- test 2.19
 usCoins :: (Fractional a) => List a
@@ -451,20 +455,22 @@ forEach f y (Cons x xs) = forEach f (f x y) xs
 -- forEach (\x y -> trace (show y) x) 0 (listFrom [1,2,3,4,5,6,7])
 
 -- example 2.2.2
-data Tree a = Empty | Leaf a | Node (Tree a) (Tree a) deriving (Eq)
+data Tree a = Empty | Leaf a | Node a (Tree a) (Tree a) deriving (Eq)
 
 instance (Show a) => Show (Tree a) where
   show (Empty)    = "empty"
   show (Leaf a)   = show a
-  show (Node l r) = " -> (" ++ show l ++ ", " ++ show r ++ ")"
+  show (Node a l r) = show a ++ " -> (" ++ show l ++ ", " ++ show r ++ ")"
 
 treeLength :: (Num b) => Tree a -> b
 treeLength (Empty)      = 0
 treeLength (Leaf _)     = 1
-treeLength (Node l r) = treeLength l + treeLength r
+treeLength (Node a l r) = treeLength l + treeLength r
 
 -- test 2.24
 -- [1, ->] -> [2, ->] -> [3, 4]
+-- Cons 1 (Cons 2 (Cons2 (Cons 3 Nil) (Cons 4 Nil)))
+-- 1 -> 2 -> (3 -> nil, 4 -> nil)
 -- Node 1 (Node 2 (Leaf 3) (Leaf 4)) Empty
 -- 1 -> (2 -> (3, 4), empty)
 
@@ -482,6 +488,25 @@ treeLength (Node l r) = treeLength l + treeLength r
 -- cdr (cdr (cdr (cdr (cdr (cdr l)))))
 
 -- test 2.26
--- 1. 1 -> 2 -> 3 -> 4 -> 5 -> 6
--- 2. (1 -> 2 -> 3, 4 -> 5 -> 6)
--- 3. (1-> 2 -> 3) -> (4 -> 5 -> 6)
+-- 1. listAppend (listFrom [1,2,3]) (listFrom [4,5,6])
+-- 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> nil
+
+-- 2. List (listFrom [1,2,3]) (listFrom [4,5,6])
+-- (1 -> 2 -> 3 -> nil, 1 -> 2 -> 3 -> nil)
+
+-- 3. listFrom [listFrom [1,2,3], listFrom [1,2,3]]
+-- (1 -> 2 -> 3 -> nil) -> (1 -> 2 -> 3 -> nil) -> nil
+
+-- test 2.27
+listReverseDeep :: List a -> List a
+listReverseDeep = listReverse
+-- Cons2 (listFrom [1,2,3]) (listFrom [4,5,6])
+-- 6 -> 5 -> 4 -> 3 -> 2 -> 1 -> nil
+
+-- test 2.28
+fringe :: List a -> List a
+fringe = foldl (flip listInsert) Nil
+-- Cons2 (Cons2 (Cons 1 Nil) (Cons 2 Nil)) (Cons2 (Cons 3 Nil) (Cons 4 Nil))
+-- 1 -> 2 -> 3 -> 4 -> nil
+
+-- test 2.29
