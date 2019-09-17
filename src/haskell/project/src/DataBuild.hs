@@ -513,27 +513,89 @@ fringe = foldl (flip listInsert) Nil
 data Branch a b = Branch b (Mobile a b) | LeafBranch b b deriving (Show)
 data Mobile a b = Mobile (Branch a b) (Branch a b) deriving (Show)
 
-makeMobile :: (Num b) => Branch a b -> Branch a b -> Mobile a b
+makeMobile :: Branch a b -> Branch a b -> Mobile a b
 makeMobile left right = Mobile left right
 
-makeBranch :: (Num b) => Branch
-makeBranch length structure = Cons length structure
+makeLeafBranch :: b -> b -> Branch a b
+makeLeafBranch length weight = LeafBranch length weight
 
--- -- a
--- leftBranch :: List a -> a
--- leftBranch (Cons2 left _) = left
+makeBranch :: b -> Mobile a b -> Branch a b
+makeBranch length structure = Branch length structure
 
--- rightBranch :: List a -> a
--- rightBranch (Cons2 _ Right) = left
+-- a.
+leftBranch :: Mobile a b -> Branch a b
+leftBranch (Mobile left _) = left
 
--- branchLength :: List a -> a
--- branchLength (Cons x _) = x
+rightBranch :: Mobile a b -> Branch a b
+rightBranch (Mobile _ right) = right
 
--- branchStructure :: List a -> List a
--- branchStructure (Cons _ xs) = xs
+branchLength :: Branch a b -> b
+branchLength (Branch length _) = length
+branchLength (LeafBranch length _) = length
 
--- makeMobile (rightBranch )
--- totalWeight :: (Num b) => List a -> b
--- totalWeight =
+branchStructure :: Branch a b -> Mobile a b
+branchStructure (Branch _ m) = m
+
+-- b.
+totalWeight :: (Num b) => Mobile a b -> b
+totalWeight (Mobile left right) = totalBranch left + totalBranch right
+
+totalBranch :: (Num b) => Branch a b -> b
+totalBranch (LeafBranch _ b) = b
+totalBranch (Branch _ m) = totalWeight m
+
+-- totalWeight (Mobile (LeafBranch 1 2) (Branch 1 ( Mobile (Branch 2 ( Mobile (LeafBranch 3 4) (LeafBranch 3 5) )) (LeafBranch 2 3) )))
+-- => 14
+
+-- c.
+equalCheck :: (Num b, Eq b) => Mobile a b -> Bool
+equalCheck (Mobile left right) = (
+                                    (==)
+                                    ((branchLength left) * (totalBranch left))
+                                    ((branchLength right) * (totalBranch right))
+                                  )
+                                && equalCheckBranch left
+                                && equalCheckBranch right
+
+equalCheckBranch :: (Num b, Eq b) => Branch a b -> Bool
+equalCheckBranch (Branch length m) = equalCheck m
+equalCheckBranch _ = True
+
+-- equalCheck (Mobile (LeafBranch 6 2) (Branch 2 ( Mobile (Branch 2 ( Mobile (LeafBranch 2 4) (LeafBranch 8 1) )) (LeafBranch 10 1) )))
+-- => True
+
+-- d.
+-- 由于使用了参数解构，所以改动很大。可以使用工具方法来减少这种耦合性
+-- // TODO 重构, (haskell 无法进行类型判断这一步， 目前还没找到解决方案，待完善)
+
+-- data Mobile' a b = Mobile' {
+--  leftBranch' :: Branch' a b,
+--  rightBranch' :: Branch' a b
+-- } deriving (Show)
+
+-- data Branch' a b = BranchLeaf' {
+--   branchLength' :: b,
+--   branchWeight' :: b
+-- } Branch' {
+--   branchLength' :: b,
+--   structure' :: Mobile' a b
+-- }  deriving (Show)
 
 
+-- -- leftBranch' :: Mobile' a b -> Mobile' a b
+-- -- leftBranch' (Mobile' left _) = left
+
+-- -- rightBranch' :: Mobile' a b -> Mobile' a b
+-- -- rightBranch' (Mobile' _ right) = right
+
+-- -- branchLength' :: Mobile' a b -> b
+-- -- branchLength' (Branch' length _) = length
+-- -- branchLength' (LeafBranch' length _) = length
+
+-- -- branchStructure' :: Mobile' a b -> Mobile' a b
+-- -- branchStructure' (Branch' _ m) = m
+
+-- -- totalWeight' :: (Num b) => Mobile' a b -> b
+-- -- totalWeight' m = totalWeight' left + totalWeight' right
+-- -- totalWeight' m = b
+-- -- totalWeight' m = totalWeight' m
