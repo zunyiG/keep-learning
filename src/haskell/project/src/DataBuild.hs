@@ -565,37 +565,46 @@ equalCheckBranch _ = True
 -- => True
 
 -- d.
--- 由于使用了参数解构，所以改动很大。可以使用工具方法来减少这种耦合性
--- // TODO 重构, (haskell 无法进行类型判断这一步， 目前还没找到解决方案，待完善)
+-- 由于使用了参数解构，所以改动很大。可以使用层次性数据来减少这种耦合性
+-- 重构
 
--- data Mobile' a b = Mobile' {
---  leftBranch' :: Branch' a b,
---  rightBranch' :: Branch' a b
--- } deriving (Show)
+-- 数据构建层
+data Mobile' a b = Mobile' (Mobile' a b) (Mobile' a b) | Branch' b (Mobile' a b) | LeafBranch' b b deriving (Show)
 
--- data Branch' a b = BranchLeaf' {
---   branchLength' :: b,
---   branchWeight' :: b
--- } Branch' {
---   branchLength' :: b,
---   structure' :: Mobile' a b
--- }  deriving (Show)
+leftBranch' :: Mobile' a b -> Mobile' a b
+leftBranch' (Mobile' left _) = left
 
+rightBranch' :: Mobile' a b -> Mobile' a b
+rightBranch' (Mobile' _ right) = right
 
--- -- leftBranch' :: Mobile' a b -> Mobile' a b
--- -- leftBranch' (Mobile' left _) = left
+branchLength' :: Mobile' a b -> b
+branchLength' (Branch' length _) = length
+branchLength' (LeafBranch' length _) = length
 
--- -- rightBranch' :: Mobile' a b -> Mobile' a b
--- -- rightBranch' (Mobile' _ right) = right
+branchStructure' :: Mobile' a b -> Mobile' a b
+branchStructure' (Branch' _ m) = m
 
--- -- branchLength' :: Mobile' a b -> b
--- -- branchLength' (Branch' length _) = length
--- -- branchLength' (LeafBranch' length _) = length
+branchWight' :: Mobile' a b -> b
+branchWight' (LeafBranch' _ w) = w
 
--- -- branchStructure' :: Mobile' a b -> Mobile' a b
--- -- branchStructure' (Branch' _ m) = m
+isMobile :: Mobile' a b -> Bool
+isMobile (Mobile' _ _) = True
+isMobile _ = False
 
--- -- totalWeight' :: (Num b) => Mobile' a b -> b
--- -- totalWeight' m = totalWeight' left + totalWeight' right
--- -- totalWeight' m = b
--- -- totalWeight' m = totalWeight' m
+isBranch :: Mobile' a b -> Bool
+isBranch (Branch' _ _) = True
+isBranch _ = False
+
+isLeafBranch :: Mobile' a b -> Bool
+isLeafBranch (LeafBranch' _ _) = True
+isLeafBranch _ = False
+
+-- 数据应用层
+totalWeight' :: (Num b) => Mobile' a b -> b
+totalWeight' m
+  | isMobile m     = totalWeight' (leftBranch' m) + totalWeight' (rightBranch' m)
+  | isBranch m     = totalWeight' (branchStructure' m)
+  | isLeafBranch m = branchWight' m
+
+-- (Mobile' (LeafBranch' 1 2) (Branch' 1 ( Mobile' (Branch' 2 ( Mobile' (LeafBranch' 3 4) (LeafBranch' 3 5) )) (LeafBranch' 2 3) )))
+
