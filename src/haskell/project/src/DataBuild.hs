@@ -510,3 +510,30 @@ fringe = foldl (flip listInsert) Nil
 -- 1 -> 2 -> 3 -> 4 -> nil
 
 -- test 2.29
+data Branch a b = Branch b (Mobile a b) | LeafBranch b b deriving (Show)
+data Mobile a b = Mobile (Branch a b) (Branch a b) deriving (Show)
+
+makeMobile :: (Num b) => Branch a b -> Branch a b -> Mobile a b
+makeMobile left right = Mobile left right
+
+makeBranch :: (Num b) => Branch
+makeBranch length structure = Cons length structure
+
+-- -- a
+-- leftBranch :: List a -> a
+-- leftBranch (Cons2 left _) = left
+
+-- rightBranch :: List a -> a
+-- rightBranch (Cons2 _ Right) = left
+
+-- branchLength :: List a -> a
+-- branchLength (Cons x _) = x
+
+-- branchStructure :: List a -> List a
+-- branchStructure (Cons _ xs) = xs
+
+-- makeMobile (rightBranch )
+-- totalWeight :: (Num b) => List a -> b
+-- totalWeight =
+
+
