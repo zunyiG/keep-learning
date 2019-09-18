@@ -500,13 +500,13 @@ treeLength (Node a l r) = treeLength l + treeLength r
 -- test 2.27
 listReverseDeep :: List a -> List a
 listReverseDeep = listReverse
--- Cons2 (listFrom [1,2,3]) (listFrom [4,5,6])
+-- listReverseDeep (Cons2 (listFrom [1,2,3]) (listFrom [4,5,6]))
 -- 6 -> 5 -> 4 -> 3 -> 2 -> 1 -> nil
 
 -- test 2.28
 fringe :: List a -> List a
 fringe = foldl (flip listInsert) Nil
--- Cons2 (Cons2 (Cons 1 Nil) (Cons 2 Nil)) (Cons2 (Cons 3 Nil) (Cons 4 Nil))
+-- fringe (Cons2 (Cons2 (Cons 1 Nil) (Cons 2 Nil)) (Cons2 (Cons 3 Nil) (Cons 4 Nil)))
 -- 1 -> 2 -> 3 -> 4 -> nil
 
 -- test 2.29
@@ -609,3 +609,22 @@ totalWeight' m
 -- (Mobile' (LeafBranch' 1 2) (Branch' 1 ( Mobile' (Branch' 2 ( Mobile' (LeafBranch' 3 4) (LeafBranch' 3 5) )) (LeafBranch' 2 3) )))
 -- => 14
 
+
+treeMap :: (a -> b) -> Tree a -> Tree b
+treeMap _ (Empty)      = Empty
+treeMap f (Leaf x)     = Leaf (f x)
+treeMap f (Node x l r) = Node (f x) (treeMap f l) (treeMap f r)
+
+-- treeMap (\x->x*2) (Node 1 (Leaf 2) (Node 3 (Leaf 4) (Leaf 5)))
+-- 2 -> (4, 6 -> (8, 10))
+
+-- test 2.30 2.31
+squareTree' :: (Num a) => Tree a -> Tree a
+squareTree' (Empty) = Empty
+squareTree' (Leaf x) = Leaf (x * x)
+squareTree' (Node x l r) = Node (x * x) (squareTree' l) (squareTree' r)
+
+squareTree :: (Num a) => Tree a -> Tree a
+squareTree = treeMap (\x -> x * x)
+
+-- test 2.32
