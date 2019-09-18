@@ -356,7 +356,7 @@ instance (Show a) => Show (List a) where
   show (Cons2 l r) = "(" ++ show l ++ ", " ++ show r ++ ")"
 
 instance Foldable List where
-  foldr _ m Nil = m
+  foldr _ m (Nil) = m
   foldr f m (Cons x xs) = foldr f (f x m) xs
   foldr f m (Cons2 l r) = foldr f (foldr f m l) r
 
@@ -364,7 +364,7 @@ listSingle :: a -> List a
 listSingle x = Cons x Nil
 
 listInsert :: a -> List a -> List a
-listInsert x Nil = listSingle x
+listInsert x (Nil) = listSingle x
 listInsert x xs = Cons x xs
 
 listFrom :: [a] -> List a
@@ -433,7 +433,7 @@ sameParity all@(Cons x xs) = listFilter (\y -> odd x == odd y) all
 
 -- test 2.21
 squareList :: (Num a) => List a -> List a
-squareList Nil = Nil
+squareList (Nil) = Nil
 squareList (Cons x xs) = listInsert (x * x) (squareList xs)
 
 squareList' = listMap (\x -> x * x)
@@ -644,4 +644,34 @@ subsets (Nil) = Nil
 -- 1.当前元素 (x)
 -- 2.当前元素和其它组合的组合 (foldr)
 -- 3.不包含当前元素的组合 (rest)
+
+-- test 2.33
+accumulate :: (b -> a -> b) -> b -> List a -> b
+accumulate _ acc (Nil) = acc
+accumulate f acc (Cons x xs) = accumulate f (f acc x) xs
+-- accumulateR _ acc (Nil) = acc
+-- accumulateR f acc (Cons x xs) = f (accumulate f acc xs) x
+
+accumulateR :: (a -> b -> b) -> b -> List a -> b
+accumulateR f acc xs = accumulate (\g x y -> g (f x y)) id xs acc
+
+-- accumulate f (\g x y -> g (f x y) id x) xs
+-- => accumulate f (\y -> id (f x y)) xs
+-- => accumulate f (\y -> f x y) xs
+-- => accumulate f ((\g x y -> g (f x y)) (\y1 -> f x1 y1) x) xs
+-- => accumulate f ((\y2 -> f x1 (f x2 y2))) xs
+-- => accumulate f ((\y3 -> f x1 (f x2 (f x3 y3)))) xs
+-- => accumulateR (\y3 -> f x1 (f x2 (f x3 y3))) acc
+
+accumulateL :: (b -> a -> b) -> b -> List a -> b
+accumulateL f acc xs = accumulateR (\x g realAcc -> g (f realAcc x)) id xs acc
+
+sequenceMap :: (a -> b) -> List a -> List b
+sequenceMap f = accumulateR (\x xs -> listInsert (f x) xs) Nil
+
+sequenceAppend :: List a -> List a -> List a
+sequenceAppend xs ys = accumulateR listInsert ys xs
+
+sequenceLength :: (Num b) => List a -> b
+sequenceLength = accumulate (\n _ -> n + 1) 0
 
