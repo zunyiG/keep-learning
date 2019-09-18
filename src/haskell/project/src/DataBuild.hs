@@ -675,3 +675,10 @@ sequenceAppend xs ys = accumulateR listInsert ys xs
 sequenceLength :: (Num b) => List a -> b
 sequenceLength = accumulate (\n _ -> n + 1) 0
 
+-- test 2.34
+hornerEval :: (Num a) => a -> List a -> a
+hornerEval x = accumulateR (\a acc -> a + acc * x) 0
+-- hornerEval 2 (listFrom [1,3,0,5,0,1])
+-- 79
+
+-- test 2.35
