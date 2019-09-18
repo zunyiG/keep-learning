@@ -649,6 +649,8 @@ subsets (Nil) = Nil
 accumulate :: (b -> a -> b) -> b -> List a -> b
 accumulate _ acc (Nil) = acc
 accumulate f acc (Cons x xs) = accumulate f (f acc x) xs
+accumulate f acc (Cons2 xs ys) = accumulate f (accumulate f acc xs) ys
+
 -- accumulateR _ acc (Nil) = acc
 -- accumulateR f acc (Cons x xs) = f (accumulate f acc xs) x
 
@@ -673,7 +675,7 @@ sequenceAppend :: List a -> List a -> List a
 sequenceAppend xs ys = accumulateR listInsert ys xs
 
 sequenceLength :: (Num b) => List a -> b
-sequenceLength = accumulate (\n _ -> n + 1) 0
+sequenceLength = accumulateL (\n _ -> n + 1) 0
 
 -- test 2.34
 hornerEval :: (Num a) => a -> List a -> a
@@ -682,3 +684,14 @@ hornerEval x = accumulateR (\a acc -> a + acc * x) 0
 -- 79
 
 -- test 2.35
+countLevel :: (Num b) => List a -> b
+countLevel = accumulateR (\_ n -> n + 1) 0
+-- countLevel (Cons2 (Cons 2 Nil) (Cons2 (Cons 3 Nil) (Cons 3 Nil)))
+-- 3
+
+-- test 2.36
+accumulateZip :: (b -> a -> b) -> b -> List (List a) -> b
+accumulateZip _ _ (Nil) = Nil
+accumulateZip f acc (Cons x xs) = listInsert (accumulateL f acc )
+                                             (accumulateZip xs)
+
