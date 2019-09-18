@@ -620,11 +620,28 @@ treeMap f (Node x l r) = Node (f x) (treeMap f l) (treeMap f r)
 
 -- test 2.30 2.31
 squareTree' :: (Num a) => Tree a -> Tree a
-squareTree' (Empty) = Empty
-squareTree' (Leaf x) = Leaf (x * x)
+squareTree' (Empty)      = Empty
+squareTree' (Leaf x)     = Leaf (x * x)
 squareTree' (Node x l r) = Node (x * x) (squareTree' l) (squareTree' r)
 
 squareTree :: (Num a) => Tree a -> Tree a
 squareTree = treeMap (\x -> x * x)
 
 -- test 2.32
+subsets :: (Show a) => List a -> List (List a)
+subsets (Cons x xs) =
+  let rest = subsets xs
+  in  listAppend (
+        foldr (\y ys -> listAppend ys (Cons (listInsert x y) Nil))
+              (Cons (Cons x Nil) Nil)
+              rest
+      ) rest
+subsets (Nil) = Nil
+-- subsets (listFrom [1,2,3])
+-- 1 -> nil -> 1 -> 2 -> nil -> 1 -> 2 -> 3 -> nil -> 1 -> 3 -> nil -> 2 -> nil -> 2 -> 3 -> nil -> 3 -> nil -> nil
+
+-- 所有子集等于
+-- 1.当前元素 (x)
+-- 2.当前元素和其它组合的组合 (foldr)
+-- 3.不包含当前元素的组合 (rest)
+
