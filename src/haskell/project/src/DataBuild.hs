@@ -690,14 +690,20 @@ countLevel = accumulateR (\_ n -> n + 1) 0
 -- 3
 
 -- test 2.36
+
 accumulateZip :: (b -> a -> b) -> b -> List (List a) -> List b
 accumulateZip _ _ (Cons (Nil) _) = Nil
 accumulateZip f acc xs =
   listInsert
-    (accumulateL f acc (accumulateL (\ys (Cons z _) -> listInsert z ys ) Nil xs))
-    (accumulateZip f acc (accumulateL (\ys (Cons _ zs) -> listInsert zs ys ) Nil xs))
---  accumulateZip (+) 0 (listFrom [listFrom [1,2,3], listFrom [4,5,6], listFrom [7,8,9], listFrom [10,11,12]])
--- 22 -> 26 -> 30 -> nil
+  (accumulateL f acc (accumulateL (\ys (Cons z _) -> listInsert z ys ) Nil xs))
+  (accumulateZip f acc (accumulateL (\ys (Cons _ zs) -> listInsert zs ys ) Nil xs))
+  --  accumulateZip (+) 0 (listFrom [listFrom [1,2,3], listFrom [4,5,6], listFrom [7,8,9], listFrom [10,11,12]])
+  -- 22 -> 26 -> 30 -> nil
+
+zipWithList' :: (a -> b -> c) -> List a -> List b -> List c
+zipWithList' _ _ (Nil) = Nil
+zipWithList' _ (Nil) _ = Nil
+zipWithList' f (Cons x xs) (Cons y ys) = listInsert (f x y) (zipWithList' f xs ys)
 
 -- test 2.37
-dotProduct :: List (List a) -> List (List a) -> List (List a)
+-- dotProduct :: List (List a) -> List (List a) -> List (List a)
