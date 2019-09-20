@@ -43,6 +43,7 @@ module.exports = {
         '05.high-order',
         '06.module',
         '07.build-typeclass',
+        '08.input-output',
       ],
       '/typescript/':[
         '',
