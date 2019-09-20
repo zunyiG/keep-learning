@@ -360,6 +360,11 @@ instance Foldable List where
   foldr f m (Cons x xs) = foldr f (f x m) xs
   foldr f m (Cons2 l r) = foldr f (foldr f m l) r
 
+instance Functor List where
+  fmap f (Nil) = Nil
+  fmap f (Cons x xs) = Cons (f x) (fmap f xs)
+  fmap f (Cons2 l r) = Cons2 (fmap f l) (fmap f r)
+
 listSingle :: a -> List a
 listSingle x = Cons x Nil
 
@@ -669,7 +674,7 @@ accumulateL :: (b -> a -> b) -> b -> List a -> b
 accumulateL f acc xs = accumulateR (\x g realAcc -> g (f realAcc x)) id xs acc
 
 sequenceMap :: (a -> b) -> List a -> List b
-sequenceMap f = accumulateR (\x xs -> listInsert (f x) xs) Nil
+sequenceMap = fmap
 
 sequenceAppend :: List a -> List a -> List a
 sequenceAppend xs ys = accumulateR listInsert ys xs
@@ -707,3 +712,4 @@ zipWithList' f (Cons x xs) (Cons y ys) = listInsert (f x y) (zipWithList' f xs y
 
 -- test 2.37
 -- dotProduct :: List (List a) -> List (List a) -> List (List a)
+
