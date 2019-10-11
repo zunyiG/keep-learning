@@ -712,4 +712,3 @@ zipWithList' f (Cons x xs) (Cons y ys) = listInsert (f x y) (zipWithList' f xs y
 
 -- test 2.37
 -- dotProduct :: List (List a) -> List (List a) -> List (List a)
-
