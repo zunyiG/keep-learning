@@ -7,6 +7,10 @@
 - 逻辑编程 Prolog
 - 用位运算实现简单计算器
 - 数据结构 + 算法
+  
+## 开发思维
+
+- [简约之美：软件设计之道(The Science of Development)] (./science-development/)
 
 ## 函数式编程
 
