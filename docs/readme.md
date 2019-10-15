@@ -10,7 +10,7 @@
   
 ## 开发思维
 
-- [简约之美：软件设计之道(The Science of Development)] (./science-development/)
+- [简约之美-软件设计之道 (The Science of Development)](./science-development/)
 
 ## 函数式编程
 

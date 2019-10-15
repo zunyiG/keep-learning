@@ -62,6 +62,9 @@ module.exports = {
       '/programming-language/': [
         ''
       ],
+      '/science-development/':[
+        ''
+      ],
       '/koa/':[
         ''
       ],
