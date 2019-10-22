@@ -14,7 +14,7 @@ var headers = {
   headers : {
     "content-type"   : contentType,
     "content-length" : body.length,
-    "requested-by"   : "Request鈩?
+    "requested-by"   : "Request?"
   }
 };
 
