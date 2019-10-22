@@ -1,0 +1,9 @@
+{
+  "name": "05-stackup",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "stackup": "^1.0.2"
+  }
+}
