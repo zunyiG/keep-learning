@@ -1,0 +1,9 @@
+{
+  "name": "08-jstrace",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "jstrace": "^0.3.0"
+  }
+}
