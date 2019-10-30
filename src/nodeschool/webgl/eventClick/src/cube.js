@@ -3,6 +3,16 @@ import * as THREE from 'three';
 const geometry = new THREE.BoxGeometry(10, 10, 10)
 const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
 
-const cube = new THREE.Mesh(geometry, material)
+const defaultCube = new THREE.Mesh(geometry, material)
 
-export default cube
+export const randomCube = function () {
+  const random = Math.random()
+
+  const geometry = new THREE.BoxGeometry(10 * (random + 0.3), 10 * (random + 0.3), 10 * (random + 0.3))
+  const material = new THREE.MeshBasicMaterial({ color: 0xffffff * random })
+  const mesh = new THREE.Mesh(geometry, material)
+  mesh.position.y = (random - 0.5) * 70
+  return mesh
+}
+
+export default defaultCube

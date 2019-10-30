@@ -1,10 +1,9 @@
 import { Scene, WebGLRenderer, Raycaster, Vector2 } from 'THREE';
-import cube from './src/cube';
-import lines from './src/lines';
+import { randomCube } from './src/cube';
 import camera from './src/camera';
-import text from './src/text';
 import { addOnMouseDown } from './src/events';
-import { randomColor } from './src/operates';
+import { randomColor, addToList } from './src/operates';
+import screen from './src/screen';
 
 let scene = new Scene()
 
@@ -12,18 +11,49 @@ const render = new WebGLRenderer()
 render.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(render.domElement)
 
-scene.add(cube)
-scene.add(lines)
-scene.add(text)
-addOnMouseDown(camera, scene, randomColor)
+// scene.add(lines)
+// scene.add(text)
 
+const clickedList = []
+
+scene.add(screen)
+addOnMouseDown(camera, screen, item => addToList(item, clickedList))
+
+let i = 0;
 const animate = () => {
   requestAnimationFrame(animate);
   render.render(scene, camera)
-  cube.rotation.y += 0.01;
-  cube.rotation.x += 0.01;
+
+  if (i % 90 === 0) {
+    const cube = randomCube();
+    cube.name = 'cube'
+    screen.add(cube)
+    cube.position.x = - (screen.position.x - 100)
+  }
+
+  const cubes = screen.children
+  for(const cube of cubes) {
+    if (cube.name === 'cube') {
+      cube.rotation.y += 0.02
+      cube.rotation.z -= 0.01
+    }
+  }
+
+  clickedList.forEach((cube, index) => {
+    if (cube.name === 'cube') {
+      if (cube.scale.x > 0.1) {
+        cube.scale.x -= 0.1
+        cube.scale.y -= 0.1
+        cube.scale.z -= 0.1
+      } else {
+        clickedList.splice(index, 1)
+        screen.remove(cube)
+      }
+    }
+  })
+
+  screen.position.x -= 0.2
+  i++;
 }
 
 window.onload = animate
-
-
