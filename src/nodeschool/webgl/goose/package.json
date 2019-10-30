@@ -1,0 +1,10 @@
+{
+  "name": "goose",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "browserslist": [],
+  "dependencies": {
+    "three": "^0.109.0"
+  }
+}
