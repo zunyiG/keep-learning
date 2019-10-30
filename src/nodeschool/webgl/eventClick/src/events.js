@@ -1,7 +1,6 @@
 import { Raycaster, Vector2 } from "THREE";
 
 export const addOnMouseDown = function addOnMouseDown (camera, objects, callback) {
-  console.log(objects);
   const onMouseDownHandle = (event) => {
     event.preventDefault();
 
@@ -18,3 +17,14 @@ export const addOnMouseDown = function addOnMouseDown (camera, objects, callback
 
   document.addEventListener('mousedown', onMouseDownHandle, false);
 }
+
+export const addOnDragRotation = function addOnMouseDown (objects) {
+  const onDragHandle = (event) => {
+    event.preventDefault();
+
+    // objects
+  }
+
+  document.addEventListener('drag', onDragHandle, false);
+}
+
