@@ -71,8 +71,8 @@ const animate = () => {
 }
 
 window.onload = () => {
-  controls = new window.THREE.OrbitControls( camera, render.domElement );
-  controls.update();
+  // controls = new window.THREE.OrbitControls( camera, render.domElement );
+  // controls.update();
 
   animate()
 }

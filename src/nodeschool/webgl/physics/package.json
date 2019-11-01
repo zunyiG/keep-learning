@@ -1,0 +1,14 @@
+{
+  "name": "load3dTextures",
+  "version": "1.0.0",
+  "main": "index.js",
+  "source": {
+
+  },
+  "license": "MIT",
+  "browserslist": [],
+  "dependencies": {
+    "@babel/preset-env": "^7.6.3",
+    "three": "^0.109.0"
+  }
+}
