@@ -21,8 +21,8 @@ window.onload = () => {
 
   scene.add(screen)
 
-  const axesHelper = new THREE.AxesHelper( 1000 );
-  scene.add( axesHelper );
+  // const axesHelper = new THREE.AxesHelper( 1000 );
+  // scene.add( axesHelper );
 
   const clickedList = []
   addOnMouseDown(camera, scene, item => addToList(item, clickedList))
