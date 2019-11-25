@@ -1,0 +1,1 @@
+$ docker run -p 80:80 -v /temp/docker/nginx/www:/www -v /temp/docker/nginx/config:/etc/nginx/sites-enabled -v /temp/docker/nginx/logs:/var/log/nginx nginx

@@ -1,0 +1,18 @@
+2019/11/25 08:07:46 [emerg] 1#1: "keepalive_timeout" directive is not allowed here in /etc/nginx/nginx.conf:43
+2019/11/25 08:09:18 [emerg] 1#1: "client_header_buffer_size" directive is not allowed here in /etc/nginx/nginx.conf:50
+2019/11/25 08:10:31 [emerg] 1#1: "open_file_cache" directive is not allowed here in /etc/nginx/nginx.conf:53
+2019/11/25 08:11:29 [emerg] 1#1: invalid URL prefix in /etc/nginx/nginx.conf:252
+2019/11/25 08:14:56 [emerg] 1#1: invalid URL prefix in /etc/nginx/nginx.conf:252
+2019/11/25 08:16:15 [emerg] 1#1: invalid URL prefix in /etc/nginx/nginx.conf:252
+2019/11/25 08:19:57 [notice] 1#1: using the "epoll" event method
+2019/11/25 08:19:57 [notice] 1#1: nginx/1.17.5
+2019/11/25 08:19:57 [notice] 1#1: built by gcc 8.3.0 (Debian 8.3.0-6) 
+2019/11/25 08:19:57 [notice] 1#1: OS: Linux 4.14.154-boot2docker
+2019/11/25 08:19:57 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2019/11/25 08:19:57 [notice] 1#1: start worker processes
+2019/11/25 08:19:57 [notice] 1#1: start worker process 6
+2019/11/25 08:20:27 [info] 6#6: *1 client closed connection while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
+2019/11/25 08:20:27 [info] 6#6: *2 client closed connection while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
+2019/11/25 08:21:52 [info] 6#6: *4 client closed connection while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
+2019/11/25 09:37:41 [info] 6#6: *17 client closed connection while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
+2019/11/25 09:53:58 [info] 6#6: *19 client timed out (110: Connection timed out) while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
