@@ -16,3 +16,52 @@
 2019/11/25 08:21:52 [info] 6#6: *4 client closed connection while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
 2019/11/25 09:37:41 [info] 6#6: *17 client closed connection while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
 2019/11/25 09:53:58 [info] 6#6: *19 client timed out (110: Connection timed out) while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
+2019/11/26 02:35:41 [info] 6#6: *51 client closed connection while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
+2019/11/26 02:35:41 [info] 6#6: *48 no user/password was provided for basic authentication, client: 192.168.99.1, server: localhost, request: "GET /NginxStatus HTTP/1.1", host: "192.168.99.100"
+2019/11/26 02:35:45 [error] 6#6: *48 open() "/etc/nginx/confpasswd" failed (2: No such file or directory), client: 192.168.99.1, server: localhost, request: "GET /NginxStatus HTTP/1.1", host: "192.168.99.100"
+2019/11/26 02:36:41 [info] 6#6: *54 client timed out (110: Connection timed out) while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
+2019/11/26 02:36:47 [error] 6#6: *48 open() "/etc/nginx/confpasswd" failed (2: No such file or directory), client: 192.168.99.1, server: localhost, request: "GET /NginxStatus HTTP/1.1", host: "192.168.99.100"
+2019/11/26 02:37:02 [info] 6#6: *56 client closed connection while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
+2019/11/26 02:37:02 [error] 6#6: *48 open() "/etc/nginx/confpasswd" failed (2: No such file or directory), client: 192.168.99.1, server: localhost, request: "GET /NginxStatus HTTP/1.1", host: "192.168.99.100"
+2019/11/26 02:37:10 [error] 6#6: *48 open() "/etc/nginx/confpasswd" failed (2: No such file or directory), client: 192.168.99.1, server: localhost, request: "GET /NginxStatus HTTP/1.1", host: "192.168.99.100"
+2019/11/26 02:37:13 [info] 6#6: *59 client closed connection while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
+2019/11/26 02:37:13 [error] 6#6: *48 open() "/etc/nginx/confpasswd" failed (2: No such file or directory), client: 192.168.99.1, server: localhost, request: "GET /NginxStatus HTTP/1.1", host: "192.168.99.100"
+2019/11/26 02:37:21 [error] 6#6: *48 open() "/etc/nginx/confpasswd" failed (2: No such file or directory), client: 192.168.99.1, server: localhost, request: "GET /NginxStatus HTTP/1.1", host: "192.168.99.100"
+2019/11/26 02:37:24 [info] 6#6: *62 client closed connection while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
+2019/11/26 02:37:28 [info] 6#6: *67 no user/password was provided for basic authentication, client: 192.168.99.1, server: localhost, request: "GET /NginxStatus HTTP/1.1", host: "192.168.99.100"
+2019/11/26 02:38:56 [info] 6#6: *68 client 192.168.99.1 closed keepalive connection
+2019/11/26 02:42:43 [error] 6#6: *71 open() "/etc/nginx/confpasswd" failed (2: No such file or directory), client: 192.168.99.1, server: localhost, request: "GET /NginxStatus HTTP/1.1", host: "192.168.99.100"
+2019/11/26 02:42:44 [error] 6#6: *71 open() "/etc/nginx/confpasswd" failed (2: No such file or directory), client: 192.168.99.1, server: localhost, request: "GET /NginxStatus HTTP/1.1", host: "192.168.99.100"
+2019/11/26 02:42:53 [info] 6#6: *74 no user/password was provided for basic authentication, client: 192.168.99.1, server: localhost, request: "GET /NginxStatus HTTP/1.1", host: "192.168.99.100"
+2019/11/26 02:42:55 [info] 6#6: *74 no user/password was provided for basic authentication, client: 192.168.99.1, server: localhost, request: "GET /NginxStatus HTTP/1.1", host: "192.168.99.100"
+2019/11/26 02:42:56 [info] 6#6: *74 no user/password was provided for basic authentication, client: 192.168.99.1, server: localhost, request: "GET /NginxStatus HTTP/1.1", host: "192.168.99.100"
+2019/11/26 02:42:56 [info] 6#6: *70 client closed connection while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
+2019/11/26 02:42:57 [info] 6#6: *74 no user/password was provided for basic authentication, client: 192.168.99.1, server: localhost, request: "GET /NginxStatus HTTP/1.1", host: "192.168.99.100"
+2019/11/26 02:42:59 [info] 6#6: *74 no user/password was provided for basic authentication, client: 192.168.99.1, server: localhost, request: "GET /NginxStatus HTTP/1.1", host: "192.168.99.100"
+2019/11/26 02:43:00 [info] 6#6: *74 no user/password was provided for basic authentication, client: 192.168.99.1, server: localhost, request: "GET /NginxStatus HTTP/1.1", host: "192.168.99.100"
+2019/11/26 02:43:03 [error] 6#6: *74 open() "/etc/nginx/confpasswd" failed (2: No such file or directory), client: 192.168.99.1, server: localhost, request: "GET /NginxStatus HTTP/1.1", host: "192.168.99.100"
+2019/11/26 02:43:06 [info] 6#6: *74 client 192.168.99.1 closed keepalive connection
+2019/11/26 02:43:22 [info] 6#6: *76 client closed connection while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
+2019/11/26 02:43:53 [notice] 1#1: signal 15 (SIGTERM) received, exiting
+2019/11/26 02:43:53 [notice] 6#6: exiting
+2019/11/26 02:43:53 [notice] 6#6: exit
+2019/11/26 02:43:53 [notice] 1#1: signal 17 (SIGCHLD) received from 6
+2019/11/26 02:43:53 [notice] 1#1: worker process 6 exited with code 0
+2019/11/26 02:43:53 [notice] 1#1: exit
+2019/11/26 02:44:32 [notice] 1#1: using the "epoll" event method
+2019/11/26 02:44:32 [notice] 1#1: nginx/1.17.5
+2019/11/26 02:44:32 [notice] 1#1: built by gcc 8.3.0 (Debian 8.3.0-6) 
+2019/11/26 02:44:32 [notice] 1#1: OS: Linux 4.14.154-boot2docker
+2019/11/26 02:44:32 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2019/11/26 02:44:32 [notice] 1#1: start worker processes
+2019/11/26 02:44:32 [notice] 1#1: start worker process 6
+2019/11/26 02:45:04 [info] 6#6: *1 client closed connection while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
+2019/11/26 02:45:19 [info] 6#6: *6 client closed connection while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
+2019/11/26 02:45:30 [info] 6#6: *8 client closed connection while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
+2019/11/26 02:53:16 [info] 6#6: *56 client closed connection while waiting for request, client: 192.168.99.1, server: 0.0.0.0:80
+2019/11/26 09:54:23 [notice] 1#1: signal 15 (SIGTERM) received, exiting
+2019/11/26 09:54:23 [notice] 6#6: exiting
+2019/11/26 09:54:23 [notice] 6#6: exit
+2019/11/26 09:54:23 [notice] 1#1: signal 17 (SIGCHLD) received from 6
+2019/11/26 09:54:23 [notice] 1#1: worker process 6 exited with code 0
+2019/11/26 09:54:23 [notice] 1#1: exit
