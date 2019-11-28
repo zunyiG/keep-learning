@@ -40,6 +40,7 @@
 
 ## 架构
 
+- [12 Factor](./12factor/)
 - [前端架构](./front-end-framework/)
 
 ## 工具库

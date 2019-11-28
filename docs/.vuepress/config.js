@@ -59,6 +59,9 @@ module.exports = {
         '01.abstraction-process-building',
         '02.abstraction-data-building',
       ],
+      '/12factor/': [
+        ''
+      ],
       '/programming-language/': [
         ''
       ],
